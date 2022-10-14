@@ -27,7 +27,7 @@ public class RestCustomerController {
         if (!customerPage.hasContent()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(customerPage,HttpStatus.OK);
     }
 
     @DeleteMapping(value = "{id}")
