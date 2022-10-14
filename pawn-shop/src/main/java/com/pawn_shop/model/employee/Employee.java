@@ -1,5 +1,6 @@
 package com.pawn_shop.model.employee;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pawn_shop.model.contract.Contract;
 import com.pawn_shop.model.login.AppUser;
 import lombok.AllArgsConstructor;
@@ -49,5 +50,6 @@ public class Employee {
     private boolean status;
 
     @OneToOne(mappedBy = "employee")
+    @JsonBackReference
     private AppUser appUser;
 }
