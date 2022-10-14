@@ -50,6 +50,4 @@ public class Customer {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @OneToMany(mappedBy ="customer",cascade = CascadeType.ALL)
-    private Set<Contract> contracts;
 }
