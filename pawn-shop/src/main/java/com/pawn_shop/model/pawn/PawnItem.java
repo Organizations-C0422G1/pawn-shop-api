@@ -33,6 +33,7 @@ public class PawnItem {
     private Set<PawnImg> pawnImg;
 
     @OneToOne(mappedBy = "pawnItem")
+    @JsonBackReference
     private Contract contract;
 
     private Boolean status;
