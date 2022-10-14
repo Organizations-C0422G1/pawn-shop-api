@@ -29,10 +29,11 @@ public class PawnItem {
     private PawnType pawnType;
 
     @OneToMany(mappedBy = "pawnItem",cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonBackReference(value = "pawnImg")
     private Set<PawnImg> pawnImg;
 
     @OneToOne(mappedBy = "pawnItem")
+    @JsonBackReference(value = "contract")
     private Contract contract;
 
     private Boolean status;
