@@ -8,8 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
 @Service
 public class ContractService implements IContractService {
 
@@ -18,10 +16,6 @@ public class ContractService implements IContractService {
 
     @Override
     public Page<ContractDto> findAllContract(Pageable pageable, String code, String customerName, String pawnItem, String startDate) {
-        Page<ContractDto> contractDtoPage = contractRepository.findAllContract(pageable, code, customerName, pawnItem, startDate);
-        for (ContractDto item : contractDtoPage) {
-            item.setReturnDate(LocalDate.now());
-        }
-        return contractDtoPage;
+        return  this.contractRepository.findAllContract(pageable, code, customerName, pawnItem, startDate);
     }
 }
