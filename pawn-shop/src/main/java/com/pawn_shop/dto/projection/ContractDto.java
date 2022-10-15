@@ -17,8 +17,6 @@ public interface ContractDto {
 
     LocalDate getReturnDate();
 
-    void setReturnDate(LocalDate returnDate);
-
     Double getLiquidationPrice();
 
     String getPawnItem();
