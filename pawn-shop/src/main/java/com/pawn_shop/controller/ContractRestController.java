@@ -21,17 +21,32 @@ public class ContractRestController {
 
     @GetMapping(value = "/listPage")
     public ResponseEntity<Page<ContractDto>> goListContract(@PageableDefault(size = 5) Pageable pageable, @RequestParam Optional<String> code,
-                                                         @RequestParam Optional<String> customerName, @RequestParam Optional<String> pawnItem,
-                                                         @RequestParam Optional<String> startDate) {
+                                                            @RequestParam Optional<String> customerName, @RequestParam Optional<String> pawnItem,
+                                                            @RequestParam Optional<String> startDate) {
         String keywordCode = code.orElse("");
         String keywordCustomerName = customerName.orElse("");
         String keywordPawnItem = pawnItem.orElse("");
         String keywordStartDate = startDate.orElse("");
 
-        Page<ContractDto> contractPage = this.contractService.findAllContract(pageable, keywordCode, keywordCustomerName, keywordPawnItem, keywordStartDate);
+        Page<ContractDto> contractPage = this.contractService.getAllContractPaginationAndSearch(pageable, keywordCode, keywordCustomerName, keywordPawnItem, keywordStartDate);
         if (contractPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(contractPage, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Optional<ContractDto>> findById(@PathVariable long id) {
+        Optional<ContractDto> contract = this.contractService.getContractDtoById(id);
+        if (!contract.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(contract, HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "delete/{id}")
+    public ResponseEntity<Void> deleteContract(@PathVariable long id) {
+        this.contractService.deleteContract(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
