@@ -26,7 +26,7 @@ public class ContractRestController {
         String keywordCode = code.orElse("");
         String keywordCustomerName = customerName.orElse("");
         String keywordPawnItem = pawnItem.orElse("");
-        String keywordStartDate = startDate.orElse("");
+        String keywordStartDate = startDate.orElse("0000-00-00");
 
         Page<ContractDto> contractPage = this.contractService.getAllContractPaginationAndSearch(pageable, keywordCode, keywordCustomerName, keywordPawnItem, keywordStartDate);
         if (contractPage.isEmpty()) {
@@ -36,17 +36,17 @@ public class ContractRestController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Optional<ContractDto>> findById(@PathVariable long id) {
-        Optional<ContractDto> contract = this.contractService.getContractDtoById(id);
+    public ResponseEntity<Optional<ContractDto>> getExpiredContractsById(@PathVariable long id) {
+        Optional<ContractDto> contract = this.contractService.getExpiredContractsById(id);
         if (!contract.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(contract, HttpStatus.OK);
     }
 
-    @PatchMapping(value = "delete/{id}")
-    public ResponseEntity<Void> deleteContract(@PathVariable long id) {
-        this.contractService.deleteContract(id);
+    @PatchMapping(value = "returnItem/{id}")
+    public ResponseEntity<Void> returnItem(@PathVariable long id) {
+        this.contractService.returnItem(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
