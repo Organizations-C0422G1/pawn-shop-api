@@ -1,5 +1,6 @@
 package com.pawn_shop.controller;
 
+import com.pawn_shop.dto.projections.CustomerProjection;
 import com.pawn_shop.model.customer.Customer;
 import com.pawn_shop.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,10 @@ public class RestCustomerController {
     private ICustomerService iCustomerService;
 
     @GetMapping(value = "")
-    public ResponseEntity<Page<Customer>> getAllCustomer(@RequestParam Optional<String> name,
+    public ResponseEntity<Page<CustomerProjection>> getAllCustomer(@RequestParam Optional<String> name,
                                                          @PageableDefault(size = 3) Pageable pageable) {
         String name1 = name.orElse("");
-        Page<Customer> customerPage = iCustomerService.findAllCustomer("%" + name1 + "%", pageable);
+        Page<CustomerProjection> customerPage = iCustomerService.findAllCustomer("%" + name1 + "%", pageable);
         if (!customerPage.hasContent()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
