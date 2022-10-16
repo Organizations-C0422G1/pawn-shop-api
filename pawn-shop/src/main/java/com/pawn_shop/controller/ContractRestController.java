@@ -35,15 +35,6 @@ public class ContractRestController {
         return new ResponseEntity<>(contractPage, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Optional<ContractDto>> getExpiredContractsById(@PathVariable long id) {
-        Optional<ContractDto> contract = this.contractService.getExpiredContractsById(id);
-        if (!contract.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(contract, HttpStatus.OK);
-    }
-
     @PatchMapping(value = "returnItem/{id}")
     public ResponseEntity<Void> returnItem(@PathVariable long id) {
         this.contractService.returnItem(id);
