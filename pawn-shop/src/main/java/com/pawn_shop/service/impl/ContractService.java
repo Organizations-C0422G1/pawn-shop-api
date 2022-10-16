@@ -22,12 +22,12 @@ public class ContractService implements IContractService {
     }
 
     @Override
-    public Optional<ContractDto> getContractDtoById(long id) {
-        return contractRepository.getContractDtoById(id);
+    public Optional<ContractDto> getExpiredContractsById(long id) {
+        return contractRepository.getExpiredContractsById(id);
     }
 
     @Override
-    public void deleteContract(long id) {
-        this.contractRepository.deleteContract(id);
+    public void returnItem(long id) {
+        this.contractRepository.returnItem(id);
     }
 }

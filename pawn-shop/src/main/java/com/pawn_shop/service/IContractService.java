@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface IContractService {
     Page<ContractDto> getAllContractPaginationAndSearch(Pageable pageable, String code, String customerName, String pawnItem, String startDate);
 
-    Optional<ContractDto> getContractDtoById(long id);
+    Optional<ContractDto> getExpiredContractsById(long id);
 
-    void deleteContract(long id);
+    void returnItem(long id);
 }
