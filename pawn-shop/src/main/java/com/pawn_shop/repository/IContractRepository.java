@@ -22,7 +22,7 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
             " join customer c on ct.customer_id = c.id " +
             " join pawn_item pi on ct.pawn_item_id = pi.id " +
             " where (ct.code like %:code% and c.name like %:customerName% " +
-            " and pi.name like %:pawnItem% and ct.start_date like %:startDate) " +
+            " and pi.name like %:pawnItem% and ct.start_date >= :startDate) " +
             " and ct.status = 0", nativeQuery = true,
             countQuery = "select count(*) from (" +
                     "select ct.code, c.name as customer, pi.name as pawnItem, " +
@@ -31,7 +31,7 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
                     " join customer c on ct.customer_id = c.id " +
                     " join pawn_item pi on ct.pawn_item_id = pi.id " +
                     " where (ct.code like %:code% and c.name like %:customerName% " +
-                    " and pi.name like %:pawnItem% and ct.start_date like %:startDate) " +
+                    " and pi.name like %:pawnItem% and ct.start_date >= :startDate) " +
                     " and ct.status = 0) contracts")
     Page<ContractDto> getAllContractPaginationAndSearch(Pageable pageable, @Param("code") String code, @Param("customerName") String customerName,
                                                         @Param("pawnItem") String pawnItem, @Param("startDate") String startDate);
@@ -44,9 +44,9 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
             " join customer c on ct.customer_id = c.id " +
             " join pawn_item pi on ct.pawn_item_id = pi.id " +
             " where ct.id = :id and ct.status = 0", nativeQuery = true)
-    Optional<ContractDto> getContractDtoById(@Param("id") long id);
+    Optional<ContractDto> getExpiredContractsById(@Param("id") long id);
 
     @Modifying
     @Query(value = "update contract set status = 1 where id = :id", nativeQuery = true)
-    void deleteContract(@Param("id") long id);
+    void returnItem(@Param("id") long id);
 }
