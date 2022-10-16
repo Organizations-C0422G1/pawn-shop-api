@@ -8,8 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class ContractService implements IContractService {
 
@@ -19,11 +17,6 @@ public class ContractService implements IContractService {
     @Override
     public Page<ContractDto> getAllContractPaginationAndSearch(Pageable pageable, String code, String customerName, String pawnItem, String startDate) {
         return this.contractRepository.getAllContractPaginationAndSearch(pageable, code, customerName, pawnItem, startDate);
-    }
-
-    @Override
-    public Optional<ContractDto> getExpiredContractsById(long id) {
-        return contractRepository.getExpiredContractsById(id);
     }
 
     @Override
