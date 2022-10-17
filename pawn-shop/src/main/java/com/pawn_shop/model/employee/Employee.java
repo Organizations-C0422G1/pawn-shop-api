@@ -33,6 +33,9 @@ public class Employee {
 
     private LocalDate dateOfBirth;
 
+    @Column(columnDefinition = "varchar(30)")
+    private String idCard;
+
     @Column(columnDefinition = "varchar(100)")
     private String email;
 

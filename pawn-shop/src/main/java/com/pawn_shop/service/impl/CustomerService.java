@@ -13,8 +13,22 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public void createCustomer(Customer newCustomer) {
-        iCustomerRepository.createCustomer(newCustomer.getCode(), newCustomer.getDateOfBirth(), newCustomer.getEmail(),
+        iCustomerRepository.createCustomer( newCustomer.getDateOfBirth(), newCustomer.getEmail(),
                 newCustomer.getGender(), newCustomer.getIdCard(), newCustomer.getImgUrl(), newCustomer.getName(),
                 newCustomer.getPhoneNumber(), newCustomer.getStatus(), newCustomer.getAddress());
     }
+
+    @Override
+    public void updateCustomer(Long id, Customer oldCustomer) {
+        iCustomerRepository.updateCustomer( oldCustomer.getDateOfBirth(), oldCustomer.getEmail(),
+                oldCustomer.getGender(), oldCustomer.getIdCard(), oldCustomer.getImgUrl(), oldCustomer.getName(),
+                oldCustomer.getPhoneNumber(), oldCustomer.getStatus(), oldCustomer.getAddress().getId(),oldCustomer.getId());
+    }
+
+//    @Override
+//    public void updateCustomer(Customer oldCustomer) {
+//        iCustomerRepository.updateCustomer(oldCustomer.getId(), oldCustomer.getDateOfBirth(), oldCustomer.getEmail(),
+//                oldCustomer.getGender(), oldCustomer.getIdCard(), oldCustomer.getImgUrl(), oldCustomer.getName(),
+//                oldCustomer.getPhoneNumber(), oldCustomer.getStatus(), oldCustomer.getAddress(), oldCustomer.getCode());
+//    }
 }
