@@ -48,11 +48,31 @@ public class ContractRestController_transactionHistory {
     }
 
     @Test
-    public void getTransactionList_8() throws Exception {
+    public void getTransactionList_9() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/contracts?customerName=T"))
+                .andDo(print())
+                .andExpect(status().is(200));
+    }
+
+    @Test
+    public void getTransactionList_7_byPawnItemName() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/contracts?pawnItemName=null"))
                 .andDo(print())
                 .andExpect(status().is(204));
     }
 
+    @Test
+    public void getTransactionList_9_byPawnItemName() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/contracts?pawnItemName=xxx"))
+                .andDo(print())
+                .andExpect(status().is(204));
+    }
+
+    @Test
+    public void getTransactionList_7_byTypeContract() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/contracts?type=null"))
+                .andDo(print())
+                .andExpect(status().is(204));
+    }
 
 }
