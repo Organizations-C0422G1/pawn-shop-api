@@ -29,6 +29,9 @@ public class Employee {
     @Column(columnDefinition = "varchar(30)")
     private String code;
 
+    @Column(columnDefinition = "varchar(30)")
+    private String idCard;
+
     private Boolean gender;
 
     private LocalDate dateOfBirth;
