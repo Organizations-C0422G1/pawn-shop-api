@@ -19,6 +19,7 @@ public class ContractRestController_transactionHistory {
     @Autowired
     private MockMvc mockMvc;
 
+    // lấy ra danh sách giao dịch tồn tại thì trả về 1 page<ContractDto>
     @Test
     public void getTransactionHistoryList_5() throws Exception {
         this.mockMvc.perform(
@@ -75,4 +76,31 @@ public class ContractRestController_transactionHistory {
                 .andExpect(status().is(204));
     }
 
+    @Test
+    public void getTransactionList_11_byTypeContract() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/contracts?type=true"))
+                .andDo(print())
+                .andExpect(status().is(200));
+    }
+
+    @Test
+    public void getTransactionList_11_byStartDate() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/contracts?startDate=2020-10-18"))
+                .andDo(print())
+                .andExpect(status().is(200));
+    }
+
+    @Test
+    public void getTransactionList_11_byEndDate() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/contracts?endDate=2022-10-18"))
+                .andDo(print())
+                .andExpect(status().is(200));
+    }
+
+    @Test
+    public void getTransactionList_8_byEndDate() throws Exception {
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/contracts?endDate=2020-10-18"))
+                .andDo(print())
+                .andExpect(status().is(204));
+    }
 }
