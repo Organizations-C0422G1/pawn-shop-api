@@ -36,13 +36,13 @@ public class EmployeeController {
 
 
     }
-    @GetMapping("/{id}")
+    @GetMapping("findById/{id}")
     public ResponseEntity<List<Employee>> findById(@PathVariable Long id) {
         List<Employee> employee = iEmployeeService.findById(id);
         if (!employee.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity(employee, HttpStatus.OK);
+        return new ResponseEntity<>(employee, HttpStatus.OK);
     }
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Employee> deleteEmployeeById(@PathVariable Long id) {

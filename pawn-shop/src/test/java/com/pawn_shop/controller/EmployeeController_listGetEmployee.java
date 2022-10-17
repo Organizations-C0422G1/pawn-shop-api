@@ -117,13 +117,13 @@ public class EmployeeController_listGetEmployee {
     /**
      * Create by HoanTV
      * Date: 11:59 pm  17-10-2022
-     * function: check db no value = no
+     * function: check page size = 0
      * HoanTV-list-employee
      *
      * @throws Exception
      */
     @Test
-    public void getListStudent_5_size0() throws Exception {
+    public void getListStudent_5_size() throws Exception {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
