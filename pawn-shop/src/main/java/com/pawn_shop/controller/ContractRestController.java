@@ -1,5 +1,7 @@
 package com.pawn_shop.controller;
 
+import com.pawn_shop.dto.projection.ContractProjection;
+import com.pawn_shop.dto.projection.MailAutoProjection;
 import com.pawn_shop.model.contract.Contract;
 import com.pawn_shop.service.IContractService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -19,7 +23,7 @@ public class ContractRestController {
     private IContractService contractService;
 
     @GetMapping("")
-    public ResponseEntity<Page<Contract>> transactionHistory(
+    public ResponseEntity<Page<ContractProjection>> transactionHistory(
             @RequestParam Optional<String> customerName,
             @RequestParam Optional<String> pawnItemName,
             @RequestParam Optional<String> type,
@@ -33,7 +37,7 @@ public class ContractRestController {
         String startDay = startDate.orElse("0000-00-00");
         String endDay = endDate.orElse("2032-01-01");
         String status1 = status.orElse("");
-        Page<Contract> contractPage = contractService.contractPage(
+        Page<ContractProjection> contractPage = contractService.contractPage(
                 "%"+ cusName + "%",
                 "%" + pawnItem + "%",
                 types,

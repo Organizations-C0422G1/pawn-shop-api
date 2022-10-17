@@ -1,5 +1,7 @@
 package com.pawn_shop.service.impl;
 
+import com.pawn_shop.dto.projection.ContractProjection;
+import com.pawn_shop.dto.projection.MailAutoProjection;
 import com.pawn_shop.model.contract.Contract;
 import com.pawn_shop.repository.IContractRepository;
 import com.pawn_shop.service.IContractService;
@@ -8,19 +10,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Service
 public class ContractService implements IContractService {
     @Autowired
     private IContractRepository contractRepository;
 
     @Override
-    public Page<Contract> contractPage(String customerName,
-                                       String pawnItemName,
-                                       String type,
-                                       String startDate,
-                                       String endDate,
-                                       String status,
-                                       Pageable pageable) {
+    public Page<ContractProjection> contractPage(String customerName,
+                                                 String pawnItemName,
+                                                 String type,
+                                                 String startDate,
+                                                 String endDate,
+                                                 String status,
+                                                 Pageable pageable) {
         if (type.equals("")) {
             return contractRepository.contractPage(
                     customerName,
