@@ -1,10 +1,8 @@
 package com.pawn_shop.controller;
 
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-=======
 import com.pawn_shop.dto.projection.ContractProjection;
 import com.pawn_shop.dto.projection.MailAutoProjection;
 import com.pawn_shop.model.contract.Contract;
@@ -16,17 +14,12 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.Optional;
->>>>>>> eeb286226d59101534b1f2e70a8e8b4048d17b2f
 
 @CrossOrigin
 @RestController
 @RequestMapping("/contracts")
 public class ContractRestController {
-<<<<<<< HEAD
-=======
     @Autowired
     private IContractService contractService;
 
@@ -73,5 +66,4 @@ public class ContractRestController {
         contractService.deleteContract(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
->>>>>>> eeb286226d59101534b1f2e70a8e8b4048d17b2f
 }
