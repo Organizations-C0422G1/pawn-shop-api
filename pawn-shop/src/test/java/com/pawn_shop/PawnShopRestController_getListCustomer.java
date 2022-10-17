@@ -24,7 +24,7 @@ public class PawnShopRestController_getListCustomer {
      * Return empty list at page 1.false
      */
     @Test
-    public void getAllCustomer_1_titleNull() throws Exception {
+    public void getAllCustomer_7_titleNull() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/customer/?page=0&name=null"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
@@ -37,7 +37,7 @@ public class PawnShopRestController_getListCustomer {
      * Return full list at page 1.true
      */
     @Test
-    public void getAllCustomer_2_titleEmpty() throws Exception {
+    public void getAllCustomer_8_titleEmpty() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/customer/?page=0&name="))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
@@ -50,7 +50,7 @@ public class PawnShopRestController_getListCustomer {
      * Return an empty list at page 1.false
      */
     @Test
-    public void getAllCustomer_3_titleNotExist() throws Exception {
+    public void getAllCustomer_9_titleNotExist() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/customer/?page=0&name=z"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
@@ -63,7 +63,7 @@ public class PawnShopRestController_getListCustomer {
      * Return an empty list at page 1.true
      */
     @Test
-    public void getAllCustomer_4_tittleExist() throws Exception {
+    public void getAllCustomer_11_tittleExist() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/customer/?page=0&name=q"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
@@ -89,7 +89,7 @@ public class PawnShopRestController_getListCustomer {
      * Return full list at page 1 consists of q.true
      */
     @Test
-    public void getAllCustomer_5_pageEmpty() throws Exception {
+    public void getAllCustomer_8_pageEmpty() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/customer/?page=&name=q"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful());
@@ -102,7 +102,7 @@ public class PawnShopRestController_getListCustomer {
      * Return an empty list at page 1.false
      */
     @Test
-    public void getAllCustomer_6_pageNotExist() throws Exception {
+    public void getAllCustomer_9_pageNotExist() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/customer/?page=11&name=q"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
@@ -115,7 +115,7 @@ public class PawnShopRestController_getListCustomer {
      * Return  list at page 1.true
      */
     @Test
-    public void getAllCustomer_7_tittleExist() throws Exception {
+    public void getAllCustomer_11_pageExist() throws Exception {
         this.mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/customer/?page=0&name=q"))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
