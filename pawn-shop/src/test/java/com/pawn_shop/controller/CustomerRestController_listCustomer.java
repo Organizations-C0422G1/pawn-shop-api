@@ -97,8 +97,6 @@ public class CustomerRestController_listCustomer {
                 .andExpect(status().is4xxClientError());
     }
     /**
-     * Create: NghiaNVT
-     * Date create: 17/10/2022
      * Get customer list with page exist
      * Return  list at page 1.true
      */
