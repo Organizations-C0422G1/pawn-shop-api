@@ -27,7 +27,7 @@ public class InterestRestController_findCompleteContractByDate {
     }
 
     @Test
-    public void getCompleteContractByDate_7() throws Exception {
+    public void getCompleteContractByDate_NotFound() throws Exception {
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get("/interestRest/complete-contract/page=10"))
                 .andDo(print())
@@ -95,8 +95,25 @@ public class InterestRestController_findCompleteContractByDate {
     }
 
     @Test
-    public void getCompleteContractByDate_starReturnDate_And_endReturnDate_4() throws Exception {
+    public void getCompleteContractByDate_starReturnDate_And_endReturnDate_TestLogic() throws Exception {
+        this.mockMvc.perform(
+                MockMvcRequestBuilders.get(
+                        "/interestRest/complete-contract?page=0&startReturnDate=2022-01-13&endReturnDate=2022-01-12"))
+                .andDo(print())
+                .andExpect(status().is(204));
+    }
 
+    @Test
+    public void getCompleteContractByDate_starReturnDate_And_endReturnDate_ok() throws Exception {
+        this.mockMvc.perform(
+                MockMvcRequestBuilders.get(
+                        "/interestRest/complete-contract?page=0&startReturnDate=2022-01-13&endReturnDate=2022-10-12"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    @Test
+    public void getCompleteContractByDate_starReturnDate_And_endReturnDate_4() throws Exception {
         this.mockMvc.perform(
                 MockMvcRequestBuilders.get(
                         "/interestRest/complete-contract?startReturnDate=&endReturnDate="))
