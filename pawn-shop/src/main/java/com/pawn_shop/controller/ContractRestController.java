@@ -28,7 +28,7 @@ public class ContractRestController {
             @RequestParam Optional<String> startDate,
             @RequestParam Optional<String> endDate,
             @RequestParam Optional<String> status,
-            @PageableDefault(size = 20)Pageable pageable) {
+            @PageableDefault(size = 20) Pageable pageable) {
         String types = type.orElse("");
         String cusName = customerName.orElse("");
         String pawnItem = pawnItemName.orElse("");
@@ -36,15 +36,19 @@ public class ContractRestController {
         String endDay = endDate.orElse("2032-01-01");
         String status1 = status.orElse("");
         Page<ContractDto> contractPage = contractService.contractPage(
-                "%"+ cusName + "%",
+                "%" + cusName + "%",
                 "%" + pawnItem + "%",
                 types,
                 startDay,
                 endDay,
                 "%" + status1 + "%",
                 pageable);
-        if (!contractPage.hasContent()){
-        
+        if (!contractPage.hasContent()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(contractPage, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/listPage")
     public ResponseEntity<Page<ContractDto>> goListContract(@PageableDefault(size = 5) Pageable pageable, @RequestParam Optional<String> code,
                                                             @RequestParam Optional<String> customerName, @RequestParam Optional<String> pawnItem,
@@ -64,17 +68,19 @@ public class ContractRestController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<ContractDto> contractDetail(@PathVariable Long id){
+    public ResponseEntity<ContractDto> contractDetail(@PathVariable Long id) {
         ContractDto contract = contractService.findById(id);
-        if (contract == null){
+        if (contract == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(contract, HttpStatus.OK);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> deleteContract(@PathVariable Long id){
+    public ResponseEntity<Void> deleteContract(@PathVariable Long id) {
         contractService.deleteContract(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     @PatchMapping(value = "returnItem/{id}")
     public ResponseEntity<Void> returnItem(@PathVariable long id) {

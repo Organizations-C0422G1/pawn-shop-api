@@ -16,12 +16,12 @@ public class ContractService implements IContractService {
 
     @Override
     public Page<ContractDto> contractPage(String customerName,
-                                                 String pawnItemName,
-                                                 String type,
-                                                 String startDate,
-                                                 String endDate,
-                                                 String status,
-                                                 Pageable pageable) {
+                                          String pawnItemName,
+                                          String type,
+                                          String startDate,
+                                          String endDate,
+                                          String status,
+                                          Pageable pageable) {
         if (type.equals("")) {
             return contractRepository.contractPage(
                     customerName,
@@ -62,7 +62,8 @@ public class ContractService implements IContractService {
     @Override
     public void deleteContract(Long id) {
         contractRepository.deleteContract(id);
-  
+    }
+
     @Override
     public Page<ContractDto> getAllContractPaginationAndSearch(Pageable pageable, String code, String customerName, String pawnItem, String startDate) {
         return this.contractRepository.getAllContractPaginationAndSearch(pageable, code, customerName, pawnItem, startDate);
@@ -73,3 +74,4 @@ public class ContractService implements IContractService {
         this.contractRepository.returnItem(id);
     }
 }
+
