@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/contractRest")
+@RequestMapping(value = "/api/employee/contracts")
 public class ContractRestController {
     @Autowired
     private IContractService contractService;
