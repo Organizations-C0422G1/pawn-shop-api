@@ -11,10 +11,7 @@ import org.springframework.validation.Validator;
 
 import javax.persistence.Column;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Getter
@@ -26,6 +23,7 @@ public class EmployeeDto implements Validator {
 
     @NotBlank(message = "Vui lòng nhập vào")
     @Pattern(regexp = "[A-Za-z ]+",message = "Vui lòng nhập đúng định dạng")
+    @Size(min = 0,max = 30)
     private String name;
 
     @NotBlank(message = "Vui lòng nhập vào")
@@ -37,10 +35,12 @@ public class EmployeeDto implements Validator {
     private LocalDate dateOfBirth;
 
     @Email
+    @NotNull(message = "Vui lòng nhập vào")
     @NotBlank(message = "Vui lòng nhập vào")
     private String email;
 
     @NotBlank(message = "Vui lòng nhập vào")
+    @NotNull(message = "Vui lòng nhập vào")
     @Pattern(regexp = "^((090)|(091)|(\\\\(84\\\\)\\\\+90)|(\\\\(84\\\\)\\\\+91))[0-9]{7}$",message = "Vui lòng nhập đúng định dạng")
     private String phoneNumber;
 
@@ -55,6 +55,7 @@ public class EmployeeDto implements Validator {
     private boolean status;
 
     @NotBlank
+    @NotNull(message = "Vui lòng nhập vào")
     @Pattern(regexp = "^[0-9]{9}|[0-9]{12}$",message = "Nhập sai định dạng. Vui lòng nhập lại!!!")
     private String idCard;
 
