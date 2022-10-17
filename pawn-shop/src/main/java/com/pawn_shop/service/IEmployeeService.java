@@ -1,9 +1,16 @@
 package com.pawn_shop.service;
 
 import com.pawn_shop.dto.projections.IEmployeeDto;
+import com.pawn_shop.model.employee.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface IEmployeeService {
-    Page<IEmployeeDto> getAllEmployee(Pageable pageable, String searchKeyWordCode, String searchKeyWordName);
+    Page<IEmployeeDto> getAllEmployeeSearch(String searchKeyWordName, String searchKeyWordCode,Pageable pageable);
+
+    void deleteEmployee(Long id);
+
+    List<Employee> findById(Long id);
 }
