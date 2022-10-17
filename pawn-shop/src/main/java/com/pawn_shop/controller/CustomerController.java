@@ -1,7 +1,6 @@
 package com.pawn_shop.controller;
 
-import com.pawn_shop.dto.projections.CustomerProjection;
-import com.pawn_shop.model.customer.Customer;
+import com.pawn_shop.dto.CustomerDto;
 import com.pawn_shop.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,15 +15,15 @@ import java.util.Optional;
 @CrossOrigin
 @RestController
 @RequestMapping("/customer")
-public class RestCustomerController {
+public class CustomerController {
 @Autowired
     private ICustomerService iCustomerService;
 
     @GetMapping(value = "")
-    public ResponseEntity<Page<CustomerProjection>> getAllCustomer(@RequestParam Optional<String> name,
-                                                         @PageableDefault(size = 3) Pageable pageable) {
+    public ResponseEntity<Page<CustomerDto>> getAllCustomer(@RequestParam Optional<String> name,
+                                                            @PageableDefault(size = 3) Pageable pageable) {
         String name1 = name.orElse("");
-        Page<CustomerProjection> customerPage = iCustomerService.findAllCustomer("%" + name1 + "%", pageable);
+        Page<CustomerDto> customerPage = iCustomerService.findAllCustomer("%" + name1 + "%", pageable);
         if (!customerPage.hasContent()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

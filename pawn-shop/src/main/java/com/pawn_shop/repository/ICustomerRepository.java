@@ -1,6 +1,6 @@
 package com.pawn_shop.repository;
 
-import com.pawn_shop.dto.projections.CustomerProjection;
+import com.pawn_shop.dto.CustomerDto;
 import com.pawn_shop.model.customer.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +37,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                     " from customer join contract on customer.id = contract.customer_id \n" +
                     " where customer.status = 1 and customer.`name` like ?1" +
                     " group by contract.customer_id")
-    Page<CustomerProjection> findAllCustomer(String name, Pageable pageable);
+    Page<CustomerDto> findAllCustomer(String name, Pageable pageable);
 
     @Modifying
     @Query(value = "update customer set status= 0 where id= ?1", nativeQuery = true)

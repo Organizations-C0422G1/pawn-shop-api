@@ -1,7 +1,6 @@
 package com.pawn_shop.service.impl;
 
-import com.pawn_shop.dto.projections.CustomerProjection;
-import com.pawn_shop.model.customer.Customer;
+import com.pawn_shop.dto.CustomerDto;
 import com.pawn_shop.repository.ICustomerRepository;
 import com.pawn_shop.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ public class CustomerService implements ICustomerService {
     private ICustomerRepository iCustomerRepository;
 
     @Override
-    public Page<CustomerProjection> findAllCustomer(String name, Pageable pageable) {
+    public Page<CustomerDto> findAllCustomer(String name, Pageable pageable) {
         return iCustomerRepository.findAllCustomer(name, pageable);
     }
 

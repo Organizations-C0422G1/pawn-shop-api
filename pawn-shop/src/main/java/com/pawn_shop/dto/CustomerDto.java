@@ -1,6 +1,6 @@
-package com.pawn_shop.dto.projections;
+package com.pawn_shop.dto;
 
-public interface CustomerProjection {
+public interface CustomerDto {
     Long getId();
     String getName();
     String getCode();
