@@ -26,7 +26,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
                     "and ee.name like concat('%' , :name , '%' ) and ee.code like concat('%' , :code , '%'  ) " +
                     "order by ee.id desc ")
     Page<IEmployeeDto> getAllEmployeeSearch(@Param("name") String searchKeyWordName, @Param("code") String searchKeyWordCode, Pageable pageable);
-    
+
     @Transactional
     @Modifying
     @Query(value = "update employee set `status` = 0 where id = :id", nativeQuery = true)
