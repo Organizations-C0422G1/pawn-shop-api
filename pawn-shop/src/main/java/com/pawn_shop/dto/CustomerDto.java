@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,4 +17,6 @@ public class CustomerDto {
     private String name;
     private String phoneNumber;
     private AddressDto addressDto;
+
+
 }

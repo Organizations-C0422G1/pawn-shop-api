@@ -14,14 +14,20 @@ import com.pawn_shop.service.IPawItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping(value = "/contracts")
-public class ContractController {
+public class ContractRestController {
     @Autowired
     private IPawItemService iPawItemService;
 
@@ -35,7 +41,16 @@ public class ContractController {
     private ICustomerService iCustomerService;
 
     @PostMapping(value = "/createQuickContract")
-    public ResponseEntity<Contract> createQuickContract(@RequestBody ContractDto contractDto) {
+    public ResponseEntity<?> createQuickContract(@RequestBody @Valid ContractDto contractDto,
+                                                 BindingResult bindingResult) {
+        new ContractDto().validate(contractDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errMap = new HashMap<>();
+            for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                errMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
+        }
         PawnItem tempPawnItem = new PawnItem();
         Address tempAddress = new Address();
         Customer tempCustomer = new Customer();
