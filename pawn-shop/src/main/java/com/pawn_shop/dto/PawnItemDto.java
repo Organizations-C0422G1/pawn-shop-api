@@ -1,39 +1,32 @@
-package com.pawn_shop.model.pawn;
+package com.pawn_shop.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pawn_shop.model.contract.Contract;
+import com.pawn_shop.model.pawn.PawnImg;
+import com.pawn_shop.model.pawn.PawnType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
-@Getter
 @Setter
-@Entity
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PawnItem {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PawnItemDto {
     private Long id;
 
-    @Column(columnDefinition = "varchar(100)")
+    @NotBlank (message = "Vui lòng nhập")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "pawn_type_id",referencedColumnName = "id")
     private PawnType pawnType;
 
-    @OneToMany(mappedBy = "pawnItem",cascade = CascadeType.ALL)
-    @JsonBackReference(value = "pawnImg")
     private Set<PawnImg> pawnImg;
 
-    @OneToOne(mappedBy = "pawnItem")
-    @JsonBackReference(value = "ContractDto")
     private Contract contract;
 
     private Boolean status;

@@ -25,6 +25,7 @@ public class Contract {
     @Column(columnDefinition = "varchar(30)")
     private String code;
 
+    @Column(columnDefinition = "double")
     private Double itemPrice;
 
     private Double interestRate;
