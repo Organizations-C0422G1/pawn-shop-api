@@ -25,10 +25,39 @@ public class ContractRestController_deleteContract {
     public void deleteContract_id_25() throws Exception {
 
         this.mockMvc.perform(
-                MockMvcRequestBuilders.get(
+                MockMvcRequestBuilders.patch(
                         "/api/employee/contracts/returnItem/{id}", "null"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
 
+    @Test
+    public void deleteContract_id_26() throws Exception {
+
+        this.mockMvc.perform(
+                MockMvcRequestBuilders.patch(
+                        "/api/employee/contracts/returnItem/{id}", ""))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void deleteContract_id_27() throws Exception {
+
+        this.mockMvc.perform(
+                MockMvcRequestBuilders.patch(
+                        "/api/employee/contracts/returnItem/{id}", 21))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void deleteContract_id_28() throws Exception {
+
+        this.mockMvc.perform(
+                MockMvcRequestBuilders.patch(
+                        "/api/employee/contracts/returnItem/{id}", 2))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
 }

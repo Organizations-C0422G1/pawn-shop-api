@@ -78,9 +78,8 @@ public class ContractRestController_getListContract {
                 .andExpect(jsonPath("content[1].itemPrice").value(1400000.0))
                 .andExpect(jsonPath("content[1].startDate").value("2022-02-03"))
                 .andExpect(jsonPath("content[1].endDate").value("2022-02-19"))
-                .andExpect(jsonPath("content[1].interestRate").value(4.0))
-                .andExpect(jsonPath("content[1].returnDate").value(null))
-                .andExpect(jsonPath("content[1].liquidationPrice").value(null));
+                .andExpect(jsonPath("content[1].interestRate").value(4.0));
+
     }
 
     @Test
@@ -134,16 +133,13 @@ public class ContractRestController_getListContract {
                 .andExpect(jsonPath("totalPages").value(1))
                 .andExpect(jsonPath("totalElements").value(2))
                 .andExpect(jsonPath("content[0].code").value("HD-NV003-16"))
-                .andExpect(jsonPath("content[0].customer.id").value("Tấn Tài"))
-                .andExpect(jsonPath("content[0].pawnItem.id").value("Túi xách Hermes Kelly"))
+                .andExpect(jsonPath("content[0].customer").value("Tấn Tài"))
+                .andExpect(jsonPath("content[0].pawnItem").value("Túi xách Hermes Kelly"))
                 .andExpect(jsonPath("content[0].itemPrice").value(1400000.0))
                 .andExpect(jsonPath("content[0].startDate").value("2022-02-03"))
                 .andExpect(jsonPath("content[0].endDate").value("2022-02-19"))
-                .andExpect(jsonPath("content[0].interestRate").value(4.0))
-                .andExpect(jsonPath("content[0].returnDate").value("null"))
-                .andExpect(jsonPath("content[0].liquidationPrice").value("null"));
+                .andExpect(jsonPath("content[0].interestRate").value(4.0));
     }
-
 
     @Test
     public void getListContract_pawnItem_7() throws Exception {
@@ -201,11 +197,8 @@ public class ContractRestController_getListContract {
                 .andExpect(jsonPath("content[0].itemPrice").value(99000000))
                 .andExpect(jsonPath("content[0].startDate").value("2022-05-20"))
                 .andExpect(jsonPath("content[0].endDate").value("2022-06-07"))
-                .andExpect(jsonPath("content[0].interestRate").value(5.0))
-                .andExpect(jsonPath("content[0].returnDate").value("" + null))
-                .andExpect(jsonPath("content[0].liquidationPrice").value("" + null));
+                .andExpect(jsonPath("content[0].interestRate").value(5.0));
     }
-
 
     @Test
     public void getListContract_startDate_7() throws Exception {
