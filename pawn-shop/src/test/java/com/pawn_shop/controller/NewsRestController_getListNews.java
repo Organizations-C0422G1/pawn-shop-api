@@ -19,21 +19,6 @@ public class NewsRestController_getListNews {
     @Autowired
     private MockMvc mockMvc;
 
-//    @Test
-//    public void getAllNews_7() throws Exception {
-//        this.mockMvc.perform(
-//                        MockMvcRequestBuilders.get("/list-news", "null")
-//                ).andDo(print())
-//                .andExpect(status().is4xxClientError());
-//    }
-//
-//    @Test
-//    public void getAllNews_8() throws Exception {
-//        this.mockMvc.perform(
-//                        MockMvcRequestBuilders.get("/list-news", "")
-//                ).andDo(print())
-//                .andExpect(status().is4xxClientError());
-//    }
     @Test
     public void getAllNews_5() throws Exception {
         this.mockMvc.perform(
@@ -54,6 +39,22 @@ public class NewsRestController_getListNews {
                 .andExpect(jsonPath("content[3].content").value("Ô tô là một trong những phương tiện được cầm cố nhiều, bởi đây là tài sản lớn và dễ quy đổi thanh khoản vay. Nếu bạn đang gặp vấn đề về tài chính, cần hỗ trợ khoản tiền lớn và đồng thời đang sở hữu xe ô tô BMW, việc cầm xe ô tô"))
                 .andExpect(jsonPath("content[3].postingDay").value("2022-10-10"));
     }
+
+    @Test
+    public void getAllNews_7() throws Exception {
+        this.mockMvc.perform(
+                MockMvcRequestBuilders.get("/list-news")
+        ).andDo(print())
+                .andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("totalPages").value(4))
+                .andExpect(jsonPath("totalElements").value(20))
+                .andExpect(jsonPath("content[3].title").value("Cầm xe ô tô BMW Model X3, X4, X5, X7 330i, 340i, 730i, 750i"))
+                .andExpect(jsonPath("content[3].content").value("Ô tô là một trong những phương tiện được cầm cố nhiều, bởi đây là tài sản lớn và dễ quy đổi thanh khoản vay. Nếu bạn đang gặp vấn đề về tài chính, cần hỗ trợ khoản tiền lớn và đồng thời đang sở hữu xe ô tô BMW, việc cầm xe ô tô"))
+                .andExpect(jsonPath("content[3].postingDay").value("2022-10-10"))
+                .andExpect(jsonPath("status").value(true))
+                .andExpect(jsonPath("appUser").value("null"));
+    }
+
 
 
 }

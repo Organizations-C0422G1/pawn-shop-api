@@ -39,8 +39,8 @@ public interface INewsRepository extends JpaRepository<News, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "update news set news.status = 1", nativeQuery = true)
-    void deleteNews(Long idDelete);
+    @Query(value = "update news set news.status = 0", nativeQuery = true)
+    void deleteNews(@Param("id") Long idDelete);
 
 
 }

@@ -1,5 +1,6 @@
 package com.pawn_shop.controller;
 
+import com.pawn_shop.model.news.News;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -42,5 +43,11 @@ public class NewsRestController_deleteNews {
                 ).andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
+    @Test
+    public void deleteNews_id_28() throws  Exception{
+        this.mockMvc.perform(
+                MockMvcRequestBuilders.delete("/delete/1")
+        ).andDo(print())
+                .andExpect(status().is(200));
+    }
 }
