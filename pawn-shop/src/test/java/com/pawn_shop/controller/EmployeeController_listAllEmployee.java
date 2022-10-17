@@ -131,18 +131,13 @@ public class EmployeeController_listAllEmployee {
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
     }
-
-
     /**
-     * Create by HoanTV
-     * Date: 11:59 pm  17-10-2022
-     * function: check display page
-     * HoanTV-list-page-employee
-     *
-     * @throws Exception
+     * Create: HoanTV
+     * Date create:Date: 11:59 pm  17/10/2022
+     * Return an empty list at page 3.false
      */
     @Test
-    public void getListStudent_6_pageList() throws Exception {
+    public void getListStudent_6_() throws Exception {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
