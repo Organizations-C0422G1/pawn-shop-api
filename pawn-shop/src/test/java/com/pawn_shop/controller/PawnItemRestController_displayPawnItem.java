@@ -23,7 +23,7 @@ public class PawnItemRestController_displayPawnItem {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get("/pawnItemRest/list/"))
+                                .get("/api/employee/pawnItemRest?page=2&itemName=&pawnName="))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("totalPages").value(4))
@@ -40,15 +40,59 @@ public class PawnItemRestController_displayPawnItem {
 
         this.mockMvc.perform(
                         MockMvcRequestBuilders
-                                .get("/pawnItemRest/list?page=1"))
+                                .get("/api/employee/pawnItemRest?page=&itemName=Máy Ảnh&pawnName="))
                 .andDo(print())
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("totalPages").value(4))
                 .andExpect(jsonPath("totalElements").value(20))
-                .andExpect(jsonPath("content[2].name").value("Tủ lạnh Sharp Inverter"))
-                .andExpect(jsonPath("content[2].pawnType.id").value("Đồ Gia Dụng"))
+                .andExpect(jsonPath("content[2].name").value("Máy ảnh Cannon EOS 1500D"))
+                .andExpect(jsonPath("content[2].pawnType.id").value("Máy Ảnh"))
+                .andExpect(jsonPath("content[2].status").value(true))
+                .andExpect(jsonPath("content[2].endDate").value("2022-10-13"))
+                .andExpect(jsonPath("content[2].itemPrice").value(2500000));
+    }
+
+    @Test
+    public void displayPawnItem_7() throws Exception {
+
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/employee/pawnItemRest?page=&itemName=&pawnName=IPhone 13 ProMax"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("totalPages").value(4))
+                .andExpect(jsonPath("totalElements").value(20))
+                .andExpect(jsonPath("content[2].name").value("IPhone 13 ProMax"))
+                .andExpect(jsonPath("content[2].pawnType.id").value("Điện Thoại"))
+                .andExpect(jsonPath("content[2].status").value(true))
+                .andExpect(jsonPath("content[2].endDate").value("2022-08-02"))
+                .andExpect(jsonPath("content[2].itemPrice").value(2200000));
+    }
+
+    @Test
+    public void displayPawnItem_8() throws Exception {
+
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/employee/pawnItemRest?page=&itemName=Xe Máy&pawnName=Honda Air Balade"))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("totalPages").value(4))
+                .andExpect(jsonPath("totalElements").value(20))
+                .andExpect(jsonPath("content[2].name").value("Honda Air Balade"))
+                .andExpect(jsonPath("content[2].pawnType.id").value("Xe Máy"))
                 .andExpect(jsonPath("content[2].status").value(false))
-                .andExpect(jsonPath("content[2].endDate").value("2022-04-15"))
-                .andExpect(jsonPath("content[2].itemPrice").value(4000000));
+                .andExpect(jsonPath("content[2].endDate").value("2022-10-13"))
+                .andExpect(jsonPath("content[2].itemPrice").value(13000000));
+    }
+
+    @Test
+    public void displayPawnItem_9() throws Exception {
+
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/employee/pawnItemRest/null"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
     }
 }
