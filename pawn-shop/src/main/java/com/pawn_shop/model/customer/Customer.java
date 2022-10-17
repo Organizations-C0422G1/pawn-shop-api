@@ -1,5 +1,6 @@
 package com.pawn_shop.model.customer;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pawn_shop.model.address.Address;
 import com.pawn_shop.model.contract.Contract;
 import lombok.AllArgsConstructor;
@@ -51,5 +52,6 @@ public class Customer {
     private Address address;
 
     @OneToMany(mappedBy ="customer",cascade = CascadeType.ALL)
+    @JsonBackReference
     private Set<Contract> contracts;
 }
