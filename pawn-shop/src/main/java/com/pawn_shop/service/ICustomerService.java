@@ -2,9 +2,11 @@ package com.pawn_shop.service;
 
 import com.pawn_shop.model.customer.Customer;
 
-import java.util.Optional;
+import java.util.List;
+
 
 public interface ICustomerService {
-    Optional<Customer> findById(int id);
+
+    List<Customer> findAllCustomer();
 
 }

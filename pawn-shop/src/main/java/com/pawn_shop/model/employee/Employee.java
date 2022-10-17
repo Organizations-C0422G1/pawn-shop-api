@@ -1,5 +1,6 @@
 package com.pawn_shop.model.employee;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pawn_shop.model.contract.Contract;
 import com.pawn_shop.model.login.AppUser;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -49,5 +51,10 @@ public class Employee {
     private boolean status;
 
     @OneToOne(mappedBy = "employee")
+    @JsonBackReference
     private AppUser appUser;
+
+    @OneToMany(mappedBy = "employee")
+    @JsonBackReference("customer_contract")
+    private List<Contract> contractList;
 }

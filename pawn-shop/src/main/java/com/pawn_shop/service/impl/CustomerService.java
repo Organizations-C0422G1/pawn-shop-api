@@ -6,16 +6,15 @@ import com.pawn_shop.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
+import java.util.List;
 @Service
 public class CustomerService implements ICustomerService {
 
     @Autowired
     private ICustomerRepository iCustomerRepository;
-    @Override
-    public Optional<Customer> findById(int id) {
-        return iCustomerRepository.findById(id);
-    }
 
+    @Override
+    public List<Customer> findAllCustomer() {
+        return iCustomerRepository.findAllCustomer();
+    }
 }

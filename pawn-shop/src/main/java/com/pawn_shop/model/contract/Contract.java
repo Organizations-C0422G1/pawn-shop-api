@@ -1,5 +1,7 @@
 package com.pawn_shop.model.contract;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pawn_shop.model.customer.Customer;
 import com.pawn_shop.model.employee.Employee;
 import com.pawn_shop.model.pawn.PawnItem;
@@ -48,6 +50,8 @@ public class Contract {
     @ManyToOne
     @JoinColumn(name = "employee_id",referencedColumnName = "id")
     private Employee employee;
+
+    private Boolean type;
 
     private int status;
 }

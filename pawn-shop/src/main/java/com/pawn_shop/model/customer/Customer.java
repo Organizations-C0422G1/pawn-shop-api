@@ -1,5 +1,6 @@
 package com.pawn_shop.model.customer;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pawn_shop.model.address.Address;
 import com.pawn_shop.model.contract.Contract;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -50,6 +52,7 @@ public class Customer {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @OneToMany(mappedBy ="customer",cascade = CascadeType.ALL)
-    private Set<Contract> contracts;
+    @OneToMany(mappedBy = "customer")
+    @JsonBackReference("customer_contract")
+    private List<Contract> contractList;
 }

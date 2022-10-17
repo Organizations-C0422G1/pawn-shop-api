@@ -5,6 +5,5 @@ import com.pawn_shop.model.pawn.PawnType;
 import java.util.List;
 
 public interface IPawnTypeService {
-
-    List<PawnType> getAll();
+    List<PawnType> findAllPawnType();
 }

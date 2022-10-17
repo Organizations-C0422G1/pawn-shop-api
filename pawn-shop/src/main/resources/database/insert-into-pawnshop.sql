@@ -1,10 +1,5 @@
--- Pawnshop import data base --
-use pawn_shop;
-
 INSERT INTO `pawn_shop`.`finance` (`id`, `current_capital`, `strong_box_money`) VALUES ('1', '500000000', '1000000000');
-
 -- bảng city
-
 INSERT INTO `pawn_shop`.`city` (`name`, `prefix`) VALUES ('An Giang', 'Tỉnh');
 INSERT INTO `pawn_shop`.`city` (`name`, `prefix`) VALUES ('Bà Rịa - Vũng Tàu', 'Tỉnh');
 INSERT INTO `pawn_shop`.`city` (`name`, `prefix`) VALUES ('Bắc Giang', 'Tỉnh');
@@ -68,10 +63,7 @@ INSERT INTO `pawn_shop`.`city` (`name`, `prefix`) VALUES ('Tuyên Quang', 'Tỉn
 INSERT INTO `pawn_shop`.`city` (`name`, `prefix`) VALUES ('Vĩnh Long', 'Tỉnh');
 INSERT INTO `pawn_shop`.`city` (`name`, `prefix`) VALUES ('Vĩnh Phúc', 'Tỉnh');
 INSERT INTO `pawn_shop`.`city` (`name`, `prefix`) VALUES ('Yên Bái', 'Tỉnh');
-
-
 -- Quận Huyện Bảng Distic
-
 INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('An Phú', 'Huyện', '1');
 INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Tân Châu', 'Thị Xã', '1');
 INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Phú Tân', 'Huyện', '1');
@@ -206,9 +198,9 @@ INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Hoàng
 INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Krông Ana', 'Huyện', '16');
 INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Ea Kar', 'Huyện', '16');
 INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Krông Búk', 'Huyện', '16');
-INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('M\'Dắk', 'Huyện', '16');
-INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Ea H\'Leo', 'Huyện', '16');
-INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Cư M\'Gar', 'Huyện', '16');
+INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('MDắk', 'Huyện', '16');
+INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Ea HLeo', 'Huyện', '16');
+INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Cư MGar', 'Huyện', '16');
 INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Buôn Đôn', 'Huyện', '16');
 INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Ea Súp', 'Huyện', '16');
 INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Krông Bông', 'Huyện', '16');
@@ -273,10 +265,7 @@ INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Duy Tu
 INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Kim Bảng', 'Huyện', '23');
 INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Lý Nhân', 'Huyện', '23');
 INSERT INTO `pawn_shop`.`district` (`name`, `prefix`, `city_id`) VALUES ('Thanh Liên', 'Huyện', '23');
-
-
 -- bảng address --
-
 INSERT INTO `pawn_shop`.`address` (`street`, `district_id`) VALUES ('255 - Nguyễn Tất Thành', '1');
 INSERT INTO `pawn_shop`.`address` (`street`, `district_id`) VALUES ('222 - Hoàng Diệu', '3');
 INSERT INTO `pawn_shop`.`address` (`street`, `district_id`) VALUES ('1 - Nguyễn Văn Linh', '4');
@@ -297,7 +286,6 @@ INSERT INTO `pawn_shop`.`address` (`street`, `district_id`) VALUES ('88 - Trần
 INSERT INTO `pawn_shop`.`address` (`street`, `district_id`) VALUES ('4 - Lê Đình Dương', '33');
 INSERT INTO `pawn_shop`.`address` (`street`, `district_id`) VALUES ('858 - Thái Phiên', '88');
 INSERT INTO `pawn_shop`.`address` (`street`, `district_id`) VALUES ('5 - Nguyễn Chí Thanh', '122');
-
 -- bảng customer --
 INSERT INTO `pawn_shop`.`customer` (`code`, `date_of_birth`, `email`, `gender`, `id_card`, `img_url`, `name`, `phone_number`, `status`,`address_id`) VALUES ('KH-1', '1998-10-01', 'nghianf@gmail.com', 1, '20117440', '2', 'Trọng Nghĩa', '0764052051', 1,1);
 INSERT INTO `pawn_shop`.`customer` (`code`, `date_of_birth`, `email`, `gender`, `id_card`, `img_url`, `name`, `phone_number`, `status`,`address_id`) VALUES ('KH-2', '1998-10-01', 'sonlh@gmail.com',0, '20117440', '2', 'Hồng Sơn', '0764052052', 1,2);
@@ -319,7 +307,6 @@ INSERT INTO `pawn_shop`.`customer` (`code`, `date_of_birth`, `email`, `gender`, 
 INSERT INTO `pawn_shop`.`customer` (`code`, `date_of_birth`, `email`, `gender`, `id_card`, `img_url`, `name`, `phone_number`, `status`,`address_id`) VALUES ('KH-18', '1998-10-01', 'congnt@gmail.com', 1, '20117440', '5', 'Thanh Công', '0764052019', 1,18);
 INSERT INTO `pawn_shop`.`customer` (`code`, `date_of_birth`, `email`, `gender`, `id_card`, `img_url`, `name`, `phone_number`, `status`,`address_id`) VALUES ('KH-19', '1998-10-01', 'tiennvt@gmail.com', 1, '20117440', '5', 'Thành Tiến', '0764052020', 1,19);
 INSERT INTO `pawn_shop`.`customer` (`code`, `date_of_birth`, `email`, `gender`, `id_card`, `img_url`, `name`, `phone_number`, `status`,`address_id`) VALUES ('KH-20', '1998-10-01', 'trongnd@gmail.com', 1, '20117440', '5', 'Đức Trọng', '0764052021', 1,20);
-
 -- bảng pawn type --
 INSERT INTO `pawn_shop`.`pawn_type` (`id`, `name`) VALUES ('1', 'Trang Sức');
 INSERT INTO `pawn_shop`.`pawn_type` (`id`, `name`) VALUES ('2', 'Túi Hiệu');
@@ -333,9 +320,7 @@ INSERT INTO `pawn_shop`.`pawn_type` (`id`, `name`) VALUES ('9', 'Xe Máy');
 INSERT INTO `pawn_shop`.`pawn_type` (`id`, `name`) VALUES ('10', 'Ô Tô');
 INSERT INTO `pawn_shop`.`pawn_type` (`id`, `name`) VALUES ('11', 'Đồ Văn Phòng');
 INSERT INTO `pawn_shop`.`pawn_type` (`id`, `name`) VALUES ('12', 'Sim Số Đẹp');
-
 -- bảng pawn item --
-
 INSERT INTO pawn_item (id, `name`, pawn_type_id,`status`) VALUES (1, 'Dây chuyền vàng', 1,0);
 INSERT INTO pawn_item (id, `name`, pawn_type_id,`status`) VALUES (2, 'Dell Vostro 5515', 4,0);
 INSERT INTO pawn_item (id, `name`, pawn_type_id,`status`) VALUES (3, 'Tủ lạnh Sharp Inverter', 7,0);
@@ -356,7 +341,6 @@ INSERT INTO pawn_item (id, `name`, pawn_type_id,`status`) VALUES (17, 'Honda Air
 INSERT INTO pawn_item (id, `name`, pawn_type_id,`status`) VALUES (18, 'IPhone 14 ProMax', 3,1);
 INSERT INTO pawn_item (id, `name`, pawn_type_id,`status`) VALUES (19, 'Tủ lạnh Samsung RT19M300PGS', 7,0);
 INSERT INTO pawn_item (id, `name`, pawn_type_id,`status`) VALUES (20, 'IPhone 14 ProMax', 3,0);
-
 -- quick sign up --
 
 -- INSERT INTO `pawn_shop`.`quick_sign_up` (`customer_name`, `phone_number`, `status`, `address_id`, `pawn_type_id`) VALUES ('Nguyễn Hoàng Đa Phúc', '0905005', 1, '1', '1');
@@ -380,15 +364,9 @@ INSERT INTO pawn_item (id, `name`, pawn_type_id,`status`) VALUES (20, 'IPhone 14
 -- INSERT INTO `pawn_shop`.`quick_sign_up` (`customer_name`, `phone_number`, `status`, `address_id`, `pawn_type_id`) VALUES ('Lê Bồ Đề', '0905005', 1, '1', '1');
 
 -- bảng aap role --
-
 INSERT INTO `pawn_shop`.`app_role` (`id`, `role`) VALUES ('1', 'ROLE_EMPLOYEE');
 INSERT INTO `pawn_shop`.`app_role` (`id`, `role`) VALUES ('2', 'ROLE_ADMIN');
-
-
-
 -- bảng employee --
-
-
 INSERT INTO `pawn_shop`.`employee` (`id`, `address`, `code`, `date_of_birth`, `email`, `gender`, `img_url`, `name`, `phone_number`, `salary`, `status`) VALUES ('1','255 - Nguyễn Tất Thành - Đà Nẵng', 'NV-01', '1991/7/13', 'Keongot@gmail.com', true,'f', 'Nguyễn Văn Thuận', '0873654521', '200000', 1);
 INSERT INTO `pawn_shop`.`employee` (`id`, `address`, `code`, `date_of_birth`, `email`, `gender`, `img_url`, `name`, `phone_number`, `salary`, `status`) VALUES ('2', '222 - Hoàng Diệu - Đà Nẵng', 'NV-02', '1991/7/13', 'Keongot@gmail.com', true,'f', 'Nguyễn Văn Thuận', '0873654521', '200000', 1);
 INSERT INTO `pawn_shop`.`employee` (`id`, `address`, `code`, `date_of_birth`, `email`, `gender`, `img_url`, `name`, `phone_number`, `salary`, `status`) VALUES ('3','1 - Nguyễn Văn Linh - Đà Nẵng', 'NV-03', '1992/8/18', 'tranvantuan@gmail.com', true,'f', 'Trần Văn Tuấn', '0543654521', '300000', 1);
@@ -411,8 +389,6 @@ INSERT INTO `pawn_shop`.`employee` (`id`, `address`, `code`, `date_of_birth`, `e
 INSERT INTO `pawn_shop`.`employee` (`id`, `address`, `code`, `date_of_birth`, `email`, `gender`, `img_url`, `name`, `phone_number`, `salary`, `status`) VALUES ('20', '5employee - Nguyễn Chí Thanh - Đà Nẵng', 'NV-20', '1992/3/12', 'levuanhthu@gmail.com', false,'f', 'Lê Vũ Anh Thư', '0893654999', '6000', 1);
 
 -- bảng contract --
-
-
 INSERT INTO `pawn_shop`.`contract` (`id`, `code`, `end_date`, `item_price`, `interest_rate`, `start_date`, `status`, `customer_id`, `employee_id`, `pawn_item_id`) VALUES ('1', 'HD-NV001-1', '2022-11-20', '5000000', '5', '2022-11-10', '0', '4', '1', '1');
 INSERT INTO `pawn_shop`.`contract` (`id`, `code`, `end_date`, `item_price`, `interest_rate`, `start_date`, `status`, `customer_id`, `employee_id`, `pawn_item_id`) VALUES ('2', 'HD-NV001-2', '2022-01-25', '3000000', '5', '2022-01-01', '0', '4', '1', '2');
 INSERT INTO `pawn_shop`.`contract` (`id`, `code`, `end_date`, `item_price`, `interest_rate`, `start_date`, `status`, `customer_id`, `employee_id`, `pawn_item_id`) VALUES ('3', 'HD-NV002-3', '2022-04-15', '4000000', '5', '2022-02-04', '0', '3', '2', '3');
@@ -433,9 +409,7 @@ INSERT INTO `pawn_shop`.`contract` (`id`, `code`, `end_date`, `item_price`, `int
 INSERT INTO `pawn_shop`.`contract` (`id`, `code`, `end_date`, `item_price`, `interest_rate`, `start_date`, `status`, `customer_id`, `employee_id`, `pawn_item_id`) VALUES ('18', 'HD-NV002-18', '2022-11-10', '6000000', '4', '2022-10-16', '3', '18', '2', '18');
 INSERT INTO `pawn_shop`.`contract` (`id`, `code`, `end_date`, `item_price`, `interest_rate`, `start_date`, `status`, `customer_id`, `employee_id`, `pawn_item_id`) VALUES ('19', 'HD-NV001-19', '2022-11-10', '6000000', '4', '2022-10-16', '0', '19', '1', '19');
 INSERT INTO `pawn_shop`.`contract` (`id`, `code`, `end_date`, `item_price`, `interest_rate`, `start_date`, `status`, `customer_id`, `employee_id`, `pawn_item_id`) VALUES ('20', 'HD-NV001-20', '2022-08-12', '2000000', '4', '2022-06-16', '0', '20', '1', '20');
-
 -- bảng aap user --
-
 INSERT INTO `pawn_shop`.`app_user` (`password`, `username`, `employee_id`) VALUES ('$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu', 'user1', '1');
 INSERT INTO `pawn_shop`.`app_user` (`password`, `username`, `employee_id`) VALUES ('$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu', 'user2', '2');
 INSERT INTO `pawn_shop`.`app_user` (`password`, `username`, `employee_id`) VALUES ('$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu', 'user3', '3');
@@ -456,9 +430,7 @@ INSERT INTO `pawn_shop`.`app_user` (`password`, `username`, `employee_id`) VALUE
 INSERT INTO `pawn_shop`.`app_user` (`password`, `username`, `employee_id`) VALUES ('$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu', 'user18', '18');
 INSERT INTO `pawn_shop`.`app_user` (`password`, `username`, `employee_id`) VALUES ('$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu', 'user19', '19');
 INSERT INTO `pawn_shop`.`app_user` (`password`, `username`, `employee_id`) VALUES ('$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu', 'user20', '20');
-
 -- bảng user role --
-
 INSERT INTO `pawn_shop`.`user_role` (`app_role_id`, `app_user_id`) VALUES ('1', '1');
 INSERT INTO `pawn_shop`.`user_role` (`app_role_id`, `app_user_id`) VALUES ('1', '2');
 INSERT INTO `pawn_shop`.`user_role` (`app_role_id`, `app_user_id`) VALUES ('1', '3');
@@ -479,24 +451,4 @@ INSERT INTO `pawn_shop`.`user_role` (`app_role_id`, `app_user_id`) VALUES ('1', 
 INSERT INTO `pawn_shop`.`user_role` (`app_role_id`, `app_user_id`) VALUES ('1', '18');
 INSERT INTO `pawn_shop`.`user_role` (`app_role_id`, `app_user_id`) VALUES ('1', '19');
 INSERT INTO `pawn_shop`.`user_role` (`app_role_id`, `app_user_id`) VALUES ('1', '20');
-
 -- bảng news --
-
-insert into news(content,img_url,posting_day,title,app_user_id,`status`)
-values
-('Bạn đang sở hữu một hay vài chiếc xe ô tô hạng sang, siêu xe và băn khoăn giữa vô số các đơn vị cung cấp dịch vụ cầm đồ uy tín lãi suất thấp, hãy cùng điểm qua ngay dịch vụ nhận cầm xe ô tô hạng sang, siêu xe tại hệ thống cầm','image',10/10/2022,'Cầm Xe Ô Tô Hạng Sang Siêu Xe Cao Cấp Định Giá Cao Nhất',1,0),
-('Bạn đang sở hữu một hay vài chiếc xe ô tô hạng sang, siêu xe và băn khoăn giữa vô số các đơn vị cung cấp dịch vụ cầm đồ uy tín lãi suất thấp, hãy cùng điểm qua ngay dịch vụ nhận cầm xe ô tô hạng sang, siêu xe tại hệ thống cầmXe ô tô là một tài sản có giá trị lớn,
- do đó, khi thực hiện thủ tục vay tiền bằng cách cầm cố tài sản là xe ô tô cũng cần phải hết sức lưu ý để tránh những trường hợp đau thương! Hãy cùng VietMoney bỏ túi ngay các kinh nghiệm cầm ô','image',10/10/2022,'Kinh nghiệm cầm ô tô an toàn tránh rủi ro bạn cần biết',1,0),
-('Bạn đang cần vay vốn làm ăn hay chi tiêu sinh hoạt cần đến tiền mặt nhanh chóng, bạn đang sở hữu một hay vài chiếc xe máy đang trong quá trình vay trả góp ngân hàng và băn khoăn không biết có thể sử dụng dịch vụ cầm xe máy đang trả góp với lãi','image','2022/10/10','Cầm xe máy đang trả góp nhanh chóng uy tín và lãi suất thấp',1,0),
-('Ô tô là một trong những phương tiện được cầm cố nhiều, bởi đây là tài sản lớn và dễ quy đổi thanh khoản vay. Nếu bạn đang gặp vấn đề về tài chính, cần hỗ trợ khoản tiền lớn và đồng thời đang sở hữu xe ô tô BMW, việc cầm xe ô tô','image','2022/10/10','Cầm xe ô tô BMW Model X3, X4, X5, X7 330i, 340i, 730i, 750i',1,0),
-('Bạn đang thực hiện dự án kinh doanh, mua nhà hay đầu tư bất động sản,… và cần hỗ trợ lớn về mặt tài chính nhưng không biết phải làm sao? Nếu bạn đang sở hữu cho mình chiếc xe ô tô Lexus, việc cầm cố xe ô tô Lexus để giải quyết vấn đề','image','2022/10/09','Cầm xe ô tô Lexus uy tín lãi suất thấp nhận tiền trong 15 phút',1,0),
-('Bạn là doanh nghiệp đang cần vay vốn làm ăn hay là cá nhân có mong muốn vay khoản tiền để chi tiêu sinh hoạt cần đến tiền mặt giải ngân nhanh chóng, bạn đang sở hữu một hay vài chiếc xe ô tô và băn khoăn giữa vô số các đơn vị cung cấp','image','2022/10/08','Thủ tục cầm xe ô tô đang áp dụng tại tiệm cầm đồ hiện nay',1,0),
-('Bạn quan tâm đến các xe máy mua thanh lý ở tiệm cầm đồ vì giá tốt hơn so với chính hãng nhưng chất lượng tương đương, nhưng lại đang băn khoăn giữa vô số các đơn vị cung cấp dịch vụ cầm đồ uy tín lãi suất thấp cũng như thủ tục, hồ sơ,','image','2022/10/06','Thủ tục sang tên xe thanh lý cầm đồ hiện nay cần gì?',1,0),
-('VietMoney là một đơn vị kinh doanh dịch vụ cầm đồ uy tín, chuyên nghiệp, được nhiều khách hàng tin tưởng và đánh giá cao. Bên cạnh đó, thủ tục cầm đồ tại VietMoney cũng rất đơn giản, nhanh chóng, không gây bất kỳ trở ngại nào cho khách hàng! Mục lục bài viết 1.','image','2022/10/05','Thủ tục cầm đồ các loại tài sản hiện nay – VietMoney',1,0),
-('Chiều ngày 01/10/2022 vừa qua, VietMoney đã tổ chức chương trình thiện nguyện: “Đóng góp nhỏ – Ngỏ lời yêu Thương” tại Mái ấm Tâm Đức thuộc chùa Linh Sơn. Với sứ mệnh phục vụ hàng triệu khách hàng phân khúc dưới chuẩn tại Việt Nam, Công ty chúng ta đang hàng ngày cung cấp','image','2022/10/03','Quỹ VietMoney Sẻ Chia Yêu Thương – Hoạt động tháng 10 tại Mái Ấm Tâm Đức',1,0),
-('Bạn đang sở hữu một hay vài chiếc xe ô tô hạng sang, siêu xe và băn khoăn giữa vô số các đơn vị cung cấp dịch vụ cầm đồ uy tín lãi suất thấp, hãy cùng điểm qua ngay dịch vụ nhận cầm xe ô tô hạng sang, siêu xe tại hệ thống cầm','image','2022/10/02','Cầm Xe Ô Tô Hạng Sang Siêu Xe Cao Cấp Định Giá Cao Nhất',1,0),
-('Kinh doanh cầm đồ là một ngành nghề ngày càng phát triển, ngày càng có nhiều người tham gia đầu tư mở tiệm kinh doanh. Tuy vậy, đây là ngành nghề có điều kiện nên chịu sự quản lý chặt chẽ hơn các ngành nghề thông thường.','image','2022/10/01','Kinh doanh cầm đồ: Thủ tục bắt buộc gồm những gì',1,0),
-('Cơ sở kinh doanh thương mại không đặt trụ sở tại khu vực thuộc trường hợp cấm của pháp lý : Nhà tập thể, nhà ở …– Cơ sở kinh doanh thương mại phải cung ứng đủ điều kiện kèm theo về phòng cháy và chữa cháy ;– Cơ sở kinh doanh thương mại phải cung ứng đủ điều kiện kèm theo bảo mật an ninh trật tự, bảo đảm an toàn công cộng .','image','2022/10/23','Điều kiện,thủ tục kinh doanh cầm đồ',1,0),
-('Camdonhanh xuất phát từ ý tưởng thay đổi định kiến về dịch vụ cầm đồ, khiến dịch vụ này trở nên an toàn và tiện lợi hơn cho mọi khách hàng. Khách hàng không còn phải đến các tiệm cầm đồ với tâm lý e ngại về lãi suất cao và tài sản không đảm bảo, thay vào đó, camdonhanh hứa hẹn mang đến sự phục vụ tốt nhất với mô hình hỗ trợ tài chính hợp pháp.','image','2022/09/10','Sứ mệnh với dịch vụ cầm đồ',1,0);
-
-
