@@ -16,4 +16,9 @@ public interface IContractService {
     ContractDto findById(Long id);
 
     void deleteContract(Long id);
+
+    Page<ContractDto> getAllContractPaginationAndSearch(Pageable pageable, String code, String customerName, String pawnItem, String startDate);
+
+    void returnItem(long id);
+
 }

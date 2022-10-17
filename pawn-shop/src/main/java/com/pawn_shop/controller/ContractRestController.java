@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-@CrossOrigin
+
 @RestController
-@RequestMapping("/api/employee/contracts")
+@CrossOrigin
+@RequestMapping(value = "/api/employee/contracts")
 public class ContractRestController {
     @Autowired
     private IContractService contractService;
@@ -43,10 +44,24 @@ public class ContractRestController {
                 "%" + status1 + "%",
                 pageable);
         if (!contractPage.hasContent()){
+        
+    @GetMapping(value = "/listPage")
+    public ResponseEntity<Page<ContractDto>> goListContract(@PageableDefault(size = 5) Pageable pageable, @RequestParam Optional<String> code,
+                                                            @RequestParam Optional<String> customerName, @RequestParam Optional<String> pawnItem,
+                                                            @RequestParam Optional<String> startDate) {
+        String keywordCode = code.orElse("");
+        String keywordCustomerName = customerName.orElse("");
+        String keywordPawnItem = pawnItem.orElse("");
+        String keywordStartDate = startDate.orElse("0000-00-00");
+
+        Page<ContractDto> contractPage = this.contractService.getAllContractPaginationAndSearch(pageable, keywordCode, keywordCustomerName, keywordPawnItem, keywordStartDate);
+        if (contractPage.isEmpty()) {
+
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(contractPage, HttpStatus.OK);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<ContractDto> contractDetail(@PathVariable Long id){
@@ -60,6 +75,11 @@ public class ContractRestController {
     @PatchMapping("/{id}")
     public ResponseEntity<Void> deleteContract(@PathVariable Long id){
         contractService.deleteContract(id);
+
+    @PatchMapping(value = "returnItem/{id}")
+    public ResponseEntity<Void> returnItem(@PathVariable long id) {
+        this.contractService.returnItem(id);
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
