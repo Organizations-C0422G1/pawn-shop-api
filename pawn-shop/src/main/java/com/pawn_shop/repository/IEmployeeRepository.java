@@ -1,6 +1,6 @@
 package com.pawn_shop.repository;
 
-import com.pawn_shop.dto.projections.IEmployeeDto;
+import com.pawn_shop.dto.projection.IEmployeeDto;
 import com.pawn_shop.model.employee.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
@@ -27,11 +26,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
                     "and ee.name like concat('%' , :name , '%' ) and ee.code like concat('%' , :code , '%'  ) " +
                     "order by ee.id desc ")
     Page<IEmployeeDto> getAllEmployeeSearch(@Param("name") String searchKeyWordName, @Param("code") String searchKeyWordCode, Pageable pageable);
-//
-//    @Query(value = " select ee.id , ee.code , ee.`name` ,ee.phone_number,ee.date_of_birth ,ee.`email`,ee.address,ee.gender,ee.img_url,ee.salary,ee.`status` " +
-//            " from employee ee ", nativeQuery = true)
-//    List<Employee> getAllEmployee();
-
+    
     @Transactional
     @Modifying
     @Query(value = "update employee set `status` = 0 where id = :id", nativeQuery = true)
