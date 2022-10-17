@@ -9,10 +9,7 @@ import com.pawn_shop.service.IAppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -35,9 +32,9 @@ public class EmployeeController {
     @Autowired
     private JwtFilter jwtFilter;
 
-    @PostMapping("/reset-password")
+    @PatchMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestBody Optional<String> newPassword, HttpServletRequest request) {
-        if (!newPassword.isPresent()) {
+        if (!newPassword.isPresent()|| newPassword.get().equals("")) {
             return new ResponseEntity<>("Không được để trống", HttpStatus.BAD_REQUEST);
         } else {
             if (String.valueOf(newPassword).length() > 30) {
