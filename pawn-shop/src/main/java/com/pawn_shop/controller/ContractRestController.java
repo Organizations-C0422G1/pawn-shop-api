@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/contracts")
+@RequestMapping("/api/employee/contracts")
 public class ContractRestController {
     @Autowired
     private IContractService contractService;
@@ -57,7 +57,7 @@ public class ContractRestController {
         return new ResponseEntity<>(contract, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Void> deleteContract(@PathVariable Long id){
         contractService.deleteContract(id);
         return new ResponseEntity<>(HttpStatus.OK);
