@@ -28,4 +28,6 @@ public interface ContractDto {
     Boolean getType();
 
     Integer getStatus();
+
+    String getCustomerEmail();
 }
