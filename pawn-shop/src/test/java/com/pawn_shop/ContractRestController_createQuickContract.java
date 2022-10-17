@@ -22,6 +22,7 @@ public class ContractRestController_createQuickContract {
     @Autowired
     private ObjectMapper objectMapper;
 
+    //case null can not manifest
     @Test
     public void createQuickContract_name_13() throws Exception {
         ContractDto contractDto = new ContractDto();
@@ -202,6 +203,7 @@ public class ContractRestController_createQuickContract {
                 .andExpect(status().is2xxSuccessful());
     }
 
+    //case null can not manifest
     @Test
     public void createQuickContract_phoneNumber_13() throws Exception {
         ContractDto contractDto = new ContractDto();
@@ -295,6 +297,128 @@ public class ContractRestController_createQuickContract {
 
     @Test
     public void createQuickContract_phoneNumber_18() throws Exception {
+        ContractDto contractDto = new ContractDto();
+        CustomerDto customerDto = new CustomerDto();
+        PawnTypeDto pawnTypeDto = new PawnTypeDto();
+        PawnItemDto pawnItemDto = new PawnItemDto();
+        AddressDto addressDto = new AddressDto();
+        DistrictDto districtDto = new DistrictDto();
+
+        districtDto.setId(1L);
+        addressDto.setDistrictDto(districtDto);
+        customerDto.setName("Ten Ok");
+        customerDto.setPhoneNumber("0909123456");
+        customerDto.setAddressDto(addressDto);
+
+        pawnTypeDto.setId(1L);
+        pawnItemDto.setPawnTypeDto(pawnTypeDto);
+
+        contractDto.setCustomerDto(customerDto);
+        contractDto.setPawnItemDto(pawnItemDto);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .post("/contracts/createQuickContract")
+                        .content(this.objectMapper.writeValueAsString(contractDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+    //District is a dropdown selected, so there is a case - "null"
+    @Test
+    public void createQuickContract_district_13() throws Exception {
+        ContractDto contractDto = new ContractDto();
+        CustomerDto customerDto = new CustomerDto();
+        PawnTypeDto pawnTypeDto = new PawnTypeDto();
+        PawnItemDto pawnItemDto = new PawnItemDto();
+        AddressDto addressDto = new AddressDto();
+        DistrictDto districtDto = new DistrictDto();
+
+        districtDto.setId(null);
+        addressDto.setDistrictDto(districtDto);
+        customerDto.setName("Ten Ok");
+        customerDto.setPhoneNumber("0909123123");
+        customerDto.setAddressDto(addressDto);
+
+        pawnTypeDto.setId(1L);
+        pawnItemDto.setPawnTypeDto(pawnTypeDto);
+
+        contractDto.setCustomerDto(customerDto);
+        contractDto.setPawnItemDto(pawnItemDto);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .post("/contracts/createQuickContract")
+                        .content(this.objectMapper.writeValueAsString(contractDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void createQuickContract_district_18() throws Exception {
+        ContractDto contractDto = new ContractDto();
+        CustomerDto customerDto = new CustomerDto();
+        PawnTypeDto pawnTypeDto = new PawnTypeDto();
+        PawnItemDto pawnItemDto = new PawnItemDto();
+        AddressDto addressDto = new AddressDto();
+        DistrictDto districtDto = new DistrictDto();
+
+        districtDto.setId(1L);
+        addressDto.setDistrictDto(districtDto);
+        customerDto.setName("Ten Ok");
+        customerDto.setPhoneNumber("0909123456");
+        customerDto.setAddressDto(addressDto);
+
+        pawnTypeDto.setId(1L);
+        pawnItemDto.setPawnTypeDto(pawnTypeDto);
+
+        contractDto.setCustomerDto(customerDto);
+        contractDto.setPawnItemDto(pawnItemDto);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .post("/contracts/createQuickContract")
+                        .content(this.objectMapper.writeValueAsString(contractDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
+//Pawn Type is a dropdown selected, so there is a case "null"
+    @Test
+    public void createQuickContract_pawnType_13() throws Exception {
+        ContractDto contractDto = new ContractDto();
+        CustomerDto customerDto = new CustomerDto();
+        PawnTypeDto pawnTypeDto = new PawnTypeDto();
+        PawnItemDto pawnItemDto = new PawnItemDto();
+        AddressDto addressDto = new AddressDto();
+        DistrictDto districtDto = new DistrictDto();
+
+        districtDto.setId(1L);
+        addressDto.setDistrictDto(districtDto);
+        customerDto.setName("Ten Ok");
+        customerDto.setPhoneNumber("0909123123");
+        customerDto.setAddressDto(addressDto);
+
+        pawnTypeDto.setId(null);
+        pawnItemDto.setPawnTypeDto(pawnTypeDto);
+
+        contractDto.setCustomerDto(customerDto);
+        contractDto.setPawnItemDto(pawnItemDto);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders
+                        .post("/contracts/createQuickContract")
+                        .content(this.objectMapper.writeValueAsString(contractDto))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void createQuickContract_pawnType_18() throws Exception {
         ContractDto contractDto = new ContractDto();
         CustomerDto customerDto = new CustomerDto();
         PawnTypeDto pawnTypeDto = new PawnTypeDto();

@@ -72,7 +72,7 @@ public class ContractDto implements Validator {
         }
 
         if (contractDto.pawnItemDto.getPawnTypeDto().getId() == null){
-            errors.rejectValue("pawnItemDto.pawnType.id",
+            errors.rejectValue("pawnItemDto.pawnTypeDto.id",
                     "create.pawnType",
                     "Vui lòng chọn loại đồ");
         }
