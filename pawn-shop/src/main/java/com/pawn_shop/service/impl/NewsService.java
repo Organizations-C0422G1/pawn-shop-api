@@ -1,0 +1,34 @@
+package com.pawn_shop.service.impl;
+
+import com.pawn_shop.dto.projection.NewsDto;
+import com.pawn_shop.model.news.News;
+import com.pawn_shop.repository.INewsRepository;
+import com.pawn_shop.service.INewsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+@Service
+public class NewsService implements INewsService {
+    @Autowired
+    private INewsRepository newsRepository;
+
+    @Override
+    public Page<NewsDto> findAllNews(Pageable pageable, String searchName, String dateFirst, String dateLast) {
+        return newsRepository.findAllNews(pageable,"%" + searchName + "%",dateFirst,dateLast) ;
+    }
+
+
+    @Override
+    public News getNewsById(Long id) {
+        return this.newsRepository.getNewsById(id);
+    }
+
+    @Override
+    public void deleteNews(Long idDelete) {
+        this.newsRepository.deleteNews(idDelete);
+    }
+
+
+}
