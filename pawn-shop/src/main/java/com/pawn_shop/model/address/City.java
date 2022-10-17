@@ -1,5 +1,6 @@
 package com.pawn_shop.model.address;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,5 +25,9 @@ public class City {
 
     @Column(columnDefinition = "varchar(100)")
     private String name;
+
+    @OneToMany(mappedBy = "city",cascade = CascadeType.ALL)
+    @JsonBackReference
+    private Set<District> districts;
 
 }

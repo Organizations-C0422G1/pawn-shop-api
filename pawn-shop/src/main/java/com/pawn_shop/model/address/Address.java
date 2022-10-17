@@ -1,5 +1,6 @@
 package com.pawn_shop.model.address;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pawn_shop.model.customer.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +28,6 @@ public class Address {
     private District district;
 
     @OneToOne(mappedBy = "address")
+    @JsonBackReference
     private Customer customer;
-
 }

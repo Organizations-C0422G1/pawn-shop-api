@@ -49,5 +49,7 @@ public class Contract {
     @JoinColumn(name = "employee_id",referencedColumnName = "id")
     private Employee employee;
 
+    private Boolean type;
+
     private int status;
 }

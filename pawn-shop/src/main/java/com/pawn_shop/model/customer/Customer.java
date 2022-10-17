@@ -51,7 +51,10 @@ public class Customer {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
+<<<<<<< HEAD
     @OneToMany(mappedBy ="customer",cascade = CascadeType.ALL)
     @JsonBackReference
     private Set<Contract> contracts;
+=======
+>>>>>>> eeb286226d59101534b1f2e70a8e8b4048d17b2f
 }
