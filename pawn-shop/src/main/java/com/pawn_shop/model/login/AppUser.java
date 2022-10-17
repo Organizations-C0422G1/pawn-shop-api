@@ -1,6 +1,5 @@
 package com.pawn_shop.model.login;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pawn_shop.model.employee.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Getter
 @Setter

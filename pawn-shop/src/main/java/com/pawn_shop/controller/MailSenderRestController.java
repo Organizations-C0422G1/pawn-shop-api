@@ -17,7 +17,7 @@ public class MailSenderRestController {
     @Autowired
     private ISendMailService sendMailService;
 
-    @Scheduled(cron = "10 31 8 * * ?")
+    @Scheduled(cron = "10 59 9 * * ?")
     public void sendEmailAuto() {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");

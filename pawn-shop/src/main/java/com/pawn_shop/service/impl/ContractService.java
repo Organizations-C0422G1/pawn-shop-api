@@ -1,19 +1,12 @@
 package com.pawn_shop.service.impl;
 
-import com.pawn_shop.dto.projection.ContractProjection;
-import com.pawn_shop.dto.projection.MailAutoProjection;
-import com.pawn_shop.model.contract.Contract;
+import com.pawn_shop.dto.projection.ContractDto;
 import com.pawn_shop.repository.IContractRepository;
 import com.pawn_shop.service.IContractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.time.LocalDate;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Service
 public class ContractService implements IContractService {
@@ -21,7 +14,7 @@ public class ContractService implements IContractService {
     private IContractRepository contractRepository;
 
     @Override
-    public Page<ContractProjection> contractPage(String customerName,
+    public Page<ContractDto> contractPage(String customerName,
                                                  String pawnItemName,
                                                  String type,
                                                  String startDate,
@@ -61,8 +54,8 @@ public class ContractService implements IContractService {
     }
 
     @Override
-    public Contract findById(Long id) {
-        return contractRepository.findByIdContract(id);
+    public ContractDto findById(Long id) {
+        return contractRepository.findByIdContractDto(id);
     }
 
     @Override
