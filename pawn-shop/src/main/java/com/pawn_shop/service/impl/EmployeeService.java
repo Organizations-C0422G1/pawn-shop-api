@@ -1,6 +1,6 @@
 package com.pawn_shop.service.impl;
 
-import com.pawn_shop.dto.projections.IEmployeeDto;
+import com.pawn_shop.dto.projection.IEmployeeDto;
 import com.pawn_shop.model.employee.Employee;
 import com.pawn_shop.repository.IEmployeeRepository;
 import com.pawn_shop.service.IEmployeeService;

@@ -1,6 +1,6 @@
 package com.pawn_shop.controller;
 
-import com.pawn_shop.dto.projections.IEmployeeDto;
+import com.pawn_shop.dto.projection.IEmployeeDto;
 import com.pawn_shop.model.employee.Employee;
 import com.pawn_shop.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;

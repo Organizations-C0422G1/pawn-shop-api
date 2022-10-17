@@ -1,4 +1,4 @@
-package com.pawn_shop.dto.projections;
+package com.pawn_shop.dto.projection;
 
 public interface IEmployeeDto {
     String getId();
@@ -9,4 +9,5 @@ public interface IEmployeeDto {
     String getEmail();
     String getDateOfBirth();
     String getStatus();
+    String getAppUser();
 }
