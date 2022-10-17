@@ -52,4 +52,7 @@ public class Employee {
     @OneToOne(mappedBy = "employee")
     @JsonBackReference
     private AppUser appUser;
+
+    @Column(columnDefinition = "varchar(30)")
+    private String idCard;
 }

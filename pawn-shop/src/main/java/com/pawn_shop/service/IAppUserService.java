@@ -6,7 +6,7 @@ public interface IAppUserService {
 
     AppUser findByUsername(String username);
 
-    void resetPassword(String username,String newPassword);
+    void resetPassword(String username, String newPassword);
 
     AppUser findByEmail(String email);
 }

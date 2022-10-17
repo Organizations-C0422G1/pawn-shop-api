@@ -21,11 +21,13 @@ public class AppUserService implements IAppUserService {
     @Override
     public void resetPassword(String username, String newPassword) {
         String encodePassword = new BCryptPasswordEncoder().encode(newPassword);
-        this.appUserRepository.resetPassword(username,encodePassword);
+        this.appUserRepository.resetPassword(username, encodePassword);
     }
 
     @Override
     public AppUser findByEmail(String email) {
         return this.appUserRepository.findByEmail(email);
     }
+
+
 }
