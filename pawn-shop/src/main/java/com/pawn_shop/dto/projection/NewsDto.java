@@ -10,6 +10,6 @@ public interface NewsDto {
     String getContent();
     LocalDate getPostingDay();
     String getImgUrl();
-    Boolean getStatus();
-    Long getAppUser();
+//    Boolean getStatus();
+//    Long getAppUser();
 }
