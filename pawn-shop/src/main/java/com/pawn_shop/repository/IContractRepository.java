@@ -9,12 +9,106 @@ import org.springframework.data.repository.query.Param;
 
 public interface IContractRepository extends JpaRepository<Contract, Long> {
 
-    @Query(value = "select * from contract where `status` = 1", nativeQuery = true,
-            countQuery = "select count(*) from contract where `status` = 1")
+    @Query(value = "select id,\n" +
+            "   code,\n" +
+            "   item_price,\n" +
+            "   interest_rate,\n" +
+            "   start_date,\n" +
+            "   end_date,\n" +
+            "   return_date,\n" +
+            "   status,\n" +
+            "   `type`,\n" +
+            "   liquidation_price,\n" +
+            "   customer_id,\n" +
+            "   employee_id,\n" +
+            "   pawn_item_id from contract where contract.status = 1", nativeQuery = true,
+            countQuery = "select count(*) from contract where contract.status = 1")
     Page<Contract> findAllCompleteContract(Pageable pageable);
 
 
-    @Query(value = "select * from contract where (return_date between :startReturnDate  and :endReturnDate) and `status` = 1", nativeQuery = true)
+    @Query(value = "select id,\n" +
+            "   code,\n" +
+            "   item_price,\n" +
+            "   interest_rate,\n" +
+            "   start_date,\n" +
+            "   end_date,\n" +
+            "   return_date,\n" +
+            "   status,\n" +
+            "   `type`,\n" +
+            "   liquidation_price,\n" +
+            "   customer_id,\n" +
+            "   employee_id,\n" +
+            "   pawn_item_id from contract where (start_date between :startReturnDate  and :endReturnDate) and `status` = 1", nativeQuery = true,
+            countQuery = "select count(*) from contract where (start_date between :startReturnDate  and :endReturnDate) and `status` = 1")
     Page<Contract> findCompleteContractByDate(@Param("startReturnDate") String startReturnDate,
                                               @Param("endReturnDate") String endReturnDate, Pageable pageable);
+
+    @Query(value = "select id,\n" +
+            "   code,\n" +
+            "   item_price,\n" +
+            "   interest_rate,\n" +
+            "  start_date,\n" +
+            "  end_date,\n" +
+            "  return_date,\n" +
+            "   status,\n" +
+            "   `type`,\n" +
+            "   liquidation_price,\n" +
+            "   customer_id,\n" +
+            "   employee_id,\n" +
+            "   pawn_item_id from contract where `status` = 3", nativeQuery = true,
+            countQuery = "select count(*) from contract where `status` = 3")
+    Page<Contract> findAllLiquidatedContract(Pageable pageable);
+
+
+    @Query(value = "select id,\n" +
+            "   code,\n" +
+            "   item_price,\n" +
+            "   interest_rate,\n" +
+            "  start_date,\n" +
+            "  end_date,\n" +
+            "  return_date,\n" +
+            "   status,\n" +
+            "   `type`,\n" +
+            "   liquidation_price,\n" +
+            "   customer_id,\n" +
+            "   employee_id,\n" +
+            "   pawn_item_id from contract where (start_date between :startReturnDate  and :endReturnDate) and `status` = 3", nativeQuery = true,
+            countQuery = "select count(*) from contract where (start_date between :startReturnDate  and :endReturnDate) and `status` = 3")
+    Page<Contract> findLiquidatedContractByDate(@Param("startReturnDate") String startReturnDate,
+                                                @Param("endReturnDate") String endReturnDate, Pageable pageable);
+
+    @Query(value = "select id,\n" +
+            "   code,\n" +
+            "   item_price,\n" +
+            "   interest_rate,\n" +
+            "  start_date,\n" +
+            "  end_date,\n" +
+            "  return_date,\n" +
+            "   status,\n" +
+            "   `type`,\n" +
+            "   liquidation_price,\n" +
+            "   customer_id,\n" +
+            "   employee_id,\n" +
+            "   pawn_item_id from contract where `status` = 0", nativeQuery = true,
+            countQuery = "select count(*) from contract where `status` = 0")
+    Page<Contract> findAllExpectedContract(Pageable pageable);
+
+
+    @Query(value = "select id,\n" +
+            "   code,\n" +
+            "   item_price,\n" +
+            "   interest_rate,\n" +
+            "  start_date,\n" +
+            "  end_date,\n" +
+            "  return_date,\n" +
+            "   status,\n" +
+            "   `type`,\n" +
+            "   liquidation_price,\n" +
+            "   customer_id,\n" +
+            "   employee_id,\n" +
+            "   pawn_item_id from contract where (start_date between :startReturnDate  and :endReturnDate) and `status` = 0", nativeQuery = true,
+            countQuery = "select count(*) from contract where (start_date between :startReturnDate  and :endReturnDate) and `status` = 0")
+    Page<Contract> findExpectedContractByDate(@Param("startReturnDate") String startReturnDate,
+                                              @Param("endReturnDate") String endReturnDate, Pageable pageable);
+
 }

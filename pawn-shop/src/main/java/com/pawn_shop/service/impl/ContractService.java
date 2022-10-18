@@ -14,13 +14,35 @@ public class ContractService implements IContractService {
     @Autowired
     private IContractRepository iContractRepository;
 
-
     @Override
     public Page<Contract> findCompleteContractByDate(String startReturnDate, String endReturnDate, Pageable pageable) {
         if (startReturnDate.equals("") && endReturnDate.equals("")) {
-            return iContractRepository.findAll(pageable);
+            return iContractRepository.findAllCompleteContract(pageable);
         } else {
             return iContractRepository.findCompleteContractByDate(startReturnDate, endReturnDate, pageable);
+        }
+    }
+
+    @Override
+    public Contract findById(Long id) {
+        return this.iContractRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Page<Contract> findLiquidationContractByDate(String startReturnDate, String endReturnDate, Pageable pageable) {
+        if (startReturnDate.equals("") && endReturnDate.equals("")) {
+            return iContractRepository.findAllLiquidatedContract(pageable);
+        } else {
+            return iContractRepository.findLiquidatedContractByDate(startReturnDate, endReturnDate, pageable);
+        }
+    }
+
+    @Override
+    public Page<Contract> findExpectedContractByDate(String startReturnDate, String endReturnDate, Pageable pageable) {
+        if (startReturnDate.equals("") && endReturnDate.equals("")) {
+            return iContractRepository.findAllExpectedContract(pageable);
+        } else {
+            return iContractRepository.findExpectedContractByDate(startReturnDate, endReturnDate, pageable);
         }
     }
 }
