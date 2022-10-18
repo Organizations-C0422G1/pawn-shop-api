@@ -51,13 +51,13 @@ public class SecurityController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetails userDetailService = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Long employeeId = this.appUserService.findByUsername(loginRequest.get().getUsername()).getEmployee().getId();
+        String employeeCode = this.appUserService.findByUsername(loginRequest.get().getUsername()).getEmployee().getCode();
 
         List<String> roles = userDetailService.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
         String jwt = jwtUtility.generateJwtToken(loginRequest.get().getUsername());
-        return new ResponseEntity<>(new LoginResponse(jwt, roles, loginRequest.get().getUsername(), employeeId), HttpStatus.OK);
+        return new ResponseEntity<>(new LoginResponse(jwt, roles, loginRequest.get().getUsername(), employeeCode), HttpStatus.OK);
     }
 
     @PostMapping("/forgot-password")

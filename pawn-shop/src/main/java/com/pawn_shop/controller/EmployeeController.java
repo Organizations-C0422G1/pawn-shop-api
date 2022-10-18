@@ -53,8 +53,8 @@ public class EmployeeController {
             roleList.add(role.getRole());
         }
 
-        Long employeeId = this.appUserService.findByUsername(username).getEmployee().getId();
+        String employeeCode = this.appUserService.findByUsername(username).getEmployee().getCode();
 
-        return new ResponseEntity<>(new LoginResponse(jwt, roleList, username, employeeId), HttpStatus.OK);
+        return new ResponseEntity<>(new LoginResponse(jwt, roleList, username, employeeCode), HttpStatus.OK);
     }
 }

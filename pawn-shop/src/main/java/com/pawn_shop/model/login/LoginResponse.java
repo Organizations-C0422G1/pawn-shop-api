@@ -19,5 +19,5 @@ public class LoginResponse {
 
     private String username;
 
-    private Long employeeId;
+    private String employeeCode;
 }
