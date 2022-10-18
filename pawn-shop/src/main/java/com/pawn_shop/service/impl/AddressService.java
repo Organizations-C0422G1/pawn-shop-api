@@ -14,5 +14,9 @@ public class AddressService implements IAddressService {
     @Override
     public Address save(Address address) {
         return iAddressRepository.save(address);
+
+    @Override
+    public Address createQuickAddress(Address address) {
+       return this.iAddressRepository.save(address);
     }
 }

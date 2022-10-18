@@ -12,18 +12,18 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRole{
+public class UserRole {
 
     @EmbeddedId
     private UserRoleKey id;
 
     @ManyToOne
     @MapsId("userId")
-    @JoinColumn(name = "app_user_id",referencedColumnName = "id")
+    @JoinColumn(name = "app_user_id", referencedColumnName = "id")
     private AppUser appUser;
 
     @ManyToOne
     @MapsId("roleId")
-    @JoinColumn(name = "app_role_id",referencedColumnName = "id")
+    @JoinColumn(name = "app_role_id", referencedColumnName = "id")
     private AppRole appRole;
 }
