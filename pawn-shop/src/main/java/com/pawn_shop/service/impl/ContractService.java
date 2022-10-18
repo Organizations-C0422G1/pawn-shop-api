@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContractService implements IContractService {
 
@@ -91,5 +93,28 @@ public class ContractService implements IContractService {
         mailService.sendMail(contract, customer.getEmail());
     }
 
+    //uyên
+    @Override
+    public List<Contract> findAllContract() {
+        return contractRepository.findAllContract();
+    }
+
+    @Override
+    public List<Contract> top10Contract() {
+        return contractRepository.top10Contract();
+    }
+
+    @Override
+    public void updateContract(Contract contract) {
+        contractRepository.updateContract(contract.getCode(),contract.getEndDate(),contract.getInterestRate(),
+                contract.getItemPrice(),contract.getLiquidationPrice(),contract.getReturnDate(),contract.getStartDate(),
+                contract.getType(),contract.getCustomer().getId(),contract.getEmployee().getId(),contract.getPawnItem().getId(), contract.getId());
+    }
+
+
+    @Override
+    public Contract findIdContract(Long id) {
+        return contractRepository.findIdContract(id);
+    }
 }
 

@@ -2,10 +2,10 @@ package com.pawn_shop.controller;
 
 import com.pawn_shop.config.MailConfig;
 import com.pawn_shop.dto.ContractDtoHd;
+import com.pawn_shop.dto.ContractUpdateDto;
 import com.pawn_shop.dto.projection.ContractDto;
 import com.pawn_shop.model.contract.Contract;
-import com.pawn_shop.service.IContractService;
-import com.pawn_shop.service.ISendMailService;
+import com.pawn_shop.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,10 +22,7 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 
 
 @RestController
@@ -38,6 +35,12 @@ public class ContractRestController {
 
     @Autowired
     private ISendMailService sendMailService;
+    @Autowired
+    private ICustomerService iCustomerService;
+    @Autowired
+    private IPawnTypeService iPawnTypeService;
+    @Autowired
+    private IPawItemService iPawnItemService;
 
     @GetMapping("")
     public ResponseEntity<Page<ContractDto>> transactionHistory(
@@ -142,5 +145,52 @@ public class ContractRestController {
         contract.setEndDate(LocalDate.parse(contractDto.getEndDate()));
         contractService.saveContract(contract);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //uyen
+    @GetMapping("/customerlist")
+    public ResponseEntity<?> getAllCustomerService() {
+        return new ResponseEntity<>(iCustomerService.findAllCustomer(), HttpStatus.OK);
+    }
+
+    @GetMapping("/top10Contract")
+    public ResponseEntity<List<Contract>> top10Contract() {
+        return new ResponseEntity<>(contractService.top10Contract(), HttpStatus.OK);
+    }
+
+    @GetMapping("/pawntypelist")
+    public ResponseEntity<?> getAllPawnType() {
+        return new ResponseEntity<>(iPawnTypeService.findAllPawnType(), HttpStatus.OK);
+    }
+
+    @GetMapping("/pawnitemlist")
+    public ResponseEntity<?> getAllPawnItem() {
+        return new ResponseEntity<>(iPawnItemService.findAllPawnItem(), HttpStatus.OK);
+    }
+
+    @GetMapping("/contract/{id}")
+    public ResponseEntity<?> getId(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(contractService.findIdContract(id), HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "/update-contract", consumes = {"*/*"})
+    public ResponseEntity<Map<String, String>> update(@Valid  @RequestBody ContractDtoHd contractUpdateDto, BindingResult bindingResult) {
+        contractUpdateDto.validate(contractUpdateDto,bindingResult);
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errMap = new HashMap<>();
+            for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                errMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            Contract contract = new Contract();
+            BeanUtils.copyProperties(contractUpdateDto, contract);
+            contract.setItemPrice(Double.parseDouble(contractUpdateDto.getItemPrice()));
+            contract.setInterestRate(Double.parseDouble(contractUpdateDto.getInterestRate()));
+            contract.setStartDate(LocalDate.parse(contractUpdateDto.getStartDate()));
+            contract.setEndDate(LocalDate.parse(contractUpdateDto.getEndDate()));
+            contractService.updateContract(contract);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
     }
 }
