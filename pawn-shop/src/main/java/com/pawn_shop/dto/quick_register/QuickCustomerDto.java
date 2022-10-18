@@ -1,24 +1,19 @@
-package com.pawn_shop.model.pawn;
+package com.pawn_shop.dto.quick_register;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-
 @Getter
 @Setter
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class PawnType {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class QuickCustomerDto {
     private Long id;
-
-    @Column(columnDefinition = "varchar(100)")
     private String name;
+    private String phoneNumber;
+    private QuickAddressDto quickAddressDto;
+
 
 }
