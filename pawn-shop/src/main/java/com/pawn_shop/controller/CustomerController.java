@@ -43,8 +43,8 @@ public class CustomerController {
         }
         Customer customer = new Customer();
         BeanUtils.copyProperties(newCustomerDTO, customer);
-        customer.setCode("KH-");
         customerService.createCustomer(customer);
+        customer.setCode("KH-");
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 

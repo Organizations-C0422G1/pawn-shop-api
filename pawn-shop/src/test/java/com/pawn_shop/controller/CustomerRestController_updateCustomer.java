@@ -27,7 +27,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion: Patch Customer
      *
      * @throws Exception this function  to test validation of field name more specific is Empty
      */
@@ -57,7 +57,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function to test validation of field name does not contain special characters
      */
@@ -88,7 +88,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function to test validation of field name successfully
      */
@@ -117,7 +117,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function to test validation of field image more specific is Empty
      */
@@ -148,7 +148,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function to test validation of field image more can't access the link
      */
@@ -180,7 +180,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function use to test validation of field image more specific is successfully
      */
@@ -212,7 +212,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function to test validation of field date of birth more specific is successfully
      */
@@ -244,7 +244,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function use to test validation of field date of birth is empty
      */
@@ -276,7 +276,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function use to test validation of field date of birth has age <18
      */
@@ -308,7 +308,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function use to test validation of field date of birth has age  >120
      */
@@ -340,7 +340,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function to test validation of field Phone number is empty
      */
@@ -372,7 +372,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function to test validation of field Phone number is contain words or special characters
      */
@@ -404,7 +404,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function use to test validation of field Phone number is successfully
      */
@@ -436,7 +436,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function to test validation of field id card is empty
      */
@@ -468,7 +468,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function to test validation of field id card is wrong format
      */
@@ -500,7 +500,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function to test validation of field id card is <9 numbers
      */
@@ -532,7 +532,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function to test validation of field id card is > 9 numbers
      */
@@ -564,7 +564,7 @@ public class CustomerRestController_updateCustomer {
     /**
      * Create by: PhucNHD
      * Date Create: 17/10/2022
-     * funtion: Post Customer
+     * funtion:Patch Customer
      *
      * @throws Exception this function  to test validation of field id card is successfully
      */
