@@ -1,5 +1,5 @@
 package com.pawn_shop.controller;
-import com.pawn_shop.dto.ContractDto;
+import com.pawn_shop.dto.ContractUpdateDto;
 import com.pawn_shop.model.contract.Contract;
 import com.pawn_shop.service.IContractService;
 import com.pawn_shop.service.ICustomerService;
@@ -10,9 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -53,12 +57,21 @@ public class ContractController {
     }
 
     @PatchMapping(value = "/update-contract", consumes = {"*/*"})
-    public ResponseEntity<?> update(@Valid  @RequestBody ContractDto contractDto, BindingResult bindingResult) {
+    public ResponseEntity<Map<String, String>> update(@Valid  @RequestBody ContractUpdateDto contractUpdateDto, BindingResult bindingResult) {
+     contractUpdateDto.validate(contractUpdateDto,bindingResult);
         if (bindingResult.hasErrors()) {
+            Map<String, String> errMap = new HashMap<>();
+            for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                errMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             Contract contract = new Contract();
-            BeanUtils.copyProperties(contractDto, contract);
+            BeanUtils.copyProperties(contractUpdateDto, contract);
+            contract.setItemPrice(Double.parseDouble(contractUpdateDto.getItemPrice()));
+            contract.setInterestRate(Double.parseDouble(contractUpdateDto.getInterestRate()));
+            contract.setStartDate(LocalDate.parse(contractUpdateDto.getStartDate()));
+            contract.setEndDate(LocalDate.parse(contractUpdateDto.getEndDate()));
             iContractService.updateContract(contract);
             return new ResponseEntity<>(HttpStatus.OK);
         }
