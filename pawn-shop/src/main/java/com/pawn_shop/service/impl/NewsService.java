@@ -1,6 +1,6 @@
 package com.pawn_shop.service.impl;
 
-import com.pawn_shop.dto.projection.NewsDto;
+import com.pawn_shop.dto.projection.INewsDto;
 import com.pawn_shop.model.news.News;
 import com.pawn_shop.repository.INewsRepository;
 import com.pawn_shop.service.INewsService;
@@ -15,7 +15,7 @@ public class NewsService implements INewsService {
     private INewsRepository newsRepository;
 
     @Override
-    public Page<NewsDto> findAllNews(Pageable pageable, String searchName,String searchContent, String dateFirst, String dateLast) {
+    public Page<INewsDto> findAllNews(Pageable pageable, String searchName, String searchContent, String dateFirst, String dateLast) {
         return  this.newsRepository.findAllNews(pageable,"%" +searchName + "%","%" + searchContent + "%",dateFirst,dateLast);
     }
 
@@ -28,6 +28,11 @@ public class NewsService implements INewsService {
     @Override
     public void deleteNews(Long idDelete) {
         this.newsRepository.deleteNews(idDelete);
+    }
+
+    @Override
+    public void saveNews(News news) {
+        this.newsRepository.saveNews(news.getContent(),news.getImgUrl(),news.getPostingDay(),news.getTitle());
     }
 
 
