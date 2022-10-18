@@ -48,6 +48,9 @@ public class Employee {
     @Column(columnDefinition = "text")
     private String imgUrl;
 
+    @Column(columnDefinition = "varchar(30)")
+    private String idCard;
+
     private boolean status;
 
     @OneToOne(mappedBy = "employee")
