@@ -1,5 +1,6 @@
 package com.pawn_shop.model.contract;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pawn_shop.model.customer.Customer;
 import com.pawn_shop.model.employee.Employee;
 import com.pawn_shop.model.pawn.PawnItem;
