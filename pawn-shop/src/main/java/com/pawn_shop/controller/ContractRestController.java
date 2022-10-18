@@ -1,22 +1,32 @@
 package com.pawn_shop.controller;
 
 import com.pawn_shop.config.MailConfig;
+import com.pawn_shop.dto.ContractDtoHd;
 import com.pawn_shop.dto.projection.ContractDto;
-import com.pawn_shop.service.IContractService;
-import com.pawn_shop.service.ISendMailService;
+import com.pawn_shop.dto.quick_register.QuickContractDto;
+import com.pawn_shop.model.address.Address;
+import com.pawn_shop.model.address.District;
+import com.pawn_shop.model.contract.Contract;
+import com.pawn_shop.model.customer.Customer;
+import com.pawn_shop.model.pawn.PawnItem;
+import com.pawn_shop.model.pawn.PawnType;
+import com.pawn_shop.service.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
-import java.util.Optional;
-import java.util.Properties;
-
+import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -28,6 +38,14 @@ public class ContractRestController {
 
     @Autowired
     private ISendMailService sendMailService;
+    @Autowired
+    private ICustomerService iCustomerService;
+    @Autowired
+    private IPawnTypeService iPawnTypeService;
+    @Autowired
+    private IPawItemService iPawnItemService;
+    @Autowired
+    private IAddressService iAddressService;
 
     @GetMapping("")
     public ResponseEntity<Page<ContractDto>> transactionHistory(
@@ -111,4 +129,114 @@ public class ContractRestController {
         this.sendMailService.sendMailReturnItem(session, emailCustomer, keywordCustomerName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    // duyên
+    @PostMapping("/create")
+    public ResponseEntity<Map<String, String>> createContract(@RequestBody @Valid ContractDtoHd contractDto,
+                                                              BindingResult bindingResult) {
+        contractDto.validate(contractDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errMap = new HashMap<>();
+            for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                errMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
+        }
+        Contract contract = new Contract();
+        BeanUtils.copyProperties(contractDto, contract);
+        contract.setItemPrice(Double.parseDouble(contractDto.getItemPrice()));
+        contract.setInterestRate(Double.parseDouble(contractDto.getInterestRate()));
+        contract.setStartDate(LocalDate.parse(contractDto.getStartDate()));
+        contract.setEndDate(LocalDate.parse(contractDto.getEndDate()));
+        contractService.saveContract(contract);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //uyen
+    @GetMapping("/customerlist")
+    public ResponseEntity<?> getAllCustomerService() {
+        return new ResponseEntity<>(iCustomerService.findAllCustomer(), HttpStatus.OK);
+    }
+
+    @GetMapping("/top10Contract")
+    public ResponseEntity<List<Contract>> top10Contract() {
+        return new ResponseEntity<>(contractService.top10Contract(), HttpStatus.OK);
+    }
+
+    @GetMapping("/pawntypelist")
+    public ResponseEntity<?> getAllPawnType() {
+        return new ResponseEntity<>(iPawnTypeService.findAllPawnType(), HttpStatus.OK);
+    }
+
+    @GetMapping("/pawnitemlist")
+    public ResponseEntity<?> getAllPawnItem() {
+        return new ResponseEntity<>(iPawnItemService.findAllPawnItem(), HttpStatus.OK);
+    }
+
+    @GetMapping("/contract/{id}")
+    public ResponseEntity<?> getId(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(contractService.findIdContract(id), HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "/update-contract", consumes = {"*/*"})
+    public ResponseEntity<Map<String, String>> update(@Valid  @RequestBody ContractDtoHd contractUpdateDto, BindingResult bindingResult) {
+        contractUpdateDto.validate(contractUpdateDto,bindingResult);
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errMap = new HashMap<>();
+            for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                errMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            Contract contract = new Contract();
+            BeanUtils.copyProperties(contractUpdateDto, contract);
+            contract.setItemPrice(Double.parseDouble(contractUpdateDto.getItemPrice()));
+            contract.setInterestRate(Double.parseDouble(contractUpdateDto.getInterestRate()));
+            contract.setStartDate(LocalDate.parse(contractUpdateDto.getStartDate()));
+            contract.setEndDate(LocalDate.parse(contractUpdateDto.getEndDate()));
+            contractService.updateContract(contract);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+    }
+
+//    Truong bat dau
+@PostMapping(value = "/createQuickContract")
+public ResponseEntity<?> createQuickContract(@RequestBody @Valid QuickContractDto quickContractDto,
+                                             BindingResult bindingResult) {
+    new QuickContractDto().validate(quickContractDto, bindingResult);
+    if (bindingResult.hasErrors()) {
+        Map<String, String> errMap = new HashMap<>();
+        for (FieldError fieldError : bindingResult.getFieldErrors()) {
+            errMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }
+        return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
+    }
+    PawnItem tempPawnItem = new PawnItem();
+    Address tempAddress = new Address();
+    Customer tempCustomer = new Customer();
+    Contract tempContract = new Contract();
+
+    PawnType tempPawnType = new PawnType();
+    tempPawnType.setId(quickContractDto.getQuickPawnItemDto().getQuickPawnTypeDto().getId());
+    tempPawnItem.setPawnType(tempPawnType);
+    PawnItem pawnItem = this.iPawnItemService.createQuickPawnItem(tempPawnItem);
+
+    District tempDistrict = new District();
+    tempDistrict.setId(quickContractDto.getQuickCustomerDto().getQuickAddressDto().getQuickDistrictDto().getId());
+    tempAddress.setDistrict(tempDistrict);
+    Address address = this.iAddressService.createQuickAddress(tempAddress);
+
+    tempCustomer.setAddress(address);
+    tempCustomer.setName(quickContractDto.getQuickCustomerDto().getName());
+    tempCustomer.setPhoneNumber(quickContractDto.getQuickCustomerDto().getPhoneNumber());
+    tempCustomer.setStatus(true);
+    Customer customer = this.iCustomerService.createQuickCustomer(tempCustomer);
+
+    tempContract.setCustomer(customer);
+    tempContract.setPawnItem(pawnItem);
+    tempContract.setStatus(4);
+    Contract contract = this.contractService.createQuickContract(tempContract);
+    return new ResponseEntity<>(contract, HttpStatus.CREATED);
+}
+//    Truong ket thuc
 }

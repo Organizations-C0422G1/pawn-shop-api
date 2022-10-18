@@ -16,6 +16,7 @@ import java.util.List;
 
 @Transactional
 public interface IContractRepository extends JpaRepository<Contract, Long> {
+
     @Query(nativeQuery = true, value = "select ct.id as id, ct.code as code, c.name as customer, p.name as pawnItem, " +
             "pt.name as pawnTypeName, ct.start_date as startDate, ct.end_date as endDate, ct.type as type, ct.status as status " +
             " from contract ct right join customer c " +
@@ -88,5 +89,36 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
     @Modifying
     @Query(value = "update contract set status = 1 where id = :id", nativeQuery = true)
     void returnItem(@Param("id") long id);
+
+    // duyên
+    @Modifying
+    @Transactional
+    @Query(value = "insert into contract (code,end_date,interest_rate,item_price,liquidation_price,return_date,start_date,status,customer_id,employee_id," +
+            "pawn_item_id,`type`) value (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12)", nativeQuery = true)
+    void saveContract(String code, LocalDate endDate, Double interestRate, Double itemPrice, Double liquidationPrice, LocalDate returnDate, LocalDate startDate, int status, Long customerId, Long employeeId, Long pawnItemId, boolean type);
+
+    @Query(value = "select * from contract order by contract.id desc limit 1",nativeQuery = true)
+    Contract findContract();
+
+    //uyên
+    @Modifying
+    @Query(value = "update contract set code = :code , end_date = :endDate, interest_rate = :interestRate, item_price = :itemPrice," +
+            "liquidation_price = :liquidationPrice, return_date = :returnDate,start_date = :startDate, type = :type," +
+            "customer_id = :customerId, employee_id = :employeeId, pawn_item_id = :pawnItemId where id = :id ", nativeQuery = true)
+    void updateContract(@Param("code") String code, @Param("endDate")LocalDate endDate,@Param("interestRate") Double interestDate,
+                        @Param("itemPrice") Double itemPrice, @Param("liquidationPrice") Double liquidationPrice,@Param("returnDate") LocalDate returnDate ,
+                        @Param("startDate") LocalDate startDate, @Param("type") Boolean type,
+                        @Param("customerId") Long customerId, @Param("employeeId") Long employeeId,
+                        @Param("pawnItemId") Long pawnItemId, @Param("id") Long id);
+
+    @Query(value = "select * from contract where start_date = current_date order by id desc limit 10 ", nativeQuery = true)
+    List<Contract> top10Contract();
+
+    @Query(value = "select  * from contract where status_delete = 0", nativeQuery = true)
+    List<Contract> findAllContract();
+
+
+    @Query(value = "select * from contract where id = :id",nativeQuery = true)
+    Contract findIdContract(@Param("id") Long id);
 }
 
