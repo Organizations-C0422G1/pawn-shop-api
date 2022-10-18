@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/employee/pawn-type")
+@RequestMapping("/api/employee/pawnTypeRest")
 public class PawnTypeController {
     @Autowired
     private IPawnTypeService iPawnTypeService;
 
-    @GetMapping("")
+    @GetMapping("/list")
     public ResponseEntity<List<PawnType>> displayPawnType() {
         List<PawnType> pawnTypeList = iPawnTypeService.findAllPawnType();
         if (pawnTypeList.isEmpty()) {

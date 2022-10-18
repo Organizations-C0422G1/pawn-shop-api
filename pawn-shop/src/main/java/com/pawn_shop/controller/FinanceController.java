@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/admin/finance")
+@RequestMapping("/api/admin/finance")
 public class FinanceController {
     @Autowired
     private IFinanceService iFinanceService;
 
-    @GetMapping("")
+    @GetMapping("/")
     public ResponseEntity<Double> displayFinance() {
         Double finance = iFinanceService.findAllFinance();
         if (finance == null) {
@@ -24,7 +24,7 @@ public class FinanceController {
         }
     }
 
-    @GetMapping("investment")
+    @GetMapping("/investment")
     public ResponseEntity<Double> displayInvestment() {
         Double totalInvestment = iFinanceService.findTotalInvestment();
         if (totalInvestment == null) {
@@ -34,7 +34,7 @@ public class FinanceController {
         }
     }
 
-    @GetMapping("profit")
+    @GetMapping("/profit")
     public ResponseEntity<Double> displayExpectedProfit() {
         Double totalExpectedProfit = iFinanceService.findTotalExpectedProfit();
         if (totalExpectedProfit == null) {
