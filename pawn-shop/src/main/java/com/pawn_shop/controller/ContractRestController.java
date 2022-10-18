@@ -1,7 +1,9 @@
 package com.pawn_shop.controller;
 
+import com.pawn_shop.config.MailConfig;
 import com.pawn_shop.dto.projection.ContractDto;
 import com.pawn_shop.service.IContractService;
+import com.pawn_shop.service.ISendMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,15 +12,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
 import java.util.Optional;
+import java.util.Properties;
 
 
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/api/employee/contracts")
 public class ContractRestController {
+
     @Autowired
     private IContractService contractService;
+
+    @Autowired
+    private ISendMailService sendMailService;
 
     @GetMapping("")
     public ResponseEntity<Page<ContractDto>> transactionHistory(
@@ -83,9 +92,23 @@ public class ContractRestController {
     }
 
     @PatchMapping(value = "returnItem/{id}")
-    public ResponseEntity<Void> returnItem(@PathVariable long id) {
+    public ResponseEntity<Void> returnItem(@PathVariable long id, @RequestParam Optional<String> email, @RequestParam Optional<String> customerName) {
+        String emailCustomer = email.orElse("");
+        String keywordCustomerName = customerName.orElse("");
         this.contractService.returnItem(id);
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.host", MailConfig.HOST_NAME);
+        props.put("mail.smtp.socketFactory.port", MailConfig.SSL_PORT);
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.port", MailConfig.SSL_PORT);
 
+        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(MailConfig.APP_EMAIL, MailConfig.APP_PASSWORD);
+            }
+        });
+        this.sendMailService.sendMailReturnItem(session, emailCustomer, keywordCustomerName);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
