@@ -37,6 +37,9 @@ public class Employee {
     @Column(columnDefinition = "varchar(30)")
     private String phoneNumber;
 
+    @Column(columnDefinition = "varchar(30)")
+    private String idCard;
+
     @Column(columnDefinition = "varchar(150)")
     private String address;
 
