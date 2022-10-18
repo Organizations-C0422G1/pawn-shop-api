@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class EmployeeController_resetPassword {
+public class EmployeeRestController_resetPassword {
 
     @Autowired
     private MockMvc mockMvc;

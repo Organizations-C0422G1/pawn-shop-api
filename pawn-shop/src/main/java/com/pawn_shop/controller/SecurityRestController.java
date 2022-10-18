@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/public")
-@CrossOrigin(origins = "*",allowedHeaders = "*")
-public class SecurityController {
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class SecurityRestController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -42,7 +42,7 @@ public class SecurityController {
     public ResponseEntity<?> authenticateUser(@RequestBody Optional<LoginRequest> loginRequest) {
 
         if (!loginRequest.isPresent()) {
-            return new ResponseEntity<>("Không được để trống tài khoản, mật khẩu",HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Không được để trống tài khoản, mật khẩu", HttpStatus.BAD_REQUEST);
         }
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.get().getUsername(), loginRequest.get().getPassword())
@@ -63,8 +63,8 @@ public class SecurityController {
     @PostMapping("/forgot-password")
     public ResponseEntity<?> getResetEmail(@RequestBody Optional<String> email) {
 
-        if (!email.isPresent()){
-            return new ResponseEntity<>("Không được để trống email",HttpStatus.BAD_REQUEST);
+        if (!email.isPresent()) {
+            return new ResponseEntity<>("Không được để trống email", HttpStatus.BAD_REQUEST);
         }
 
         AppUser user = this.appUserService.findByEmail(email.get());

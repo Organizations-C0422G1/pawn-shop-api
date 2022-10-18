@@ -18,8 +18,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/employee")
-@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
-public class EmployeeController {
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+public class EmployeeRestController {
 
     @Autowired
     private IAppUserService appUserService;
@@ -35,7 +35,7 @@ public class EmployeeController {
 
     @PatchMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestBody Optional<String> newPassword, HttpServletRequest request) {
-        if (!newPassword.isPresent()|| newPassword.get().equals("")) {
+        if (!newPassword.isPresent() || newPassword.get().equals("")) {
             return new ResponseEntity<>("Không được để trống", HttpStatus.BAD_REQUEST);
         } else {
             if (String.valueOf(newPassword).length() > 30) {

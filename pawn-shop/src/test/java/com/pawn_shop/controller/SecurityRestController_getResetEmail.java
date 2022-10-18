@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SecurityController_getResetEmail {
+public class SecurityRestController_getResetEmail {
 
     @Autowired
     private MockMvc mockMvc;

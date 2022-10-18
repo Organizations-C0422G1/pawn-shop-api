@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class SecurityController_authenticateUser {
+public class SecurityRestController_authenticateUser {
 
     @Autowired
     private MockMvc mockMvc;

@@ -20,6 +20,7 @@ public class MailConfig {
     public static final String APP_PASSWORD = "ufgknjtbrihadbns";
 
     public static final String RECEIVE_EMAIL = "lhongson2909@gmail.com";
+
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
