@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -48,14 +49,15 @@ public class CustomerService implements ICustomerService {
     public void updateCustomer(Long id, Customer oldCustomer) {
         Address address = iAddressService.save(oldCustomer.getAddress());
         oldCustomer.setAddress(address);
-        iCustomerRepository.updateCustomer( oldCustomer.getDateOfBirth(), oldCustomer.getEmail(),
+        iCustomerRepository.updateCustomer(oldCustomer.getDateOfBirth(), oldCustomer.getEmail(),
                 oldCustomer.getGender(), oldCustomer.getIdCard(), oldCustomer.getImgUrl(), oldCustomer.getName(),
-                oldCustomer.getPhoneNumber(), oldCustomer.getStatus(), oldCustomer.getAddress().getId(),oldCustomer.getId());
+                oldCustomer.getPhoneNumber(), oldCustomer.getStatus(), oldCustomer.getAddress().getId(), oldCustomer.getId());
     }
 
     @Override
     public List<Customer> findAll() {
         return iCustomerRepository.findAll();
+    }
 
     @Override
     public Page<Customer> findAllCustomer(Pageable pageable) {
