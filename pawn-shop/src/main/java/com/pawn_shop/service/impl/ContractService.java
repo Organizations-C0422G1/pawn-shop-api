@@ -10,8 +10,9 @@ public class ContractService implements IContractService {
 
     @Autowired
     private IContractRepository iContractRepository;
+
     @Override
-    public void createLiquidation(Double price, String dateLiquidation, Long idCustomer, Long idPawnItem) {
-        this.iContractRepository.createLiquidation(price, dateLiquidation, idCustomer, idPawnItem);
+    public void createLiquidation(Double price, String dateLiquidation, Long idContract) {
+        iContractRepository.createLiquidation(price, dateLiquidation, idContract);
     }
 }

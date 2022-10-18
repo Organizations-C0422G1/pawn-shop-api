@@ -1,7 +1,7 @@
 package com.pawn_shop.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pawn_shop.dto.ContractDto;
+import com.pawn_shop.dto.ContractLiquidationDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -32,7 +32,7 @@ public class LiquidationRestController_updateLiquidation {
     @Test
     public void updateLiquidation_24() throws Exception {
 
-        ContractDto contractDto = new ContractDto();
+        ContractLiquidationDto contractDto = new ContractLiquidationDto();
         contractDto.setLiquidationPrice(100000.00);
         contractDto.setReturnDate("2022-10-17");
         contractDto.setCustomer(4L);
@@ -56,7 +56,7 @@ public class LiquidationRestController_updateLiquidation {
     @Test
     public void updateLiquidation_19() throws Exception {
 
-        ContractDto contractDto = new ContractDto();
+        ContractLiquidationDto contractDto = new ContractLiquidationDto();
         contractDto.setLiquidationPrice(null);
         contractDto.setReturnDate("");
         contractDto.setCustomer(null);
@@ -80,7 +80,7 @@ public class LiquidationRestController_updateLiquidation {
     @Test
     public void updateLiquidation_21() throws Exception {
 
-        ContractDto contractDto = new ContractDto();
+        ContractLiquidationDto contractDto = new ContractLiquidationDto();
         contractDto.setLiquidationPrice(null);
         contractDto.setReturnDate("40-09-2022");
         contractDto.setCustomer(null);

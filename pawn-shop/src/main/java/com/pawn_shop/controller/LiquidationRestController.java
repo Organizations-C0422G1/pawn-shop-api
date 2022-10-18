@@ -1,7 +1,7 @@
 package com.pawn_shop.controller;
 
-import com.pawn_shop.dto.ContractDto;
-import com.pawn_shop.dto.ICustomerDtoList;
+import com.pawn_shop.dto.ContractLiquidationDto;
+import com.pawn_shop.dto.ICustomerLiquidationDto;
 import com.pawn_shop.dto.IPawnItemDtoList;
 import com.pawn_shop.dto.IPawnTypeDtoList;
 import com.pawn_shop.service.IContractService;
@@ -12,10 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -35,9 +38,9 @@ public class LiquidationRestController {
     private IContractService iContractService;
 
     @GetMapping("/list/{name}")
-    public ResponseEntity<List<ICustomerDtoList>> findByNameCustomer(@RequestParam("name") Optional<String> name){
+    public ResponseEntity<List<ICustomerLiquidationDto>> findByNameCustomer(@RequestParam("name") Optional<String> name){
         String names = name.orElse("");
-        List<ICustomerDtoList> list = iCustomerService.findByNameCustomer(names,ICustomerDtoList.class);
+        List<ICustomerLiquidationDto> list = iCustomerService.findByNameCustomer(names, ICustomerLiquidationDto.class);
         if (list.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -68,14 +71,18 @@ public class LiquidationRestController {
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
 
-    @PatchMapping(value = "/liquidation", consumes = {"*/*"})
-    public ResponseEntity<Void> updateLiquidation(@Valid @RequestBody ContractDto contractDto, BindingResult bindingResult){
+    @PatchMapping( "/liquidation")
+    public ResponseEntity<Map<String,String>> updateLiquidation(@Valid @RequestBody ContractLiquidationDto contractDto, BindingResult bindingResult){
         try{
             if (bindingResult.hasErrors()) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                Map<String, String> errMap = new HashMap<>();
+                for (FieldError fieldError: bindingResult.getFieldErrors()){
+                    errMap.put(fieldError.getField(),fieldError.getDefaultMessage());
+                }
+                return new ResponseEntity<>(errMap,HttpStatus.BAD_REQUEST);
             } else {
-                this.iContractService.createLiquidation(contractDto.getLiquidationPrice(), contractDto.getReturnDate()
-                        , contractDto.getCustomer(), contractDto.getPawnItem());
+                this.iContractService.createLiquidation(contractDto.getLiquidationPrice(), contractDto.getReturnDate().toString()
+                        , contractDto.getIdContract());
                 return new ResponseEntity<>(HttpStatus.OK);
             }
         }catch (Exception e){
