@@ -11,12 +11,16 @@ import javax.transaction.Transactional;
 public interface IContractRepository extends JpaRepository<Contract, Long> {
 
     @Modifying
-    @Query(nativeQuery = true,value = "UPDATE `pawn_shop`.`contract` \n" +
-            "SET \n" +
-            "    `liquidation_price` = ?1,\n" +
-            "    `return_date` = ?2,\n" +
-            "    `status` = 3 \n" +
-            "WHERE\n" +
-            "    (`id` = ?3);\n")
+    @Query(nativeQuery = true,value = "UPDATE `pawn_shop`.`contract` " +
+            "SET " +
+            "    `liquidation_price` = ?1," +
+            "    `return_date` = ?2," +
+            "    `status` = 3 " +
+            "WHERE" +
+            "    (`id` = ?3);")
     void createLiquidation(Double price, String dateLiquidation, Long idContract);
+
+    @Query(value = "select c.id from contract c" +
+            " where c.pawn_item_id = ?1",nativeQuery = true)
+    Long findContractByIdPawnItem(Long idPawnItem);
 }

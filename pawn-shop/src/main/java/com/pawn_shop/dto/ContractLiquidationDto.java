@@ -17,7 +17,7 @@ public class ContractLiquidationDto implements Validator {
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate returnDate;
 
-    private Long idContract;
+    private Long idPawnItem;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -31,8 +31,8 @@ public class ContractLiquidationDto implements Validator {
             errors.rejectValue("returnDate", "r.l","* không được để trống trường này!");
         }
 
-        if (contractDto.idContract == null){
-            errors.rejectValue("idContract","r.l","* không được để trống trường này!");
+        if (contractDto.idPawnItem == null){
+            errors.rejectValue("idPawnItem","r.l","* không được để trống trường này!");
         }
 
         if (contractDto.liquidationPrice == null){

@@ -2,8 +2,8 @@ package com.pawn_shop.controller;
 
 import com.pawn_shop.dto.ContractLiquidationDto;
 import com.pawn_shop.dto.ICustomerLiquidationDto;
-import com.pawn_shop.dto.IPawnItemDtoList;
-import com.pawn_shop.dto.IPawnTypeDtoList;
+import com.pawn_shop.dto.IPawnItemLiquidationDto;
+import com.pawn_shop.dto.IPawnTypeLiquidationDto;
 import com.pawn_shop.service.IContractService;
 import com.pawn_shop.service.ICustomerService;
 import com.pawn_shop.service.IPawItemService;
@@ -23,13 +23,14 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
+@RequestMapping("/api/employee/liquidation")
 public class LiquidationRestController {
 
     @Autowired
     private ICustomerService iCustomerService;
 
     @Autowired
-    private IPawItemService iPawItemRepository;
+    private IPawItemService iPawItemService;
 
     @Autowired
     private IPawnTypeService iPawnTypeService;
@@ -37,10 +38,12 @@ public class LiquidationRestController {
     @Autowired
     private IContractService iContractService;
 
-    @GetMapping("/list/{name}")
-    public ResponseEntity<List<ICustomerLiquidationDto>> findByNameCustomer(@RequestParam("name") Optional<String> name){
+    @GetMapping("/customer/list")
+    public ResponseEntity<List<ICustomerLiquidationDto>> findByNameCustomer(@RequestParam("name") Optional<String> name,
+                                                                            @RequestParam("cmnd") Optional<String> cmnd){
         String names = name.orElse("");
-        List<ICustomerLiquidationDto> list = iCustomerService.findByNameCustomer(names, ICustomerLiquidationDto.class);
+        String cmnds = cmnd.orElse("");
+        List<ICustomerLiquidationDto> list = iCustomerService.findByNameCustomer(names,cmnds, ICustomerLiquidationDto.class);
         if (list.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -48,8 +51,13 @@ public class LiquidationRestController {
     }
 
     @GetMapping("/pawnItem/list")
-    public ResponseEntity<List<IPawnItemDtoList>> findByPawnItem(){
-        List<IPawnItemDtoList> list = iPawItemRepository.findAllPawnItem(IPawnItemDtoList.class);
+    public ResponseEntity<List<IPawnItemLiquidationDto>> findByNameAndPricePawnItem(@RequestParam("namePawnType") Optional<String> namePawnType,
+                                                                        @RequestParam("idPawnItem") Optional<String> idPawnItem,
+                                                                        @RequestParam("price") Optional<String> price){
+        String namePawnTypes = namePawnType.orElse("");
+        String idPawnItems = idPawnItem.orElse("");
+        String prices = price.orElse("");
+        List<IPawnItemLiquidationDto> list = iPawItemService.findAllPawnItem(namePawnTypes,idPawnItems,prices, IPawnItemLiquidationDto.class);
         if (list.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -57,21 +65,23 @@ public class LiquidationRestController {
     }
 
     @GetMapping("/pawnType/list")
-    public ResponseEntity<List<IPawnTypeDtoList>> findByPawnType(
-            @RequestParam("id") Optional<String> id,
-            @RequestParam("name") Optional<String> name,
-            @RequestParam("price") Optional<String> price){
-        String ids = id.orElse("");
-        String names = name.orElse("");
-        String prices = price.orElse("");
-        List<IPawnTypeDtoList> list = iPawnTypeService.findAllPawnTypeByNameAndPrice(names,ids,prices,IPawnTypeDtoList.class);
+    public ResponseEntity<List<IPawnTypeLiquidationDto>> findByPawnType(){
+        List<IPawnTypeLiquidationDto> list = iPawnTypeService.findAllPawnType(IPawnTypeLiquidationDto.class);
         if (list.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
 
-    @PatchMapping( "/liquidation")
+    @GetMapping("/findContractByIdItem")
+    public ResponseEntity<Long> findContractByIdPawnItem(@RequestParam("id") Optional<Long> idItem){
+        if (idItem == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(iContractService.findContractByIdPawnItem(idItem.orElse(null)),HttpStatus.OK);
+    }
+
+    @PatchMapping( "/update")
     public ResponseEntity<Map<String,String>> updateLiquidation(@Valid @RequestBody ContractLiquidationDto contractDto, BindingResult bindingResult){
         try{
             if (bindingResult.hasErrors()) {
@@ -82,7 +92,7 @@ public class LiquidationRestController {
                 return new ResponseEntity<>(errMap,HttpStatus.BAD_REQUEST);
             } else {
                 this.iContractService.createLiquidation(contractDto.getLiquidationPrice(), contractDto.getReturnDate().toString()
-                        , contractDto.getIdContract());
+                        , iContractService.findContractByIdPawnItem(contractDto.getIdPawnItem()));
                 return new ResponseEntity<>(HttpStatus.OK);
             }
         }catch (Exception e){

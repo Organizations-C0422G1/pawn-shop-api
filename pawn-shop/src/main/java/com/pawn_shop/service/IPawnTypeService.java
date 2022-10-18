@@ -6,6 +6,4 @@ import java.util.List;
 
 public interface IPawnTypeService {
     <T>List<T> findAllPawnType(Class<T> tClass);
-
-    <T> List<T> findAllPawnTypeByNameAndPrice(String name, String id, String priceItem, Class<T> tClass);
 }

@@ -17,9 +17,4 @@ public class PawnTypeService implements IPawnTypeService {
     public <T> List<T> findAllPawnType(Class<T> tClass) {
         return iPawnTypeRepository.findAllPawnType(tClass);
     }
-
-    @Override
-    public <T> List<T> findAllPawnTypeByNameAndPrice(String name, String id, String priceItem, Class<T> tClass) {
-        return iPawnTypeRepository.findAllPawnTypeByNameAndPrice(name,id,priceItem,tClass);
-    }
 }

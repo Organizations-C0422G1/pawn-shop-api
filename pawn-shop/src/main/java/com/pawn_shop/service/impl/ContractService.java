@@ -15,4 +15,9 @@ public class ContractService implements IContractService {
     public void createLiquidation(Double price, String dateLiquidation, Long idContract) {
         iContractRepository.createLiquidation(price, dateLiquidation, idContract);
     }
+
+    @Override
+    public Long findContractByIdPawnItem(Long idPawnItem) {
+        return iContractRepository.findContractByIdPawnItem(idPawnItem);
+    }
 }

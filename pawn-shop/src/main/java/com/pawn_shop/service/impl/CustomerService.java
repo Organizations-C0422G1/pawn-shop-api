@@ -13,18 +13,9 @@ public class CustomerService implements ICustomerService {
 
     @Autowired
     private ICustomerRepository iCustomerRepository;
-    @Override
-    public List<Customer> findAll() {
-        return iCustomerRepository.findAll();
-    }
 
     @Override
-    public <T> List<T> kiemAll(Class<T> tClass) {
-        return iCustomerRepository.findAllCustomer(tClass);
-    }
-
-    @Override
-    public <T> List<T> findByNameCustomer(String name,Class<T> tClass) {
-        return iCustomerRepository.findByNameCustomer(name,tClass);
+    public <T> List<T> findByNameCustomer(String name,String cmnd,Class<T> tClass) {
+        return iCustomerRepository.findByNameCustomer(name,cmnd,tClass);
     }
 }
