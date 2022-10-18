@@ -67,8 +67,8 @@ public class ContractDto implements Validator {
             errors.rejectValue("interestRate","add.interestRate","Vui lòng nhập");
         }try {
             interestRate = Double.parseDouble(contractDto.getInterestRate());
-            if (interestRate<=0) {
-                errors.rejectValue("interestRate","add.interestRate","Vui lòng nhập lãi suất lơn hơn 0");
+            if (interestRate <0.2 || interestRate > 0.4) {
+                errors.rejectValue("interestRate","add.interestRate","Vui lòng nhập lãi suất trong khoảng 0.2 đến 0.4");
             }
         } catch (Exception e) {
             errors.rejectValue("interestRate","add.interestRate","Vui lòng nhập số");

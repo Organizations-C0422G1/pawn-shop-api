@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface ICustomerService {
     public Page<Customer> findAllCustomer (Pageable pageable);
-    public Optional<Customer> findCustomerById (@Param("id") int id);
+    public Optional<Customer> findCustomerById (@Param("id") Long id);
     public Optional<Customer> findCustomerByIdCard(@Param("idCard") String idCard);
 }

@@ -21,7 +21,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Optional<Customer> findCustomerById(int id) {
+    public Optional<Customer> findCustomerById(Long id) {
         return iCustomerRepository.findCustomerById(id);
     }
 

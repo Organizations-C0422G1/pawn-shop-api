@@ -27,7 +27,7 @@ public class RestCustomerController {
         return new ResponseEntity<>(customers,HttpStatus.OK);
     }
     @GetMapping("/findCustomerById")
-    public ResponseEntity<Customer> findCustomerById (@RequestParam int id) {
+    public ResponseEntity<Customer> findCustomerById (@RequestParam Long id) {
         Customer customer = iCustomerService.findCustomerById(id).orElse(null);
         if (customer == null) {
             return new ResponseEntity<>(HttpStatus.OK);

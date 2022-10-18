@@ -11,6 +11,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Setter
@@ -21,6 +22,7 @@ public class PawnItemDto {
     private Long id;
 
     @NotBlank (message = "Vui lòng nhập")
+    @Size(min = 10, max = 100, message = "Nhập tối đa 100 kí tự,ít nhất 10 kí tự")
     private String name;
 
     private PawnType pawnType;
