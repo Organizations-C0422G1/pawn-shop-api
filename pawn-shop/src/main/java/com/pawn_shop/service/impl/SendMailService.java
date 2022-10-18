@@ -98,7 +98,7 @@ public class SendMailService implements ISendMailService {
                     + "<meta charset=\"UTF-8\">"
                     + "</head>"
                     + "<body>"
-                    + "<h2 style=\"color: blue; fontSize:20px\">Dear " + email + "!</h2>"
+                    + "<h2 style=\"color: blue; fontSize:20px\">Dear " + customerName + "!</h2>"
                     + "<p>Hệ thống PAWN xác nhận bạn đã thanh toán thành công. Cảm ơn quý khách đã sử dụng dịch vụ của PAWN</p>"
                     + "<h3 style=\"color:green\">Mr. Trần Hoàng Long</h3>"
                     + "<b>Phone number:</b><span>0971450138</span>"
