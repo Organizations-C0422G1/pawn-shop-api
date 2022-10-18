@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public interface PawnItemDto {
     String getName();
 
-    Boolean getStatus();
+    Integer getStatus();
 
     String getPawnType();
 
