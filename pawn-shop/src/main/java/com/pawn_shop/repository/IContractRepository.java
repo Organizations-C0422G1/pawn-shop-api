@@ -91,5 +91,13 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
     @Modifying
     @Query(value = "update contract set status = 1 where id = :id", nativeQuery = true)
     void returnItem(@Param("id") long id);
+
+    // duyên
+    @Modifying
+    @Transactional
+    @Query(value = "insert into contract (code,end_date,interest_rate,item_price,liquidation_price,return_date,start_date,status,customer_id,employee_id," +
+            "pawn_item_id,`type`) value (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12)", nativeQuery = true)
+    void saveContract(String code, LocalDate endDate, Double interestRate, Double itemPrice, Double liquidationPrice, LocalDate returnDate, LocalDate startDate, int status, Long customerId, Long employeeId, Long pawnItemId, boolean type);
+
 }
 

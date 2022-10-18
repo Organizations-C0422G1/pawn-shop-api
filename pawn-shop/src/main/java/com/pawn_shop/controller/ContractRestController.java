@@ -1,19 +1,29 @@
 package com.pawn_shop.controller;
 
 import com.pawn_shop.config.MailConfig;
+import com.pawn_shop.dto.ContractDtoHd;
 import com.pawn_shop.dto.projection.ContractDto;
+import com.pawn_shop.model.contract.Contract;
 import com.pawn_shop.service.IContractService;
 import com.pawn_shop.service.ISendMailService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
+import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -109,6 +119,28 @@ public class ContractRestController {
             }
         });
         this.sendMailService.sendMailReturnItem(session, emailCustomer, keywordCustomerName);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // duyên
+    @PostMapping("/create")
+    public ResponseEntity<Map<String, String>> createContract(@RequestBody @Valid ContractDtoHd contractDto,
+                                                              BindingResult bindingResult) {
+        contractDto.validate(contractDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errMap = new HashMap<>();
+            for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                errMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
+        }
+        Contract contract = new Contract();
+        BeanUtils.copyProperties(contractDto, contract);
+        contract.setItemPrice(Double.parseDouble(contractDto.getItemPrice()));
+        contract.setInterestRate(Double.parseDouble(contractDto.getInterestRate()));
+        contract.setStartDate(LocalDate.parse(contractDto.getStartDate()));
+        contract.setEndDate(LocalDate.parse(contractDto.getEndDate()));
+        contractService.saveContract(contract);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
