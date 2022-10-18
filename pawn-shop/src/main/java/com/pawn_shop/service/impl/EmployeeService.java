@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -27,8 +28,29 @@ public class EmployeeService implements IEmployeeService {
 iEmployeeRepository.deleteEmployee(id);
     }
 
-    @Override
-    public List<Employee> findById(Long id) {
-        return iEmployeeRepository.findByIds(id);
-    }
+//    @Override
+//    public List<Employee> findById(Long id) {
+//        return iEmployeeRepository.findByIds(id);
+//    }
+
+        @Override
+        public Employee findById(Long id) {
+            return this.iEmployeeRepository.findById(id).orElse(null);
+        }
+
+        @Override
+        public void update(Employee employee) {
+            String address = employee.getAddress();
+            LocalDate dateOfBirth = employee.getDateOfBirth();
+            String email = employee.getEmail();
+            Boolean gender = employee.getGender();
+            String img = employee.getImgUrl();
+            String name = employee.getName();
+            String phone = employee.getPhoneNumber();
+            String idCard = employee.getIdCard();
+            Long id = employee.getId();
+            this.iEmployeeRepository.updateEmployee(address, dateOfBirth, email,
+                    gender, img, name, phone, idCard, id);
+        }
+
 }
