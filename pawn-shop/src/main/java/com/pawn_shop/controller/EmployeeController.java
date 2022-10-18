@@ -45,7 +45,7 @@ public class EmployeeController {
         String jwt = jwtFilter.parseJwt(request);
         String username = jwtUtility.getUserNameFromJwtToken(jwt);
 
-        this.appUserService.resetPassword(username, String.valueOf(newPassword));
+        this.appUserService.resetPassword(username, newPassword.get());
 
         List<AppRole> roles = this.appRoleService.findByUsername(username);
         List<String> roleList = new ArrayList<>();

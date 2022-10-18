@@ -20,7 +20,8 @@ public class AppUserService implements IAppUserService {
 
     @Override
     public void resetPassword(String username, String newPassword) {
-        String encodePassword = new BCryptPasswordEncoder().encode(newPassword);
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
+        String encodePassword = bCryptPasswordEncoder.encode(newPassword);
         this.appUserRepository.resetPassword(username, encodePassword);
     }
 
@@ -28,6 +29,5 @@ public class AppUserService implements IAppUserService {
     public AppUser findByEmail(String email) {
         return this.appUserRepository.findByEmail(email);
     }
-
 
 }

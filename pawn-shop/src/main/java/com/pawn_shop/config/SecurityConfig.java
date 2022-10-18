@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder(12);
     }
 
     @Override
@@ -46,11 +46,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/public/**", "/api/public/login")
+                .antMatchers("/api/public/**")
                 .permitAll().and()
 
                 .authorizeRequests()
-                .antMatchers("/api/employee/**","/api/employee/reset-password")
+                .antMatchers("/api/employee/**")
                 .access("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')").and()
 
                 .authorizeRequests()
