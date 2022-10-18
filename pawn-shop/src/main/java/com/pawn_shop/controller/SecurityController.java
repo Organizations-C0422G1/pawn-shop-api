@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/public")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*",allowedHeaders = "*")
 public class SecurityController {
 
     @Autowired
@@ -40,6 +40,7 @@ public class SecurityController {
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody Optional<LoginRequest> loginRequest) {
+
         if (!loginRequest.isPresent()) {
             return new ResponseEntity<>("Không được để trống tài khoản, mật khẩu",HttpStatus.BAD_REQUEST);
         }

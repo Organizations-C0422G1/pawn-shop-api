@@ -41,7 +41,7 @@ public class SendMailService implements ISendMailService {
                 "<body>\n" +
                 "<h3>Chào " + user.getEmployee().getName() + "</h3>\n" +
                 "<p>Đây là email đặt lại mật khẩu của bạn, bấm vào link bên dưới để đặt lại mật khẩu:</p>\n" +
-                "<a href=\"http://localhost:4200/login/reset-pasword/" + jwt + "\">Reset password link</a>\n" +
+                "<a href=\"http://localhost:4200/reset-password/" +jwt+"\">Reset password link</a>\n" +
                 "<p style=\"color: red\"><i>Lưu ý: Không chia sẻ link này cho người khác</i></p>\n" +
                 "<hr>\n" +
                 "<h4>C04 - PawnShop</h4>\n" +
