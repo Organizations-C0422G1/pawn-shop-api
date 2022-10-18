@@ -86,11 +86,19 @@ public class ContractService implements IContractService {
         this.contractRepository.returnItem(id);
     }
 
+    //duyeen
     @Override
     public void saveContract(Contract contract) {
+        Contract lastContract = this.contractRepository.findContract();
+        contract.setCode(contract.getCode()+(lastContract.getId()+1));
         contractRepository.saveContract(contract.getCode(), contract.getEndDate(), contract.getInterestRate(), contract.getItemPrice(), contract.getLiquidationPrice(), contract.getReturnDate(), contract.getStartDate(), contract.getStatus(), contract.getCustomer().getId(), contract.getEmployee().getId(), contract.getPawnItem().getId(),contract.getType());
         Customer customer = customerService.findCustomerById(contract.getCustomer().getId()).orElse(null);
         mailService.sendMail(contract, customer.getEmail());
+    }
+
+    @Override
+    public Contract findContract() {
+        return contractRepository.findContract();
     }
 
     //uyên
@@ -116,5 +124,12 @@ public class ContractService implements IContractService {
     public Contract findIdContract(Long id) {
         return contractRepository.findIdContract(id);
     }
+
+
+    @Override
+    public Contract createQuickContract(Contract contract) {
+        return this.contractRepository.save(contract);
+    }
+
 }
 

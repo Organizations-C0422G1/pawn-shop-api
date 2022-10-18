@@ -99,6 +99,9 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
             "pawn_item_id,`type`) value (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12)", nativeQuery = true)
     void saveContract(String code, LocalDate endDate, Double interestRate, Double itemPrice, Double liquidationPrice, LocalDate returnDate, LocalDate startDate, int status, Long customerId, Long employeeId, Long pawnItemId, boolean type);
 
+    @Query(value = "select * from contract order by contract.id desc limit 1",nativeQuery = true)
+    Contract findContract();
+
     //uyên
     @Modifying
     @Query(value = "update contract set code = :code , end_date = :endDate, interest_rate = :interestRate, item_price = :itemPrice," +

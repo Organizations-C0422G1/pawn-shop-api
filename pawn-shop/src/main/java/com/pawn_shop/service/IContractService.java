@@ -33,4 +33,8 @@ public interface IContractService {
     void updateContract(Contract contract);
 
     Contract findIdContract(Long id);
+
+    Contract createQuickContract(Contract contract);
+
+    Contract findContract();
 }

@@ -22,4 +22,9 @@ public class PawItemService implements IPawItemService {
     public List<PawnItem> findAllPawnItem() {
         return iPawItemRepository.findAll();
     }
+
+    @Override
+    public PawnItem createQuickPawnItem(PawnItem pawnItem) {
+        return this.iPawItemRepository.save(pawnItem);
+    }
 }

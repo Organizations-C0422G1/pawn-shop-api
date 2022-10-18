@@ -35,4 +35,9 @@ public class CustomerService implements ICustomerService {
     public List<Customer> findAllCustomer() {
         return iCustomerRepository.findAllCustomer();
     }
+
+    @Override
+    public Customer createQuickCustomer(Customer customer) {
+        return this.iCustomerRepository.save(customer);
+    }
 }

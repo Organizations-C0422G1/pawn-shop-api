@@ -13,4 +13,5 @@ public interface ICustomerService {
     public Optional<Customer> findCustomerById (@Param("id") Long id);
     public Optional<Customer> findCustomerByIdCard(@Param("idCard") String idCard);
     List<Customer> findAllCustomer();
+    Customer createQuickCustomer(Customer customer);
 }
