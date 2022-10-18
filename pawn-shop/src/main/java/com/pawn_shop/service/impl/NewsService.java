@@ -15,8 +15,8 @@ public class NewsService implements INewsService {
     private INewsRepository newsRepository;
 
     @Override
-    public Page<NewsDto> findAllNews(Pageable pageable, String searchName, String dateFirst, String dateLast) {
-        return newsRepository.findAllNews(pageable,"%" + searchName + "%",dateFirst,dateLast) ;
+    public Page<NewsDto> findAllNews(Pageable pageable, String searchName,String searchContent, String dateFirst, String dateLast) {
+        return  this.newsRepository.findAllNews(pageable,"%" +searchName + "%","%" + searchContent + "%",dateFirst,dateLast);
     }
 
 

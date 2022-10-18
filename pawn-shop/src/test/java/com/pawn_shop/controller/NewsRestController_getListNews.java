@@ -40,28 +40,28 @@ public class NewsRestController_getListNews {
                 .andExpect(jsonPath("content[3].postingDay").value("2022-10-10"));
     }
     @Test
-    public void getAllNews_1() throws Exception {
+    public void getAllNews_title_1() throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/list-news?title=null")
                 ).andDo(print())
                 .andExpect(status().is(404));
     }
     @Test
-    public void getAllNews_2() throws Exception {
+    public void getAllNews_title_2() throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/list-news?title= ")
                 ).andDo(print())
-                .andExpect(status().is2xxSuccessful());
+                .andExpect(status().is(204));
     }
     @Test
-    public void getAllNews_3() throws Exception {
+    public void getAllNews_title_3() throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/list-news?tile=ádsa")
                 ).andDo(print())
                 .andExpect(status().is4xxClientError());
     }
     @Test
-    public void getAllNews_4() throws Exception {
+    public void getAllNews_title_4() throws Exception {
         this.mockMvc.perform(
                         MockMvcRequestBuilders.get("/list-news?tile=Cầm Xe Ô Tô Hạng Sang Siêu Xe")
                 ).andDo(print())

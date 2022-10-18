@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface INewsService {
 
-    Page<NewsDto> findAllNews(Pageable pageable, String searchName , String dateFirst, String dateLast);
+    Page<NewsDto> findAllNews(Pageable pageable, String searchName ,String searchContent, String dateFirst, String dateLast);
 
     News getNewsById(Long id);
 

@@ -22,21 +22,23 @@ public class NewsController {
 
     @GetMapping("/list-news")
     public ResponseEntity<Page<NewsDto>> getAllNews(@PageableDefault(5) Pageable pageable, @RequestParam("title") Optional<String> titleSearch,
+                                                    @RequestParam("content") Optional<String> contentSearch,
                                                     Optional<String> firstDate,
                                                     Optional<String> lastDate) {
         String searchName = titleSearch.orElse("");
+        String searchContent = contentSearch.orElse("");
         String dateFirst = firstDate.orElse("0001-01-01");
         String dateLast = lastDate.orElse("9000-01-01");
-        if(searchName.equals("")){
+        if (searchName.equals("")) {
             searchName = "";
         }
-        if(dateFirst.equals("null")){
+        if (dateFirst.equals("null")) {
             dateFirst = "0001-01-01";
         }
-        if(dateLast.equals("null")){
+        if (dateLast.equals("null")) {
             dateLast = "9000-01-01";
         }
-        Page<NewsDto> newsDtos = this.newsService.findAllNews(pageable, searchName, dateFirst, dateLast);
+        Page<NewsDto> newsDtos = this.newsService.findAllNews(pageable, searchName, searchContent, dateFirst, dateLast);
         if (newsDtos.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
