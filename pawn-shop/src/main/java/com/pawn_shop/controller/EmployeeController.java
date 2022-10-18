@@ -1,17 +1,20 @@
 package com.pawn_shop.controller;
 
+import com.pawn_shop.dto.EmployeeDto;
 import com.pawn_shop.dto.projection.IEmployeeDto;
 import com.pawn_shop.model.employee.Employee;
 import com.pawn_shop.service.IEmployeeService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -36,23 +39,34 @@ public class EmployeeController {
 
 
     }
-    @GetMapping("findById/{id}")
-    public ResponseEntity<List<Employee>> findById(@PathVariable Long id) {
-        List<Employee> employee = iEmployeeService.findById(id);
-        if (!employee.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(employee, HttpStatus.OK);
-    }
+    
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Employee> deleteEmployeeById(@PathVariable Long id) {
-        List<Employee> employeeList = iEmployeeService.findById(id);
-        for (Employee employee : employeeList) {
-            if (Objects.equals(id, employee.getId())) {
-                iEmployeeService.deleteEmployee(id);
-                return new ResponseEntity<>(HttpStatus.OK);
-            }
+        Employee employee1 = this.iEmployeeService.findById(id);
+
+        if (Objects.equals(id, employee1.getId())) {
+            iEmployeeService.deleteEmployee(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+
         }
-            return new ResponseEntity(employeeList,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(employee1, HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Employee> findByIdEmployee(@PathVariable Long id) {
+        Employee employee = this.iEmployeeService.findById(id);
+        return new ResponseEntity<>(employee, HttpStatus.OK);
+    }
+
+    @PatchMapping("/update")
+    public ResponseEntity<Void> updateById(@RequestBody @Valid EmployeeDto employeeDto, BindingResult bindingResult) {
+        new EmployeeDto().validate(employeeDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDto, employee);
+        this.iEmployeeService.update(employee);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

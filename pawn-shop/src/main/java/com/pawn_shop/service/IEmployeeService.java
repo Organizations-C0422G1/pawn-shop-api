@@ -11,6 +11,9 @@ public interface IEmployeeService {
     Page<IEmployeeDto> getAllEmployeeSearch(String searchKeyWordName, String searchKeyWordCode,Pageable pageable);
 
     void deleteEmployee(Long id);
+   
 
-    List<Employee> findById(Long id);
+    void update(Employee employee);
+
+    Employee findById(Long id);
 }

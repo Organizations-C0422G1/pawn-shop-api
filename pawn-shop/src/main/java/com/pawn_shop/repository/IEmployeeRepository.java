@@ -11,7 +11,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Optional;
 
 @Repository
 public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
@@ -32,6 +33,18 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
     @Query(value = "update employee set `status` = 0 where id = :id", nativeQuery = true)
     void deleteEmployee(@Param("id") Long id);
 
-    @Query(value = "select * from employee where id = :id", nativeQuery = true)
-    List<Employee> findByIds(Long id);
+
+    @Query(value = "select id, address,code, date_of_birth,email,gender,img_url,`name`,phone_number,salary,`status`,id_card \n" +
+            "\tfrom employee " +
+            "\twhere id = :id", nativeQuery = true)
+    Optional<Employee> findById(@Param("id") Long id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update employee set address = :address, date_of_birth = :dateOfBirth,email = :email," +
+            " gender = :gender , img_url = :imgUrl , `name` = :name, phone_number = :phoneNumber, id_card= :idCard " +
+            " where id = :id", nativeQuery = true)
+    void updateEmployee(@Param("address") String address, @Param("dateOfBirth") LocalDate dateOfBirth,
+                        @Param("email") String email, @Param("gender") Boolean gender, @Param("imgUrl") String imgUrl,
+                        @Param("name") String name, @Param("phoneNumber") String phoneNumber, @Param("idCard") String idCard, @Param("id") Long id);
 }
