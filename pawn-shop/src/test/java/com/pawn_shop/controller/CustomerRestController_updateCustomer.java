@@ -48,7 +48,7 @@ public class CustomerRestController_updateCustomer {
         customerDTO.setAddress(address);
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -78,7 +78,7 @@ public class CustomerRestController_updateCustomer {
         customerDTO.setAddress(address);
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -107,7 +107,7 @@ public class CustomerRestController_updateCustomer {
         customerDTO.setAddress(address);
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -139,7 +139,7 @@ public class CustomerRestController_updateCustomer {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -170,7 +170,7 @@ public class CustomerRestController_updateCustomer {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -202,7 +202,7 @@ public class CustomerRestController_updateCustomer {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -234,7 +234,7 @@ public class CustomerRestController_updateCustomer {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -266,7 +266,7 @@ public class CustomerRestController_updateCustomer {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -298,7 +298,7 @@ public class CustomerRestController_updateCustomer {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -330,7 +330,7 @@ public class CustomerRestController_updateCustomer {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -362,7 +362,7 @@ public class CustomerRestController_updateCustomer {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -394,7 +394,7 @@ public class CustomerRestController_updateCustomer {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -426,7 +426,7 @@ public class CustomerRestController_updateCustomer {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -458,7 +458,7 @@ public class CustomerRestController_updateCustomer {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -490,7 +490,7 @@ public class CustomerRestController_updateCustomer {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -522,7 +522,7 @@ public class CustomerRestController_updateCustomer {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -554,7 +554,7 @@ public class CustomerRestController_updateCustomer {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
@@ -586,7 +586,7 @@ public class CustomerRestController_updateCustomer {
 
         this.mockMvc
                 .perform(MockMvcRequestBuilders
-                        .post("/api/pawnShop/goCreateCustomer")
+                        .patch("/api/pawnShop/goUpdateCustomer")
                         .content(this.objectMapper.writeValueAsString(customerDTO))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andDo(print())
