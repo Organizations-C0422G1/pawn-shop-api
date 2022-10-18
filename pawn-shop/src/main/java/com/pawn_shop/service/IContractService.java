@@ -13,4 +13,6 @@ public interface IContractService {
     Page<Contract> findLiquidationContractByDate(String startReturnDate, String endReturnDate, Pageable pageable);
 
     Page<Contract> findExpectedContractByDate(String startReturnDate, String endReturnDate, Pageable pageable);
+
+    void updateStatusContract(Long idContract);
 }

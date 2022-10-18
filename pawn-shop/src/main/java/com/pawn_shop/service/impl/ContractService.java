@@ -45,4 +45,9 @@ public class ContractService implements IContractService {
             return iContractRepository.findExpectedContractByDate(startReturnDate, endReturnDate, pageable);
         }
     }
+
+    @Override
+    public void updateStatusContract(Long idContract) {
+        iContractRepository.updateStatusContract(idContract);
+    }
 }
