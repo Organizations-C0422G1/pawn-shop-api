@@ -9,4 +9,6 @@ public interface ISendMailService {
     List<MailAutoProjection> listEmail();
 
     void sendMailAuto(Session session);
+
+    void sendMailReturnItem(Session session, String email, String customerName);
 }

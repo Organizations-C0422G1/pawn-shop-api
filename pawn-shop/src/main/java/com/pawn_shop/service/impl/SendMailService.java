@@ -4,6 +4,7 @@ import com.pawn_shop.config.MailConfig;
 import com.pawn_shop.dto.projection.MailAutoProjection;
 import com.pawn_shop.repository.IContractRepository;
 import com.pawn_shop.service.ISendMailService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
+@Slf4j
 public class SendMailService implements ISendMailService {
     @Autowired
     private IContractRepository contractRepository;
@@ -81,6 +83,36 @@ public class SendMailService implements ISendMailService {
             }
         } else {
             System.out.println("không có email nào để gửi!");
+        }
+    }
+
+    @Override
+    public void sendMailReturnItem(Session session, String email, String customerName) {
+        try {
+            Multipart multipart = new MimeMultipart();
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(MailConfig.APP_EMAIL));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+            message.setSubject("XÁC NHẬN THANH TOÁN THÀNH CÔNG!");
+            String htmlContent = "<!DOCTYPE html>"
+                    + "<html lang=\"vi\">"
+                    + "<head>"
+                    + "<meta charset=\"UTF-8\">"
+                    + "</head>"
+                    + "<body>"
+                    + "<h2 style=\"color: blue; fontSize:20px\">Dear " + customerName + "!</h2>"
+                    + "<p>Hệ thống PAWN xác nhận bạn đã thanh toán thành công. Cảm ơn quý khách đã sử dụng dịch vụ của PAWN</p>"
+                    + "<h3 style=\"color:green\">Mr. Trần Hoàng Long</h3>"
+                    + "<b>Phone number:</b><span>0971450138</span>"
+                    + "</body>"
+                    + "</html>";
+            MimeBodyPart textBodyPart = new MimeBodyPart();
+            textBodyPart.setContent(htmlContent, "text/html; charset=UTF-8");
+            multipart.addBodyPart(textBodyPart);
+            message.setContent(multipart, "UTF-8");
+            Transport.send(message);
+        } catch (MessagingException e) {
+            e.printStackTrace();
         }
     }
 }
