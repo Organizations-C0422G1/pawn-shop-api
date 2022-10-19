@@ -4,6 +4,7 @@ import com.pawn_shop.config.MailConfig;
 import com.pawn_shop.dto.projection.MailAutoProjection;
 import com.pawn_shop.repository.IContractRepository;
 import com.pawn_shop.service.ISendMailService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
+@Slf4j
 public class SendMailService implements ISendMailService {
     @Autowired
     private IContractRepository contractRepository;

@@ -5,6 +5,7 @@ import com.pawn_shop.model.contract.Contract;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IContractService {
@@ -22,7 +23,7 @@ public interface IContractService {
 
     Page<ContractDto> getAllContractPaginationAndSearch(Pageable pageable, String code, String customerName, String pawnItem, String startDate);
 
-    void returnItem(long id);
+    void returnItem(Double liquidationPrice, LocalDate returnDate, long id);
 
     void saveContract(Contract contract);
 

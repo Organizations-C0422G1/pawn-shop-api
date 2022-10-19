@@ -2,7 +2,6 @@ package com.pawn_shop.controller;
 
 import com.pawn_shop.config.MailConfig;
 import com.pawn_shop.dto.ContractDtoHd;
-import com.pawn_shop.dto.ContractUpdateDto;
 import com.pawn_shop.dto.projection.ContractDto;
 import com.pawn_shop.dto.quick_register.QuickContractDto;
 import com.pawn_shop.model.address.Address;
@@ -23,13 +22,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
-
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.*;
-
 
 @RestController
 @CrossOrigin
@@ -96,7 +93,6 @@ public class ContractRestController {
         return new ResponseEntity<>(contractPage, HttpStatus.OK);
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<ContractDto> contractDetail(@PathVariable Long id) {
         ContractDto contract = contractService.findById(id);
@@ -113,10 +109,15 @@ public class ContractRestController {
     }
 
     @PatchMapping(value = "returnItem/{id}")
-    public ResponseEntity<Void> returnItem(@PathVariable long id, @RequestParam Optional<String> email, @RequestParam Optional<String> customerName) {
+    public ResponseEntity<Void> returnItem(@PathVariable long id, @RequestParam Optional<String> email,
+                                           @RequestParam Optional<String> customerName,
+                                           @RequestParam Optional<Double> liquidationPrice,
+                                           @RequestParam Optional<LocalDate> returnDate) {
         String emailCustomer = email.orElse("");
         String keywordCustomerName = customerName.orElse("");
-        this.contractService.returnItem(id);
+        Double liquidationPriceParam = liquidationPrice.orElse(0.0);
+        LocalDate returnDateParam = returnDate.orElse(LocalDate.now());
+        this.contractService.returnItem(liquidationPriceParam, returnDateParam, id);
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.host", MailConfig.HOST_NAME);
@@ -182,8 +183,8 @@ public class ContractRestController {
     }
 
     @PatchMapping(value = "/update-contract", consumes = {"*/*"})
-    public ResponseEntity<Map<String, String>> update(@Valid  @RequestBody ContractDtoHd contractUpdateDto, BindingResult bindingResult) {
-        contractUpdateDto.validate(contractUpdateDto,bindingResult);
+    public ResponseEntity<Map<String, String>> update(@Valid @RequestBody ContractDtoHd contractUpdateDto, BindingResult bindingResult) {
+        contractUpdateDto.validate(contractUpdateDto, bindingResult);
         if (bindingResult.hasErrors()) {
             Map<String, String> errMap = new HashMap<>();
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
@@ -202,44 +203,44 @@ public class ContractRestController {
         }
     }
 
-//    Truong bat dau
-@PostMapping(value = "/createQuickContract")
-public ResponseEntity<?> createQuickContract(@RequestBody @Valid QuickContractDto quickContractDto,
-                                             BindingResult bindingResult) {
-    new QuickContractDto().validate(quickContractDto, bindingResult);
-    if (bindingResult.hasErrors()) {
-        Map<String, String> errMap = new HashMap<>();
-        for (FieldError fieldError : bindingResult.getFieldErrors()) {
-            errMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+    //    Truong bat dau
+    @PostMapping(value = "/createQuickContract")
+    public ResponseEntity<?> createQuickContract(@RequestBody @Valid QuickContractDto quickContractDto,
+                                                 BindingResult bindingResult) {
+        new QuickContractDto().validate(quickContractDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errMap = new HashMap<>();
+            for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                errMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
+        PawnItem tempPawnItem = new PawnItem();
+        Address tempAddress = new Address();
+        Customer tempCustomer = new Customer();
+        Contract tempContract = new Contract();
+
+        PawnType tempPawnType = new PawnType();
+        tempPawnType.setId(quickContractDto.getQuickPawnItemDto().getQuickPawnTypeDto().getId());
+        tempPawnItem.setPawnType(tempPawnType);
+        PawnItem pawnItem = this.iPawnItemService.createQuickPawnItem(tempPawnItem);
+
+        District tempDistrict = new District();
+        tempDistrict.setId(quickContractDto.getQuickCustomerDto().getQuickAddressDto().getQuickDistrictDto().getId());
+        tempAddress.setDistrict(tempDistrict);
+        Address address = this.iAddressService.createQuickAddress(tempAddress);
+
+        tempCustomer.setAddress(address);
+        tempCustomer.setName(quickContractDto.getQuickCustomerDto().getName());
+        tempCustomer.setPhoneNumber(quickContractDto.getQuickCustomerDto().getPhoneNumber());
+        tempCustomer.setStatus(true);
+        Customer customer = this.iCustomerService.createQuickCustomer(tempCustomer);
+
+        tempContract.setCustomer(customer);
+        tempContract.setPawnItem(pawnItem);
+        tempContract.setStatus(4);
+        Contract contract = this.contractService.createQuickContract(tempContract);
+        return new ResponseEntity<>(contract, HttpStatus.CREATED);
     }
-    PawnItem tempPawnItem = new PawnItem();
-    Address tempAddress = new Address();
-    Customer tempCustomer = new Customer();
-    Contract tempContract = new Contract();
-
-    PawnType tempPawnType = new PawnType();
-    tempPawnType.setId(quickContractDto.getQuickPawnItemDto().getQuickPawnTypeDto().getId());
-    tempPawnItem.setPawnType(tempPawnType);
-    PawnItem pawnItem = this.iPawnItemService.createQuickPawnItem(tempPawnItem);
-
-    District tempDistrict = new District();
-    tempDistrict.setId(quickContractDto.getQuickCustomerDto().getQuickAddressDto().getQuickDistrictDto().getId());
-    tempAddress.setDistrict(tempDistrict);
-    Address address = this.iAddressService.createQuickAddress(tempAddress);
-
-    tempCustomer.setAddress(address);
-    tempCustomer.setName(quickContractDto.getQuickCustomerDto().getName());
-    tempCustomer.setPhoneNumber(quickContractDto.getQuickCustomerDto().getPhoneNumber());
-    tempCustomer.setStatus(true);
-    Customer customer = this.iCustomerService.createQuickCustomer(tempCustomer);
-
-    tempContract.setCustomer(customer);
-    tempContract.setPawnItem(pawnItem);
-    tempContract.setStatus(4);
-    Contract contract = this.contractService.createQuickContract(tempContract);
-    return new ResponseEntity<>(contract, HttpStatus.CREATED);
-}
 //    Truong ket thuc
 }
