@@ -83,11 +83,10 @@ public class ContractRestController {
         String keywordCode = code.orElse("");
         String keywordCustomerName = customerName.orElse("");
         String keywordPawnItem = pawnItem.orElse("");
-        String keywordStartDate = startDate.orElse("0000-00-00");
+        String keywordStartDate = startDate.orElse("");
 
         Page<ContractDto> contractPage = this.contractService.getAllContractPaginationAndSearch(pageable, keywordCode, keywordCustomerName, keywordPawnItem, keywordStartDate);
         if (contractPage.isEmpty()) {
-
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(contractPage, HttpStatus.OK);
@@ -108,16 +107,26 @@ public class ContractRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PatchMapping(value = "returnItem/{id}")
+    @GetMapping(value = "/listNotPagination")
+    public ResponseEntity<List<Contract>> goListNotPagination() {
+        List<Contract> contractList = this.contractService.findAllContract();
+        if (contractList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(contractList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "returnItem/{id}")
     public ResponseEntity<Void> returnItem(@PathVariable long id, @RequestParam Optional<String> email,
                                            @RequestParam Optional<String> customerName,
-                                           @RequestParam Optional<Double> liquidationPrice,
-                                           @RequestParam Optional<LocalDate> returnDate) {
+                                           @RequestParam Optional<Double> liquidationPrice) {
         String emailCustomer = email.orElse("");
         String keywordCustomerName = customerName.orElse("");
         Double liquidationPriceParam = liquidationPrice.orElse(0.0);
-        LocalDate returnDateParam = returnDate.orElse(LocalDate.now());
-        this.contractService.returnItem(liquidationPriceParam, returnDateParam, id);
+        LocalDate returnDateParam = LocalDate.now();
+
+        List<Contract> contractList = contractService.findAllContract();
+
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.host", MailConfig.HOST_NAME);
@@ -125,13 +134,19 @@ public class ContractRestController {
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.port", MailConfig.SSL_PORT);
 
-        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(MailConfig.APP_EMAIL, MailConfig.APP_PASSWORD);
+        for (Contract contract : contractList) {
+            if (Objects.equals(id, contract.getId())) {
+                Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(MailConfig.APP_EMAIL, MailConfig.APP_PASSWORD);
+                    }
+                });
+                this.contractService.returnItem(liquidationPriceParam, returnDateParam, id);
+                this.sendMailService.sendMailReturnItem(session, emailCustomer, keywordCustomerName);
+                return new ResponseEntity<>(HttpStatus.OK);
             }
-        });
-        this.sendMailService.sendMailReturnItem(session, emailCustomer, keywordCustomerName);
-        return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     // duyên
