@@ -242,5 +242,5 @@ public class ContractRestController {
         Contract contract = this.contractService.createQuickContract(tempContract);
         return new ResponseEntity<>(contract, HttpStatus.CREATED);
     }
-//    Truong ket thuc
+    // Truong ket thuc
 }

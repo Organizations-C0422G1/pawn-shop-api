@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface IPawnTypeRepository extends JpaRepository<PawnType,Long> {
-    @Query(value = "select * from pawn_type",nativeQuery = true)
+    @Query(value = "select pawn_type.id, pawn_type.name from pawn_type",nativeQuery = true)
     List<PawnType> findAllPawnType();
 }
-

@@ -14,6 +14,4 @@ public class QuickCustomerDto {
     private String name;
     private String phoneNumber;
     private QuickAddressDto quickAddressDto;
-
-
 }
