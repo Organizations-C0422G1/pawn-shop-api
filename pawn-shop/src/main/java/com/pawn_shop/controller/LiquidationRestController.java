@@ -51,8 +51,8 @@ public class LiquidationRestController {
     }
 
     @GetMapping("/pawnItem/list")
-    public ResponseEntity<List<IPawnItemLiquidationDto>> findByNameAndPricePawnItem(@RequestParam("namePawnType") Optional<String> namePawnType,
-                                                                        @RequestParam("idPawnItem") Optional<String> idPawnItem,
+    public ResponseEntity<List<IPawnItemLiquidationDto>> findByNameAndPricePawnItem(@RequestParam("namePawnItem") Optional<String> namePawnType,
+                                                                        @RequestParam("idPawnType") Optional<String> idPawnItem,
                                                                         @RequestParam("price") Optional<String> price){
         String namePawnTypes = namePawnType.orElse("");
         String idPawnItems = idPawnItem.orElse("");
