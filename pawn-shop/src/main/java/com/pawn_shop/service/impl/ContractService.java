@@ -18,7 +18,17 @@ import java.util.List;
 public class ContractService implements IContractService {
 
     @Autowired
-    private IContractRepository contractRepository;
+    private IContractRepository iContractRepository;
+
+    @Override
+    public void createLiquidation(Double price, String dateLiquidation, Long idContract) {
+        iContractRepository.createLiquidation(price, dateLiquidation, idContract);
+    }
+
+    @Override
+    public Long findContractByIdPawnItem(Long idPawnItem) {
+        return iContractRepository.findContractByIdPawnItem(idPawnItem);
+    }
 
     @Autowired
     private ICustomerService customerService;
@@ -35,7 +45,7 @@ public class ContractService implements IContractService {
                                           String status,
                                           Pageable pageable) {
         if (type.equals("")) {
-            return contractRepository.contractPage(
+            return iContractRepository.contractPage(
                     customerName,
                     pawnItemName,
                     1,
@@ -45,7 +55,7 @@ public class ContractService implements IContractService {
                     status,
                     pageable);
         } else if (type.equals("1")) {
-            return contractRepository.contractPage(
+            return iContractRepository.contractPage(
                     customerName,
                     pawnItemName,
                     1,
@@ -55,7 +65,7 @@ public class ContractService implements IContractService {
                     status,
                     pageable);
         }
-        return contractRepository.contractPage(
+        return iContractRepository.contractPage(
                 customerName,
                 pawnItemName,
                 0,
@@ -68,53 +78,53 @@ public class ContractService implements IContractService {
 
     @Override
     public ContractDto findById(Long id) {
-        return contractRepository.findByIdContractDto(id);
+        return iContractRepository.findByIdContractDto(id);
     }
 
     @Override
     public void deleteContract(Long id) {
-        contractRepository.deleteContract(id);
+        iContractRepository.deleteContract(id);
     }
 
     @Override
     public Page<ContractDto> getAllContractPaginationAndSearch(Pageable pageable, String code, String customerName, String pawnItem, String startDate) {
-        return this.contractRepository.getAllContractPaginationAndSearch(pageable, code, customerName, pawnItem, startDate);
+        return this.iContractRepository.getAllContractPaginationAndSearch(pageable, code, customerName, pawnItem, startDate);
     }
 
     @Override
     public void returnItem(long id) {
-        this.contractRepository.returnItem(id);
+        this.iContractRepository.returnItem(id);
     }
 
     //duyeen
     @Override
     public void saveContract(Contract contract) {
-        Contract lastContract = this.contractRepository.findContract();
+        Contract lastContract = this.iContractRepository.findContract();
         contract.setCode(contract.getCode()+(lastContract.getId()+1));
-        contractRepository.saveContract(contract.getCode(), contract.getEndDate(), contract.getInterestRate(), contract.getItemPrice(), contract.getLiquidationPrice(), contract.getReturnDate(), contract.getStartDate(), contract.getStatus(), contract.getCustomer().getId(), contract.getEmployee().getId(), contract.getPawnItem().getId(),contract.getType());
+        iContractRepository.saveContract(contract.getCode(), contract.getEndDate(), contract.getInterestRate(), contract.getItemPrice(), contract.getLiquidationPrice(), contract.getReturnDate(), contract.getStartDate(), contract.getStatus(), contract.getCustomer().getId(), contract.getEmployee().getId(), contract.getPawnItem().getId(),contract.getType());
         Customer customer = customerService.findCustomerById(contract.getCustomer().getId()).orElse(null);
         mailService.sendMail(contract, customer.getEmail());
     }
 
     @Override
     public Contract findContract() {
-        return contractRepository.findContract();
+        return iContractRepository.findContract();
     }
 
     //uyên
     @Override
     public List<Contract> findAllContract() {
-        return contractRepository.findAllContract();
+        return iContractRepository.findAllContract();
     }
 
     @Override
     public List<Contract> top10Contract() {
-        return contractRepository.top10Contract();
+        return iContractRepository.top10Contract();
     }
 
     @Override
     public void updateContract(Contract contract) {
-        contractRepository.updateContract(contract.getCode(),contract.getEndDate(),contract.getInterestRate(),
+        iContractRepository.updateContract(contract.getCode(),contract.getEndDate(),contract.getInterestRate(),
                 contract.getItemPrice(),contract.getLiquidationPrice(),contract.getReturnDate(),contract.getStartDate(),
                 contract.getType(),contract.getCustomer().getId(),contract.getEmployee().getId(),contract.getPawnItem().getId(), contract.getId());
     }
@@ -122,13 +132,13 @@ public class ContractService implements IContractService {
 
     @Override
     public Contract findIdContract(Long id) {
-        return contractRepository.findIdContract(id);
+        return iContractRepository.findIdContract(id);
     }
 
 
     @Override
     public Contract createQuickContract(Contract contract) {
-        return this.contractRepository.save(contract);
+        return this.iContractRepository.save(contract);
     }
 
 }

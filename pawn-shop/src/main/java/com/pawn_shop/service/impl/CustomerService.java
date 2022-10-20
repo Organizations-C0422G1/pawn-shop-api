@@ -1,6 +1,5 @@
 package com.pawn_shop.service.impl;
 
-
 import com.pawn_shop.dto.ICustomerDto;
 import com.pawn_shop.model.address.Address;
 import com.pawn_shop.model.customer.Customer;
@@ -15,12 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class CustomerService implements ICustomerService {
     @Autowired
     private ICustomerRepository iCustomerRepository;
-
 
     @Autowired
     private IAddressService iAddressService;
@@ -82,5 +79,6 @@ public class CustomerService implements ICustomerService {
     @Override
     public Customer createQuickCustomer(Customer customer) {
         return this.iCustomerRepository.save(customer);
+
     }
 }

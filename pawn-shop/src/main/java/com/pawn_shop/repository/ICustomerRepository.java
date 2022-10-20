@@ -6,6 +6,10 @@ import com.pawn_shop.model.customer.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,12 +17,16 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
+
+    @Query(nativeQuery = true,value = "Select c.code, c.name, c.id_card from customer c " +
+            " where c.name like %?1% and c.id_card like %?2%")
+    <T> List<T> findByNameCustomer(String name,String cmnd,Class<T> tClass);
+
 
     @Query(nativeQuery = true, value = "select count(customer.id) as amountContract ,\n" +
             " customer.id as id,\n" +

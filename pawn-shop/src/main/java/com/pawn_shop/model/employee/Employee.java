@@ -43,18 +43,12 @@ public class Employee {
     @Column(columnDefinition = "varchar(150)")
     private String address;
 
-    @Column(columnDefinition = "VARCHAR(15)")
-    private String idCard;
-
     private Double salary;
 
     @Column(columnDefinition = "text")
     private String imgUrl;
 
     private boolean status;
-
-    @Column(columnDefinition = "varchar(30)")
-    private String idCard;
 
     @OneToOne(mappedBy = "employee")
     @JsonBackReference

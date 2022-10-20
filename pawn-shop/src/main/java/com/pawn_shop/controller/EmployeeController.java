@@ -65,10 +65,6 @@ public class EmployeeController {
     }
 
     @PatchMapping("/update")
-
-    public ResponseEntity<Void> updateById(@RequestBody @Valid EmployeeDto employeeDto, BindingResult bindingResult) {
-        new EmployeeDto().validate(employeeDto, bindingResult);
-
     public ResponseEntity<Void>updateById(@RequestBody @Valid EmployeeDto employeeDto, BindingResult bindingResult){
         new EmployeeDto().validate(employeeDto,bindingResult);
 
@@ -85,11 +81,6 @@ public class EmployeeController {
     public ResponseEntity<IEmployeeDto> findByUser(@PathVariable String user) {
         IEmployeeDto employee = this.iEmployeeService.findByUser(user);
         return new ResponseEntity<>(employee, HttpStatus.OK);
-    }
-
-        BeanUtils.copyProperties(employeeDto,employee);
-        this.iEmployeeService.update(employee);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

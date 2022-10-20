@@ -14,6 +14,11 @@ public class PawItemService implements IPawItemService {
     private IPawItemRepository iPawItemRepository;
 
     @Override
+
+    public <T> List<T> findAllPawnItem(String namePawnType, String namePawnItem, String price, Class<T> tClass) {
+        return iPawItemRepository.findAllPawnItem(namePawnType,namePawnItem, price, tClass);
+    }
+
     public PawnItem savePawnItem(PawnItem pawnItem) {
         return iPawItemRepository.save(pawnItem);
     }
@@ -27,4 +32,5 @@ public class PawItemService implements IPawItemService {
     public PawnItem createQuickPawnItem(PawnItem pawnItem) {
         return this.iPawItemRepository.save(pawnItem);
     }
+
 }
