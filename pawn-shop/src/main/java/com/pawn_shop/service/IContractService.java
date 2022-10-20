@@ -4,6 +4,8 @@ import com.pawn_shop.model.contract.Contract;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface IContractService {
 
     Page<Contract> findCompleteContractByDate(String startReturnDate, String endReturnDate, Pageable pageable);
@@ -14,5 +16,12 @@ public interface IContractService {
 
     Page<Contract> findExpectedContractByDate(String startReturnDate, String endReturnDate, Pageable pageable);
 
-    void updateStatusContract(Long idContract);
+    <T> List<T> getAllExpectedContractByDate(String startReturnDate, String endReturnDate, Class<T> tClass);
+
+    <T> List<T> getAllLiquidationContractByDate(String startReturnDate, String endReturnDate, Class<T> tClass);
+
+    <T> List<T> getAllCompleteContractByDate(String startReturnDate, String endReturnDate, Class<T> tClass);
+
+
+
 }

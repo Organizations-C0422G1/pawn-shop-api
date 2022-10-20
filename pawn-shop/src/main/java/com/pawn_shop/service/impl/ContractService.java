@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContractService implements IContractService {
 
@@ -47,7 +49,32 @@ public class ContractService implements IContractService {
     }
 
     @Override
-    public void updateStatusContract(Long idContract) {
-        iContractRepository.updateStatusContract(idContract);
+    public <T> List<T> getAllExpectedContractByDate(String startReturnDate, String endReturnDate, Class<T> tClass) {
+        if (startReturnDate.equals("") && endReturnDate.equals("")) {
+            return iContractRepository.getAllExpectedContract(tClass);
+        } else {
+            return iContractRepository.getAllExpectedContractByDate(startReturnDate, endReturnDate, tClass);
+        }
+
     }
+
+    @Override
+    public <T> List<T> getAllLiquidationContractByDate(String startReturnDate, String endReturnDate, Class<T> tClass) {
+        if (startReturnDate.equals("") && endReturnDate.equals("")) {
+            return iContractRepository.getAllLiquidationContract(tClass);
+        } else {
+            return iContractRepository.getAllLiquidationContractByDate(startReturnDate, endReturnDate, tClass);
+        }
+    }
+
+    @Override
+    public <T> List<T> getAllCompleteContractByDate(String startReturnDate, String endReturnDate, Class<T> tClass) {
+        if (startReturnDate.equals("") && endReturnDate.equals("")) {
+            return iContractRepository.getAllCompleteContract(tClass);
+        } else {
+            return iContractRepository.getAllCompleteContractByDate(startReturnDate, endReturnDate, tClass);
+        }
+    }
+
+  
 }

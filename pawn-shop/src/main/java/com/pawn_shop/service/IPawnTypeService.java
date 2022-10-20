@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface IPawnTypeService {
 
-    List<PawnType> findAllPawnType();
+
 
 }
