@@ -10,13 +10,17 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import java.util.List;
+import java.util.Optional;
+
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
-    @Query(nativeQuery = true, value = "select count(customer.id) as amountContract ,\n" +
+
+    @Query(nativeQuery = true, value = "select count(contract.id) as amountContract ,\n" +
             " customer.id as id,\n" +
             " customer.`name` as `name`,\n" +
             " customer.`code` as `code`,\n" +
@@ -29,8 +33,8 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             " customer.`status` as `status`\n" +
             " from customer join contract on customer.id = contract.customer_id \n" +
             " where customer.status = 1 and customer.`name` like ?1" +
-            " group by contract.customer_id",
-            countQuery = "select count(customer.id) as amountContract ,\n" +
+            " group by customer.id",
+            countQuery = "select count(contract.id) as amountContract ,\n" +
                     " customer.id as id,\n" +
                     " customer.`name` as `name`,\n" +
                     " customer.`code` as `code`,\n" +
@@ -43,8 +47,8 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                     " customer.`status` as `status`\n" +
                     " from customer join contract on customer.id = contract.customer_id \n" +
                     " where customer.status = 1 and customer.`name` like ?1" +
-                    " group by contract.customer_id")
-    Page<ICustomerDto> findAllCustomer(String name, Pageable pageable);
+                    " group by customer.id")
+     Page<ICustomerDto> findAllCustomer(String name, Pageable pageable);
 
     @Modifying
     @Transactional
@@ -77,4 +81,24 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                         @Param("gender") Boolean gender, @Param("id_card") String idCard, @Param("img_url") String imgUrl,
                         @Param("name") String name, @Param("phone_number") String phoneNumber, @Param("status") Boolean status,
                         @Param("address_id") Long addressId, @Param("id") Long id);
+
+//    @Query(value = "select *\n" +
+//            "from customer\n" +
+//            "where id=:id", nativeQuery = true)
+//    Customer findCustomerById(@Param("id") Long id);
+
+
+
+    @Query(value = "select * from customer where status = 1",nativeQuery = true, countQuery = "select count(*) from (select * from customer where status =1) as tableQuery")
+    public Page<Customer> findAllCustomer (Pageable pageable);
+
+    @Query (value = "select * from customer where id = :id", nativeQuery = true)
+    public Optional<Customer> findCustomerById (@Param("id") Long id);
+
+    @Query(value = "select * from customer where id_card = :idCard",nativeQuery = true)
+    public Optional<Customer> findCustomerByIdCard(@Param("idCard") String idCard);
+
+    @Query(value = "select * from customer",nativeQuery = true)
+    List<Customer> findAllCustomer();
+
 }

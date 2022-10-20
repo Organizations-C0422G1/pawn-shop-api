@@ -2,12 +2,19 @@ package com.pawn_shop.controller;
 
 import com.pawn_shop.dto.CustomerDto;
 import com.pawn_shop.dto.ICustomerDto;
+import com.pawn_shop.model.address.Address;
+import com.pawn_shop.model.address.City;
+import com.pawn_shop.model.address.District;
 import com.pawn_shop.model.customer.Customer;
+import com.pawn_shop.service.IAddressService;
+import com.pawn_shop.service.ICityService;
 import com.pawn_shop.service.ICustomerService;
+import com.pawn_shop.service.IDistrictService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +31,12 @@ import java.util.Optional;
 public class CustomerController {
     @Autowired
     private ICustomerService iCustomerService;
+    @Autowired
+    private ICityService iCityService;
+    @Autowired
+    private IDistrictService iDistrictService;
+    @Autowired
+    private IAddressService iAddressService;
 
     @GetMapping(value = "")
     public ResponseEntity<Page<ICustomerDto>> getAllCustomer(@RequestParam Optional<String> name,
@@ -76,5 +89,30 @@ public class CustomerController {
         BeanUtils.copyProperties(updateCustomerDTO, customer);
         iCustomerService.updateCustomer(customer.getId(), customer);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    @GetMapping("/goFindDistrict")
+    public ResponseEntity<List<District>> findAllDistrict(@RequestParam("city") Long city) {
+        List<District> districtList = iDistrictService.findAll(city);
+        return new ResponseEntity<>(districtList, HttpStatus.OK);
+    }
+
+    @GetMapping("/findCityById")
+    public ResponseEntity<City> findCityById(@RequestParam("id") Long id) {
+        City city = iCityService.findById(id);
+        return new ResponseEntity<City>(city, HttpStatus.OK);
+    }
+
+    @GetMapping("/findCustomer")
+    public ResponseEntity<Optional<Customer>> findCustomer(@Param("id") Long id) {
+        Optional<Customer> customer = iCustomerService.findCustomerById(id);
+        return new ResponseEntity<Optional<Customer>>(customer, HttpStatus.OK);
+    }
+
+    @PostMapping("/saveAddress")
+    public ResponseEntity<Address> saveAddress(@RequestBody Address address) {
+        iAddressService.save(address);
+        return new ResponseEntity<>(address, HttpStatus.OK);
     }
 }
