@@ -88,13 +88,6 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
             " and pi.name like %:pawnItem% and ct.start_date >= :startDate) " +
             " and ct.status = 0", nativeQuery = true,
             countQuery = "select count(*) from (" +
-                    " select ct.code, c.name as customer, pi.name as pawnItem, " +
-                    " ct.item_price as itemPrice, ct.start_date as startDate, " +
-                    " ct.end_date as endDate, ct.interest_rate as interestRate, " +
-                    " ct.return_date as returnDate, ct.liquidation_price as liquidationPrice " +
-            " and pi.name like %:pawnItem% and ct.start_date like %:startDate%) " +
-            " and ct.status = 0", nativeQuery = true,
-            countQuery = "select count(*) from (" +
                     " select ct.id, ct.code, c.name as customer, pi.name as pawnItem, " +
                     " ct.item_price as itemPrice, ct.start_date as startDate, " +
                     " ct.end_date as endDate, ct.interest_rate as interestRate, " +
@@ -140,8 +133,6 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
     @Query(value = "update contract set code = :code , end_date = :endDate, interest_rate = :interestRate, item_price = :itemPrice," +
             "liquidation_price = :liquidationPrice, return_date = :returnDate,start_date = :startDate, type = :type," +
             "customer_id = :customerId, employee_id = :employeeId, pawn_item_id = :pawnItemId where id = :id ", nativeQuery = true)
-    void updateContract(@Param("code") String code, @Param("endDate")LocalDate endDate,@Param("interestRate") Double interestDate,
-                        @Param("itemPrice") Double itemPrice, @Param("liquidationPrice") Double liquidationPrice,@Param("returnDate") LocalDate returnDate ,
     void updateContract(@Param("code") String code, @Param("endDate") LocalDate endDate, @Param("interestRate") Double interestDate,
                         @Param("itemPrice") Double itemPrice, @Param("liquidationPrice") Double liquidationPrice, @Param("returnDate") LocalDate returnDate,
                         @Param("startDate") LocalDate startDate, @Param("type") Boolean type,
