@@ -119,12 +119,6 @@ public class ContractRestController {
         contractService.deleteContract(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    @PatchMapping(value = "returnItem/{id}")
-    public ResponseEntity<Void> returnItem(@PathVariable long id, @RequestParam Optional<String> email, @RequestParam Optional<String> customerName) {
-        String emailCustomer = email.orElse("");
-        String keywordCustomerName = customerName.orElse("");
-        this.contractService.returnItem(id);
         
     @GetMapping(value = "/listNotPagination")
     public ResponseEntity<List<Contract>> goListNotPagination() {
