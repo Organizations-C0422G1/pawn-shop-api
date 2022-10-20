@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -25,8 +26,8 @@ public class NewsDto implements Validator {
     @NotBlank(message = "Vui lòng nhập vào")
     private String content;
 
-    @NotBlank(message = "Vui lòng nhập vào")
-    private String postingDay;
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    private LocalDate postingDay;
 
     @NotBlank(message = "Vui lòng nhập vào")
     private String imgUrl;
@@ -42,19 +43,17 @@ public class NewsDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-         NewsDto newsDto = (NewsDto) target;
-         LocalDate postingDay;
-         if (newsDto.getPostingDay()=="") {
-             errors.rejectValue("postingDay","postingDay","Vui lòng nhập vào");
-         } else {
-             try {
-                 postingDay = LocalDate.parse(newsDto.getPostingDay());
-                 if (postingDay.isBefore(LocalDate.now()) || postingDay.isAfter(LocalDate.now())) {
-                     errors.rejectValue("postingDay","postingDay","Vui lòng nhập đúng ngày hiện tại");
-                 }
-             } catch (Exception e) {
-                 errors.rejectValue("postingDay","postingDay","Vui lòng nhập đúng định dạng dd/MM/yyyy");
-             }
-         }
+        NewsDto newsDto = (NewsDto) target;
+        LocalDate postingDay;
+        if (newsDto.getPostingDay() == null) {
+            errors.rejectValue("postingDay", "postingDay", "Vui lòng nhập vào");
+        } else {
+            postingDay = newsDto.getPostingDay();
+            if (postingDay.isBefore(LocalDate.now()) || postingDay.isAfter(LocalDate.now())) {
+                errors.rejectValue("postingDay", "postingDay", "Vui lòng nhập đúng ngày hiện tại");
+            }
+        }
     }
 }
+
+
