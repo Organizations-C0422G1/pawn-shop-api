@@ -1,12 +1,21 @@
 package com.pawn_shop.controller;
 
+import com.pawn_shop.model.finance.Finance;
+
 import com.pawn_shop.service.IFinanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@CrossOrigin
 
 @RestController
 @RequestMapping("/api/admin/finance")
@@ -15,8 +24,9 @@ public class FinanceController {
     private IFinanceService iFinanceService;
 
     @GetMapping("")
-    public ResponseEntity<Double> displayFinance() {
-        Double finance = iFinanceService.findAllFinance();
+    public ResponseEntity<List<Finance>> displayFinance() {
+        List<Finance> finance = iFinanceService.findAllFinance();
+
         if (finance == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {

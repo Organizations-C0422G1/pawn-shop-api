@@ -18,10 +18,4 @@ public class PawItemService implements IPawItemService {
     public Page<PawnItemDto> findAllPawnItem(Pageable pageable, String itemName, String pawnName) {
         return iPawItemRepository.findAllPawnItem(pageable, itemName, pawnName);
     }
-
-    @Override
-    public <T> T detailContractPawnItem(Long id, Class<T> tClass) {
-        return iPawItemRepository.detailContractPawnItem(id, tClass);
-    }
-
 }

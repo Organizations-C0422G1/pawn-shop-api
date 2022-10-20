@@ -1,11 +1,13 @@
 package com.pawn_shop.service;
 
-public interface IFinanceService {
+import com.pawn_shop.model.finance.Finance;
 
-    Double findAllFinance();
+import java.util.List;
+
+public interface IFinanceService {
+    List<Finance> findAllFinance();
 
     Double findTotalInvestment();
 
     Double findTotalExpectedProfit();
-
 }

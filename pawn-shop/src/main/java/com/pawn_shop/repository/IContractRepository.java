@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 public interface IContractRepository extends JpaRepository<Contract, Long> {
 
     @Query(value = "select id,\n" +
@@ -117,6 +118,4 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
     @Modifying
     @Query(value = "UPDATE `pawn_shop`.`contract` SET `status` = '2' WHERE (`id` = :idContract)", nativeQuery = true)
     void updateStatusContract(@Param("idContract") Long idContract);
-
-
 }

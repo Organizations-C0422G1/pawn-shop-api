@@ -1,9 +1,11 @@
 package com.pawn_shop.service.impl;
 
+import com.pawn_shop.model.finance.Finance;
 import com.pawn_shop.repository.IFinanceRepository;
 import com.pawn_shop.service.IFinanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class FinanceService implements IFinanceService {
@@ -12,7 +14,7 @@ public class FinanceService implements IFinanceService {
     private IFinanceRepository iFinanceRepository;
 
     @Override
-    public Double findAllFinance() {
+    public List<Finance> findAllFinance() {   
         return iFinanceRepository.findAllFinance();
     }
 

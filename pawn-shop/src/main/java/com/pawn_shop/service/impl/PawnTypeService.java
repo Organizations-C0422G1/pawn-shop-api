@@ -18,5 +18,4 @@ public class PawnTypeService implements IPawnTypeService {
     public List<PawnType> findAllPawnType() {
         return iPawnTypeRepository.findAllPawnType();
     }
-
 }

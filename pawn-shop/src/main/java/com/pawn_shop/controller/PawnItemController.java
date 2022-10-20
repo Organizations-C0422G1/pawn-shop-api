@@ -1,6 +1,6 @@
 package com.pawn_shop.controller;
 
-import com.pawn_shop.dto.projection.DetailContractPawnItemDto;
+
 import com.pawn_shop.dto.projection.PawnItemDto;
 import com.pawn_shop.service.IContractService;
 import com.pawn_shop.service.IPawItemService;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping(value = "/api/employee/pawnItemRest")
 public class PawnItemController {
     @Autowired
@@ -25,8 +25,10 @@ public class PawnItemController {
     private IContractService iContractService;
 
     @GetMapping(value = "")
-    public ResponseEntity<Page<PawnItemDto>> displayPawnItem(@PageableDefault(size = 5) Pageable pageable, @RequestParam Optional<String> itemName, @RequestParam Optional<String> pawnName) {
 
+    public ResponseEntity<Page<PawnItemDto>> displayPawnItem(@PageableDefault(size = 5) Pageable pageable,
+                                                             @RequestParam Optional<String> itemName,
+                                                             @RequestParam Optional<String> pawnName) {
         String keywordItemName = itemName.orElse("");
         String keywordPawnName = pawnName.orElse("");
 
@@ -38,7 +40,7 @@ public class PawnItemController {
         }
     }
 
-    @PatchMapping(value = "/updateStatusContract/{idContract}")
+    @GetMapping(value = "/updateStatusContract/{idContract}")
     public ResponseEntity<Void> updateStatusContract(@PathVariable("idContract") Optional<Long> idContract) {
         if (idContract == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -55,5 +57,4 @@ public class PawnItemController {
         }
         return new ResponseEntity<>(detailContractPawnItemList, HttpStatus.OK);
     }
-
 }

@@ -3,13 +3,19 @@ package com.pawn_shop.dto.projection;
 import java.time.LocalDate;
 
 public interface PawnItemDto {
-    String getName();
+    String getNameCustomer();
+
+    String getNamePawnItem();
+
+    String getNamePawnType();
 
     Integer getStatus();
 
-    String getPawnType();
+    Double getItemPrice();
+
+    LocalDate getStartDate();
 
     LocalDate getEndDate();
 
-    Double getItemPrice();
+    Long getIdContract();
 }
