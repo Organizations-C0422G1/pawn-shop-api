@@ -19,9 +19,10 @@ public interface IPawItemRepository extends JpaRepository<PawnItem, Long> {
             "    pawn_type pt ON pt.id = pi.pawn_type_id" +
             " WHERE" +
             " pi.name LIKE %?1%" +
-            " AND c.pawn_item_id LIKE %?2%" +
+            " AND pi.pawn_type_id LIKE %?2%" +
             "        AND c.item_price LIKE %?3%" +
             "        AND c.status = 2",nativeQuery = true)
 
     <T> List<T> findAllPawnItem(String namePawnType, String idPawnItem,String price,Class<T> tClass);
+
 }
