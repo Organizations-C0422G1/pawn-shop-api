@@ -27,6 +27,7 @@ public class EmployeeDto implements Validator {
     private String name;
 
     @NotBlank(message = "Vui lòng nhập vào")
+
     private String code;
 
     private Boolean gender;
@@ -50,6 +51,7 @@ public class EmployeeDto implements Validator {
     private Double salary;
 
     @NotBlank(message = "Vui lòng nhập vào")
+
     private String imgUrl;
 
     private boolean status;
@@ -70,4 +72,7 @@ public class EmployeeDto implements Validator {
     public void validate(Object target, Errors errors) {
 
     }
+
+}
+
 }
