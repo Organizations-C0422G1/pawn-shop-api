@@ -8,7 +8,6 @@ import com.pawn_shop.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -20,6 +19,7 @@ public class EmployeeService implements IEmployeeService {
     private IEmployeeRepository iEmployeeRepository;
 
     @Override
+
     public Page<IEmployeeDto> getAllEmployeeSearch( String searchKeyWordName, String searchKeyWordCode,Pageable pageable) {
         return iEmployeeRepository.getAllEmployeeSearch( searchKeyWordName, searchKeyWordCode , pageable);
     }
@@ -59,5 +59,6 @@ iEmployeeRepository.deleteEmployee(id);
             this.iEmployeeRepository.updateEmployee(address, dateOfBirth, email,
                     gender, img, name, phone, idCard, id);
         }
+
 
 }
