@@ -122,5 +122,6 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
 
     @Query(value = "select * from contract where id = :id",nativeQuery = true)
     Contract findIdContract(@Param("id") Long id);
+
 }
 

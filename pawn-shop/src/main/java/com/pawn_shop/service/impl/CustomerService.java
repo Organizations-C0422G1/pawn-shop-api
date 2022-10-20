@@ -15,6 +15,10 @@ import java.util.List;
 import java.util.Optional;
 
 
+import java.util.List;
+import java.util.Optional;
+
+
 @Service
 public class CustomerService implements ICustomerService {
     @Autowired
@@ -48,14 +52,17 @@ public class CustomerService implements ICustomerService {
     public void updateCustomer(Long id, Customer oldCustomer) {
         Address address = iAddressService.save(oldCustomer.getAddress());
         oldCustomer.setAddress(address);
-        iCustomerRepository.updateCustomer( oldCustomer.getDateOfBirth(), oldCustomer.getEmail(),
+
+        iCustomerRepository.updateCustomer(oldCustomer.getDateOfBirth(), oldCustomer.getEmail(),
                 oldCustomer.getGender(), oldCustomer.getIdCard(), oldCustomer.getImgUrl(), oldCustomer.getName(),
-                oldCustomer.getPhoneNumber(), oldCustomer.getStatus(), oldCustomer.getAddress().getId(),oldCustomer.getId());
+                oldCustomer.getPhoneNumber(), oldCustomer.getStatus(), oldCustomer.getAddress().getId(), oldCustomer.getId());
     }
 
     @Override
     public List<Customer> findAll() {
         return iCustomerRepository.findAll();
+    }
+
 
     @Override
     public Page<Customer> findAllCustomer(Pageable pageable) {

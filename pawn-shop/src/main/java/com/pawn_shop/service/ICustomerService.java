@@ -10,15 +10,18 @@ import java.util.Optional;
 
 
 public interface ICustomerService {
+
     Page<ICustomerDto> findAllCustomer(String name, Pageable pageable);
 
     void deleteCustomer(Integer id);
+
 
     void createCustomer(Customer newCustomer);
 
     void updateCustomer(Long id, Customer oldCustomer);
 
     List<Customer> findAll();
+
 
     public Page<Customer> findAllCustomer (Pageable pageable);
     
@@ -27,6 +30,6 @@ public interface ICustomerService {
     public Optional<Customer> findCustomerByIdCard(@Param("idCard") String idCard);
     
     List<Customer> findAllCustomer();
-    
+
     Customer createQuickCustomer(Customer customer);
 }
