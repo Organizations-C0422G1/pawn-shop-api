@@ -50,6 +50,9 @@ public class Employee {
 
     private boolean status;
 
+    @Column(columnDefinition = "varchar(30)")
+    private String idCard;
+
     @OneToOne(mappedBy = "employee")
     @JsonBackReference
     private AppUser appUser;
