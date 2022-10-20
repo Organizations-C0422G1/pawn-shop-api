@@ -1,5 +1,6 @@
 package com.pawn_shop.controller;
 
+import com.pawn_shop.dto.projection.IContractInterestDto;
 import com.pawn_shop.model.contract.Contract;
 import com.pawn_shop.service.IContractService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/employee/interestRest")
@@ -25,8 +28,22 @@ public class InterestRestController {
         if (endReturnDate.compareTo(startReturnDate) < 0) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-            Page<Contract> contracts = this.iContractService.findCompleteContractByDate(startReturnDate, endReturnDate, pageable);
+        Page<Contract> contracts = this.iContractService.findCompleteContractByDate(startReturnDate, endReturnDate, pageable);
         if (!contracts.hasContent()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(contracts, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/complete-contract/list")
+    public ResponseEntity<List<IContractInterestDto>> getAllCompleteContractByDate(@RequestParam(value = "startReturnDate") String startReturnDate,
+                                                                                   @RequestParam(value = "endReturnDate") String endReturnDate) {
+        if (endReturnDate.compareTo(startReturnDate) < 0) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        List<IContractInterestDto> contracts = this.iContractService.getAllCompleteContractByDate(startReturnDate, endReturnDate, IContractInterestDto.class);
+        if (contracts.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(contracts, HttpStatus.OK);
@@ -48,6 +65,20 @@ public class InterestRestController {
         }
     }
 
+    @GetMapping("/liquidation-contract/list")
+    public ResponseEntity<List<IContractInterestDto>> getAllLiquidationContractByDate(@RequestParam(value = "startReturnDate") String startReturnDate,
+                                                                                      @RequestParam(value = "endReturnDate") String endReturnDate) {
+        if (endReturnDate.compareTo(startReturnDate) < 0) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        List<IContractInterestDto> contracts = this.iContractService.getAllLiquidationContractByDate(startReturnDate, endReturnDate, IContractInterestDto.class);
+        if (contracts.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(contracts, HttpStatus.OK);
+        }
+    }
+
     @GetMapping("/expected-contract")
     public ResponseEntity<Page<Contract>> findExpectedContractByDate(@RequestParam(value = "startReturnDate") String startReturnDate,
                                                                      @RequestParam(value = "endReturnDate") String endReturnDate,
@@ -62,6 +93,21 @@ public class InterestRestController {
             return new ResponseEntity<>(contracts, HttpStatus.OK);
         }
     }
+
+    @GetMapping("/expected-contract/list")
+    public ResponseEntity<List<IContractInterestDto>> getAllExpectedContractByDate(@RequestParam(value = "startReturnDate") String startReturnDate,
+                                                                                   @RequestParam(value = "endReturnDate") String endReturnDate) {
+        if (endReturnDate.compareTo(startReturnDate) < 0) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        List<IContractInterestDto> contracts = this.iContractService.getAllExpectedContractByDate(startReturnDate, endReturnDate, IContractInterestDto.class);
+        if (contracts.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(contracts, HttpStatus.OK);
+        }
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Contract> findContractById(@PathVariable Long id) {
