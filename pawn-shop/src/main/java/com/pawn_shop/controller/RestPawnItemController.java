@@ -18,8 +18,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/pawnItem")
-public class PawnItemRestController {
+public class RestPawnItemController {
     @Autowired
     private IPawItemService iPawItemService;
     @PostMapping("/addPawnItem")

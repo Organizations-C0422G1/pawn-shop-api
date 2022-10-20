@@ -24,6 +24,8 @@ public class PawItemService implements IPawItemService {
     }
 
     @Override
+    public void updatePawnItem(PawnItem pawnItem) {
+        iPawItemRepository.updatePawnItem(pawnItem.getName(), pawnItem.getPawnType().getId(),pawnItem.getId());
     public PawnItem createQuickPawnItem(PawnItem pawnItem) {
         return this.iPawItemRepository.save(pawnItem);
     }

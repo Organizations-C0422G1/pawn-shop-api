@@ -7,6 +7,12 @@ import java.util.List;
 
 public interface IPawItemService {
     PawnItem savePawnItem(PawnItem pawnItem);
+
     List<PawnItem> findAllPawnItem();
+
+    void updatePawnItem(PawnItem pawnItem);
+
+    List<PawnItem> findAllPawnItem();
+    
     PawnItem createQuickPawnItem(PawnItem pawnItem);
 }

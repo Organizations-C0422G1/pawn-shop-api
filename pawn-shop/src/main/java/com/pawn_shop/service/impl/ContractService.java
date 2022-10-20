@@ -4,6 +4,7 @@ import com.pawn_shop.dto.projection.ContractDto;
 import com.pawn_shop.email.MailService;
 import com.pawn_shop.model.contract.Contract;
 import com.pawn_shop.model.customer.Customer;
+import com.pawn_shop.model.pawn.PawnItem;
 import com.pawn_shop.repository.IContractRepository;
 import com.pawn_shop.service.IContractService;
 import com.pawn_shop.service.ICustomerService;
@@ -11,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+import java.time.LocalDate;
 
 @Service
 public class ContractService implements IContractService {
@@ -83,6 +84,12 @@ public class ContractService implements IContractService {
     }
 
     @Override
+    public void saveContract(Contract contract) {
+        Contract lastContract = this.contractRepository.findContract();
+        contract.setCode(contract.getCode()+(lastContract.getId()+1));
+        contractRepository.saveContract(contract.getCode(), contract.getEndDate(), contract.getInterestRate(), contract.getItemPrice(), contract.getLiquidationPrice(), contract.getReturnDate(), contract.getStartDate(), contract.getStatus(), contract.getCustomer().getId(), contract.getEmployee().getId(), contract.getPawnItem().getId(),
+                contract.getType());
+                
     public void returnItem(Double liquidationPrice, LocalDate returnDate, long id) {
         this.contractRepository.returnItem(liquidationPrice, returnDate, id);
     }
@@ -115,6 +122,9 @@ public class ContractService implements IContractService {
 
     @Override
     public void updateContract(Contract contract) {
+        contractRepository.updateContract(contract.getCode(),contract.getEndDate(),contract.getInterestRate(),
+                contract.getItemPrice(),contract.getLiquidationPrice(),contract.getReturnDate(),contract.getStartDate(),
+                contract.getType(),contract.getCustomer().getId(),contract.getEmployee().getId(),contract.getPawnItem().getId(), contract.getId());
         contractRepository.updateContract(contract.getCode(), contract.getEndDate(), contract.getInterestRate(),
                 contract.getItemPrice(), contract.getLiquidationPrice(), contract.getReturnDate(), contract.getStartDate(),
                 contract.getType(), contract.getCustomer().getId(), contract.getEmployee().getId(), contract.getPawnItem().getId(), contract.getId());
@@ -125,11 +135,14 @@ public class ContractService implements IContractService {
         return contractRepository.findIdContract(id);
     }
 
+    @Override
+    public Contract findContract() {
+        return contractRepository.findContract();
+    }
 
     @Override
     public Contract createQuickContract(Contract contract) {
         return this.contractRepository.save(contract);
     }
-
 }
 

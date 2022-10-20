@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
 import java.time.LocalDate;
+import java.time.Period;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContractDtoHd implements Validator {
+public class ContractDto implements Validator {
     private Long id;
 
     private String code;
@@ -39,12 +39,9 @@ public class ContractDtoHd implements Validator {
 
     private PawnItem pawnItem;
 
-    private Long customer;
-
     private Customer customer;
 
     private Employee employee;
-
     @Override
     public boolean supports(Class<?> clazz) {
         return false;
@@ -52,7 +49,7 @@ public class ContractDtoHd implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        ContractDtoHd contractDto = (ContractDtoHd) target;
+        ContractDto contractDto = (ContractDto) target;
         Double itemPrice;
         if (contractDto.getItemPrice() == "" ) {
             errors.rejectValue("itemPrice","add.itemPrice","Vui lòng nhập");

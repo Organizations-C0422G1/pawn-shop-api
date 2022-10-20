@@ -11,6 +11,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
+    @Query(value = "select * from customer where status = 1", nativeQuery = true)
+    public List<Customer> findAllCus();
+
+    @Query(value = "select * from customer where id = :id", nativeQuery = true)
+    public Optional<Customer> findCustomerById(@Param("id") Long id);
+
+    @Query(value = "select * from customer where id_card = :idCard", nativeQuery = true)
+    public List<Customer> findCustomerByIdCard(@Param("idCard") String idCard);
+
     @Query(value = "select * from customer where status = 1",nativeQuery = true, countQuery = "select count(*) from (select * from customer where status =1) as tableQuery")
     public Page<Customer> findAllCustomer (Pageable pageable);
 

@@ -2,6 +2,13 @@ package com.pawn_shop.controller;
 
 import com.pawn_shop.config.MailConfig;
 import com.pawn_shop.dto.ContractDtoHd;
+import com.pawn_shop.dto.ContractUpdateDto;
+import com.pawn_shop.dto.IEmployeeDto;
+import com.pawn_shop.dto.PawnItemDto;
+import com.pawn_shop.dto.projection.ContractDto;
+import com.pawn_shop.model.contract.Contract;
+import com.pawn_shop.model.employee.Employee;
+import com.pawn_shop.model.pawn.PawnItem;
 import com.pawn_shop.dto.projection.ContractDto;
 import com.pawn_shop.dto.quick_register.QuickContractDto;
 import com.pawn_shop.model.address.Address;
@@ -21,13 +28,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.*;
 
+@RestController
+@CrossOrigin("http://localhost:4200")
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/api/employee/contracts")
@@ -45,8 +53,9 @@ public class ContractRestController {
     @Autowired
     private IPawItemService iPawnItemService;
     @Autowired
+    private IEmployeeService iEmployeeService;
+    @Autowired
     private IAddressService iAddressService;
-
     @GetMapping("")
     public ResponseEntity<Page<ContractDto>> transactionHistory(
             @RequestParam Optional<String> customerName,
@@ -83,6 +92,10 @@ public class ContractRestController {
         String keywordCode = code.orElse("");
         String keywordCustomerName = customerName.orElse("");
         String keywordPawnItem = pawnItem.orElse("");
+        String keywordStartDate = startDate.orElse("0000-00-00");
+
+        Page<ContractDto> contractPage = this.contractService.getAllContractPaginationAndSearch(pageable, keywordCode, keywordCustomerName, keywordPawnItem, keywordStartDate);
+        if (contractPage.isEmpty()) {
         String keywordStartDate = startDate.orElse("");
 
         Page<ContractDto> contractPage = this.contractService.getAllContractPaginationAndSearch(pageable, keywordCode, keywordCustomerName, keywordPawnItem, keywordStartDate);
@@ -91,7 +104,7 @@ public class ContractRestController {
         }
         return new ResponseEntity<>(contractPage, HttpStatus.OK);
     }
-
+    
     @GetMapping("/{id}")
     public ResponseEntity<ContractDto> contractDetail(@PathVariable Long id) {
         ContractDto contract = contractService.findById(id);
@@ -107,6 +120,12 @@ public class ContractRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PatchMapping(value = "returnItem/{id}")
+    public ResponseEntity<Void> returnItem(@PathVariable long id, @RequestParam Optional<String> email, @RequestParam Optional<String> customerName) {
+        String emailCustomer = email.orElse("");
+        String keywordCustomerName = customerName.orElse("");
+        this.contractService.returnItem(id);
+        
     @GetMapping(value = "/listNotPagination")
     public ResponseEntity<List<Contract>> goListNotPagination() {
         List<Contract> contractList = this.contractService.findAllContract();
@@ -126,7 +145,6 @@ public class ContractRestController {
         LocalDate returnDateParam = LocalDate.now();
 
         List<Contract> contractList = contractService.findAllContract();
-
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.host", MailConfig.HOST_NAME);
@@ -134,6 +152,13 @@ public class ContractRestController {
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.port", MailConfig.SSL_PORT);
 
+        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(MailConfig.APP_EMAIL, MailConfig.APP_PASSWORD);
+            }
+        });
+        this.sendMailService.sendMailReturnItem(session, emailCustomer, keywordCustomerName);
+        return new ResponseEntity<>(HttpStatus.OK);
         for (Contract contract : contractList) {
             if (Objects.equals(id, contract.getId())) {
                 Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
@@ -162,11 +187,19 @@ public class ContractRestController {
             return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
         }
         Contract contract = new Contract();
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(contractDto, contract);
+        //Nhowf Long huongw dan cachs lay usename ddang dang nhap => findEmployee dua vaof username
+        IEmployeeDto iEmployeeDto =iEmployeeService.findByUser("user1");
+        BeanUtils.copyProperties(iEmployeeDto,employee);
         BeanUtils.copyProperties(contractDto, contract);
         contract.setItemPrice(Double.parseDouble(contractDto.getItemPrice()));
         contract.setInterestRate(Double.parseDouble(contractDto.getInterestRate()));
         contract.setStartDate(LocalDate.parse(contractDto.getStartDate()));
         contract.setEndDate(LocalDate.parse(contractDto.getEndDate()));
+        employee.setId(Long.parseLong(iEmployeeDto.getId()));
+        contract.setEmployee(employee);
+        contract.setCustomer(iCustomerService.findCustomerById(contractDto.getCustomer()).orElse(null));
         contractService.saveContract(contract);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -198,6 +231,9 @@ public class ContractRestController {
     }
 
     @PatchMapping(value = "/update-contract", consumes = {"*/*"})
+    public ResponseEntity<Map<String, String>> update(@Valid  @RequestBody ContractDtoHd contractUpdateDto, BindingResult bindingResult) {
+        contractUpdateDto.validate(contractUpdateDto,bindingResult);
+        
     public ResponseEntity<Map<String, String>> update(@Valid @RequestBody ContractDtoHd contractUpdateDto, BindingResult bindingResult) {
         contractUpdateDto.validate(contractUpdateDto, bindingResult);
         if (bindingResult.hasErrors()) {
