@@ -5,7 +5,5 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface IPawItemService {
-
     Page<PawnItemDto> findAllPawnItem(Pageable pageable, String itemName, String pawnName);
-
 }

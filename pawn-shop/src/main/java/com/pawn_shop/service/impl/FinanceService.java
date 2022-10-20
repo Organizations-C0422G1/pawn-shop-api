@@ -5,7 +5,6 @@ import com.pawn_shop.repository.IFinanceRepository;
 import com.pawn_shop.service.IFinanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -15,7 +14,7 @@ public class FinanceService implements IFinanceService {
     private IFinanceRepository iFinanceRepository;
 
     @Override
-    public List<Finance> findAllFinance() {
+    public List<Finance> findAllFinance() {   
         return iFinanceRepository.findAllFinance();
     }
 

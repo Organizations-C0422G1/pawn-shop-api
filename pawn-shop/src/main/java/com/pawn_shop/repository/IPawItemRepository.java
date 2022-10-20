@@ -47,5 +47,4 @@ public interface IPawItemRepository extends JpaRepository<PawnItem, Long> {
                     "    pawn_type pt ON pi.pawn_type_id = pt.id" +
                     " where pt.`name` like %:itemName% and pi.`name` like %:pawnName% and c.`status`= '0')  as pawnItem")
     Page<PawnItemDto> findAllPawnItem(Pageable pageable, @Param("itemName") String itemName, @Param("pawnName") String pawnName);
-
 }

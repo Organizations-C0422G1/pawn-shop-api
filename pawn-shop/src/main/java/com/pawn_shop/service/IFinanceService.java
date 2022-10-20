@@ -5,11 +5,9 @@ import com.pawn_shop.model.finance.Finance;
 import java.util.List;
 
 public interface IFinanceService {
-
     List<Finance> findAllFinance();
 
     Double findTotalInvestment();
 
     Double findTotalExpectedProfit();
-
 }
