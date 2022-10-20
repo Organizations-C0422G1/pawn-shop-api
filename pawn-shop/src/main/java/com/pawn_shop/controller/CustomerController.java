@@ -2,6 +2,7 @@ package com.pawn_shop.controller;
 
 import com.pawn_shop.dto.CustomerDto;
 import com.pawn_shop.dto.ICustomerDto;
+
 import com.pawn_shop.model.address.Address;
 import com.pawn_shop.model.address.City;
 import com.pawn_shop.model.address.District;
@@ -10,6 +11,7 @@ import com.pawn_shop.service.IAddressService;
 import com.pawn_shop.service.ICityService;
 import com.pawn_shop.service.ICustomerService;
 import com.pawn_shop.service.IDistrictService;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -92,6 +94,7 @@ public class CustomerController {
     }
 
 
+
     @GetMapping("/goFindDistrict")
     public ResponseEntity<List<District>> findAllDistrict(@RequestParam("city") Long city) {
         List<District> districtList = iDistrictService.findAll(city);
@@ -115,4 +118,5 @@ public class CustomerController {
         iAddressService.save(address);
         return new ResponseEntity<>(address, HttpStatus.OK);
     }
+
 }
