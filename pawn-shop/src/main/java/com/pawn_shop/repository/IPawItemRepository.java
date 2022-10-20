@@ -1,11 +1,15 @@
 package com.pawn_shop.repository;
 
 import com.pawn_shop.dto.projection.PawnItemDto;
+
+import com.pawn_shop.model.customer.Customer;
+import java.util.List;
 import com.pawn_shop.model.pawn.PawnItem;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.data.repository.query.Param;
 
 public interface IPawItemRepository extends JpaRepository<PawnItem, Long> {
@@ -47,4 +51,22 @@ public interface IPawItemRepository extends JpaRepository<PawnItem, Long> {
                     "    pawn_type pt ON pi.pawn_type_id = pt.id" +
                     " where pt.`name` like %:itemName% and pi.`name` like %:pawnName% and c.`status`= '0')  as pawnItem")
     Page<PawnItemDto> findAllPawnItem(Pageable pageable, @Param("itemName") String itemName, @Param("pawnName") String pawnName);
+
+
+    @Query(value = "SELECT" +
+            "    pi.id as idPawnItem,pi.name as namePawnItem, pt.name AS namePawnType, c.item_price AS itemPrice" +
+            " FROM" +
+            "    pawn_item pi" +
+            "        JOIN" +
+            "    contract c ON c.pawn_item_id = pi.id" +
+            "        JOIN" +
+            "    pawn_type pt ON pt.id = pi.pawn_type_id" +
+            " WHERE" +
+            " pi.name LIKE %?1%" +
+            " AND pi.pawn_type_id LIKE %?2%" +
+            "        AND c.item_price LIKE %?3%" +
+            "        AND c.status = 2",nativeQuery = true)
+
+    <T> List<T> findAllPawnItem(String namePawnType, String idPawnItem,String price,Class<T> tClass);
+
 }

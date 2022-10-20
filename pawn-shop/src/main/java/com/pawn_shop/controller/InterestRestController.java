@@ -111,7 +111,7 @@ public class InterestRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Contract> findContractById(@PathVariable Long id) {
-        Contract contract = this.iContractService.findById(id);
+        Contract contract = this.iContractService.findByIdInterest(id);
         if (contract == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
