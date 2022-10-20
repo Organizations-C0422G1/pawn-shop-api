@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Set;
+import java.time.LocalDate;
 
 @Service
 public class ContractService implements IContractService {
@@ -84,18 +84,29 @@ public class ContractService implements IContractService {
     }
 
     @Override
-    public void returnItem(long id) {
-        this.contractRepository.returnItem(id);
-    }
-
-    @Override
     public void saveContract(Contract contract) {
         Contract lastContract = this.contractRepository.findContract();
         contract.setCode(contract.getCode()+(lastContract.getId()+1));
         contractRepository.saveContract(contract.getCode(), contract.getEndDate(), contract.getInterestRate(), contract.getItemPrice(), contract.getLiquidationPrice(), contract.getReturnDate(), contract.getStartDate(), contract.getStatus(), contract.getCustomer().getId(), contract.getEmployee().getId(), contract.getPawnItem().getId(),
                 contract.getType());
+                
+    public void returnItem(Double liquidationPrice, LocalDate returnDate, long id) {
+        this.contractRepository.returnItem(liquidationPrice, returnDate, id);
+    }
+
+    //duyeen
+    @Override
+    public void saveContract(Contract contract) {
+        Contract lastContract = this.contractRepository.findContract();
+        contract.setCode(contract.getCode() + (lastContract.getId() + 1));
+        contractRepository.saveContract(contract.getCode(), contract.getEndDate(), contract.getInterestRate(), contract.getItemPrice(), contract.getLiquidationPrice(), contract.getReturnDate(), contract.getStartDate(), contract.getStatus(), contract.getCustomer().getId(), contract.getEmployee().getId(), contract.getPawnItem().getId(), contract.getType());
         Customer customer = customerService.findCustomerById(contract.getCustomer().getId()).orElse(null);
         mailService.sendMail(contract, customer.getEmail());
+    }
+
+    @Override
+    public Contract findContract() {
+        return contractRepository.findContract();
     }
 
     //uyên
@@ -114,6 +125,9 @@ public class ContractService implements IContractService {
         contractRepository.updateContract(contract.getCode(),contract.getEndDate(),contract.getInterestRate(),
                 contract.getItemPrice(),contract.getLiquidationPrice(),contract.getReturnDate(),contract.getStartDate(),
                 contract.getType(),contract.getCustomer().getId(),contract.getEmployee().getId(),contract.getPawnItem().getId(), contract.getId());
+        contractRepository.updateContract(contract.getCode(), contract.getEndDate(), contract.getInterestRate(),
+                contract.getItemPrice(), contract.getLiquidationPrice(), contract.getReturnDate(), contract.getStartDate(),
+                contract.getType(), contract.getCustomer().getId(), contract.getEmployee().getId(), contract.getPawnItem().getId(), contract.getId());
     }
 
     @Override
@@ -124,6 +138,11 @@ public class ContractService implements IContractService {
     @Override
     public Contract findContract() {
         return contractRepository.findContract();
+    }
+
+    @Override
+    public Contract createQuickContract(Contract contract) {
+        return this.contractRepository.save(contract);
     }
 }
 

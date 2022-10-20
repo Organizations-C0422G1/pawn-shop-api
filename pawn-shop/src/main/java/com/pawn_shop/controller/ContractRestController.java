@@ -9,6 +9,14 @@ import com.pawn_shop.dto.projection.ContractDto;
 import com.pawn_shop.model.contract.Contract;
 import com.pawn_shop.model.employee.Employee;
 import com.pawn_shop.model.pawn.PawnItem;
+import com.pawn_shop.dto.projection.ContractDto;
+import com.pawn_shop.dto.quick_register.QuickContractDto;
+import com.pawn_shop.model.address.Address;
+import com.pawn_shop.model.address.District;
+import com.pawn_shop.model.contract.Contract;
+import com.pawn_shop.model.customer.Customer;
+import com.pawn_shop.model.pawn.PawnItem;
+import com.pawn_shop.model.pawn.PawnType;
 import com.pawn_shop.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +28,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
-
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.*;
 
-
 @RestController
 @CrossOrigin("http://localhost:4200")
+@RestController
+@CrossOrigin
 @RequestMapping(value = "/api/employee/contracts")
 public class ContractRestController {
 
@@ -45,10 +52,10 @@ public class ContractRestController {
     private IPawnTypeService iPawnTypeService;
     @Autowired
     private IPawItemService iPawnItemService;
-
     @Autowired
     private IEmployeeService iEmployeeService;
-
+    @Autowired
+    private IAddressService iAddressService;
     @GetMapping("")
     public ResponseEntity<Page<ContractDto>> transactionHistory(
             @RequestParam Optional<String> customerName,
@@ -89,13 +96,15 @@ public class ContractRestController {
 
         Page<ContractDto> contractPage = this.contractService.getAllContractPaginationAndSearch(pageable, keywordCode, keywordCustomerName, keywordPawnItem, keywordStartDate);
         if (contractPage.isEmpty()) {
+        String keywordStartDate = startDate.orElse("");
 
+        Page<ContractDto> contractPage = this.contractService.getAllContractPaginationAndSearch(pageable, keywordCode, keywordCustomerName, keywordPawnItem, keywordStartDate);
+        if (contractPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(contractPage, HttpStatus.OK);
     }
-
-
+    
     @GetMapping("/{id}")
     public ResponseEntity<ContractDto> contractDetail(@PathVariable Long id) {
         ContractDto contract = contractService.findById(id);
@@ -116,6 +125,26 @@ public class ContractRestController {
         String emailCustomer = email.orElse("");
         String keywordCustomerName = customerName.orElse("");
         this.contractService.returnItem(id);
+        
+    @GetMapping(value = "/listNotPagination")
+    public ResponseEntity<List<Contract>> goListNotPagination() {
+        List<Contract> contractList = this.contractService.findAllContract();
+        if (contractList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(contractList, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "returnItem/{id}")
+    public ResponseEntity<Void> returnItem(@PathVariable long id, @RequestParam Optional<String> email,
+                                           @RequestParam Optional<String> customerName,
+                                           @RequestParam Optional<Double> liquidationPrice) {
+        String emailCustomer = email.orElse("");
+        String keywordCustomerName = customerName.orElse("");
+        Double liquidationPriceParam = liquidationPrice.orElse(0.0);
+        LocalDate returnDateParam = LocalDate.now();
+
+        List<Contract> contractList = contractService.findAllContract();
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.host", MailConfig.HOST_NAME);
@@ -130,6 +159,19 @@ public class ContractRestController {
         });
         this.sendMailService.sendMailReturnItem(session, emailCustomer, keywordCustomerName);
         return new ResponseEntity<>(HttpStatus.OK);
+        for (Contract contract : contractList) {
+            if (Objects.equals(id, contract.getId())) {
+                Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(MailConfig.APP_EMAIL, MailConfig.APP_PASSWORD);
+                    }
+                });
+                this.contractService.returnItem(liquidationPriceParam, returnDateParam, id);
+                this.sendMailService.sendMailReturnItem(session, emailCustomer, keywordCustomerName);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     // duyên
@@ -150,6 +192,7 @@ public class ContractRestController {
         //Nhowf Long huongw dan cachs lay usename ddang dang nhap => findEmployee dua vaof username
         IEmployeeDto iEmployeeDto =iEmployeeService.findByUser("user1");
         BeanUtils.copyProperties(iEmployeeDto,employee);
+        BeanUtils.copyProperties(contractDto, contract);
         contract.setItemPrice(Double.parseDouble(contractDto.getItemPrice()));
         contract.setInterestRate(Double.parseDouble(contractDto.getInterestRate()));
         contract.setStartDate(LocalDate.parse(contractDto.getStartDate()));
@@ -190,6 +233,9 @@ public class ContractRestController {
     @PatchMapping(value = "/update-contract", consumes = {"*/*"})
     public ResponseEntity<Map<String, String>> update(@Valid  @RequestBody ContractDtoHd contractUpdateDto, BindingResult bindingResult) {
         contractUpdateDto.validate(contractUpdateDto,bindingResult);
+        
+    public ResponseEntity<Map<String, String>> update(@Valid @RequestBody ContractDtoHd contractUpdateDto, BindingResult bindingResult) {
+        contractUpdateDto.validate(contractUpdateDto, bindingResult);
         if (bindingResult.hasErrors()) {
             Map<String, String> errMap = new HashMap<>();
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
@@ -207,4 +253,45 @@ public class ContractRestController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
     }
+
+    //    Truong bat dau
+    @PostMapping(value = "/createQuickContract")
+    public ResponseEntity<?> createQuickContract(@RequestBody @Valid QuickContractDto quickContractDto,
+                                                 BindingResult bindingResult) {
+        new QuickContractDto().validate(quickContractDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errMap = new HashMap<>();
+            for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                errMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+            }
+            return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
+        }
+        PawnItem tempPawnItem = new PawnItem();
+        Address tempAddress = new Address();
+        Customer tempCustomer = new Customer();
+        Contract tempContract = new Contract();
+
+        PawnType tempPawnType = new PawnType();
+        tempPawnType.setId(quickContractDto.getQuickPawnItemDto().getQuickPawnTypeDto().getId());
+        tempPawnItem.setPawnType(tempPawnType);
+        PawnItem pawnItem = this.iPawnItemService.createQuickPawnItem(tempPawnItem);
+
+        District tempDistrict = new District();
+        tempDistrict.setId(quickContractDto.getQuickCustomerDto().getQuickAddressDto().getQuickDistrictDto().getId());
+        tempAddress.setDistrict(tempDistrict);
+        Address address = this.iAddressService.createQuickAddress(tempAddress);
+
+        tempCustomer.setAddress(address);
+        tempCustomer.setName(quickContractDto.getQuickCustomerDto().getName());
+        tempCustomer.setPhoneNumber(quickContractDto.getQuickCustomerDto().getPhoneNumber());
+        tempCustomer.setStatus(true);
+        Customer customer = this.iCustomerService.createQuickCustomer(tempCustomer);
+
+        tempContract.setCustomer(customer);
+        tempContract.setPawnItem(pawnItem);
+        tempContract.setStatus(4);
+        Contract contract = this.contractService.createQuickContract(tempContract);
+        return new ResponseEntity<>(contract, HttpStatus.CREATED);
+    }
+//    Truong ket thuc
 }

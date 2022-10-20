@@ -16,6 +16,10 @@ public class CustomerService implements ICustomerService {
     @Autowired
     private ICustomerRepository iCustomerRepository;
 
+    @Override
+    public Page<Customer> findAllCustomer(Pageable pageable) {
+        return iCustomerRepository.findAllCustomer(pageable);
+    }
 
     @Override
     public Optional<Customer> findCustomerById(Long id) {
@@ -24,6 +28,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public List<Customer> findCustomerByIdCard(String idCard) {
+    public Optional<Customer> findCustomerByIdCard(String idCard) {
         return iCustomerRepository.findCustomerByIdCard(idCard);
     }
 
@@ -35,5 +40,7 @@ public class CustomerService implements ICustomerService {
     @Override
     public List<Customer> findAllCus() {
         return iCustomerRepository.findAllCus();
+    public Customer createQuickCustomer(Customer customer) {
+        return this.iCustomerRepository.save(customer);
     }
 }

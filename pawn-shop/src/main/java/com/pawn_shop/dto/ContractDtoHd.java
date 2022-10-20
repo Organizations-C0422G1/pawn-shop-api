@@ -41,7 +41,9 @@ public class ContractDtoHd implements Validator {
 
     private Long customer;
 
+    private Customer customer;
 
+    private Employee employee;
 
     @Override
     public boolean supports(Class<?> clazz) {

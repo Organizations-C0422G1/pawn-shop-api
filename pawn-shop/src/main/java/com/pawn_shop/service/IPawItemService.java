@@ -11,4 +11,8 @@ public interface IPawItemService {
     List<PawnItem> findAllPawnItem();
 
     void updatePawnItem(PawnItem pawnItem);
+
+    List<PawnItem> findAllPawnItem();
+    
+    PawnItem createQuickPawnItem(PawnItem pawnItem);
 }

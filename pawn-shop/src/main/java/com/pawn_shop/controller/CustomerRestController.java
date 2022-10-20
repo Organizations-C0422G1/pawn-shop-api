@@ -24,6 +24,9 @@ public class CustomerRestController {
     public ResponseEntity<List<Customer>> customerList () {
         List<Customer> customers = iCustomerService.findAllCus();
         if (customers.isEmpty()) {
+    public ResponseEntity<Page<Customer>> customerList (@PageableDefault Pageable pageable) {
+        Page<Customer> customers = iCustomerService.findAllCustomer(pageable);
+        if (!customers.hasContent()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(customers,HttpStatus.OK);
@@ -48,5 +51,12 @@ public class CustomerRestController {
     @GetMapping("/getCustomerToEdit")
     public ResponseEntity<?> getCustomerToEdit(){
         return new ResponseEntity<>(iCustomerService.findAllCustomer(), HttpStatus.OK);
+        
+    public ResponseEntity<Customer> findCustomerByIdCard(@RequestParam String idCard) {
+        Customer customer = iCustomerService.findCustomerByIdCard(idCard).orElse(null);
+        if (customer==null) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(customer,HttpStatus.OK);
     }
 }
