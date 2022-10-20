@@ -27,9 +27,6 @@ import java.util.Optional;
 public class LiquidationRestController {
 
     @Autowired
-    private ICustomerService iCustomerService;
-
-    @Autowired
     private IPawItemService iPawItemService;
 
     @Autowired
@@ -37,18 +34,6 @@ public class LiquidationRestController {
 
     @Autowired
     private IContractService iContractService;
-
-    @GetMapping("/customer/list")
-    public ResponseEntity<List<ICustomerLiquidationDto>> findByNameCustomer(@RequestParam("name") Optional<String> name,
-                                                                            @RequestParam("cmnd") Optional<String> cmnd){
-        String names = name.orElse("");
-        String cmnds = cmnd.orElse("");
-        List<ICustomerLiquidationDto> list = iCustomerService.findByNameCustomer(names,cmnds, ICustomerLiquidationDto.class);
-        if (list.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(list,HttpStatus.OK);
-    }
 
     @GetMapping("/pawnItem/list")
     public ResponseEntity<List<IPawnItemLiquidationDto>> findByNameAndPricePawnItem(@RequestParam("namePawnItem") Optional<String> namePawnType,

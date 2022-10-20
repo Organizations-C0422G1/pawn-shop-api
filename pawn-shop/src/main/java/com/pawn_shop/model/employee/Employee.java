@@ -1,7 +1,6 @@
 package com.pawn_shop.model.employee;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.pawn_shop.model.contract.Contract;
 import com.pawn_shop.model.login.AppUser;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +9,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -29,9 +27,6 @@ public class Employee {
     @Column(columnDefinition = "varchar(30)")
     private String code;
 
-    @Column(columnDefinition = "varchar(30)")
-    private String idCard;
-
     private Boolean gender;
 
     private LocalDate dateOfBirth;
@@ -41,6 +36,9 @@ public class Employee {
 
     @Column(columnDefinition = "varchar(30)")
     private String phoneNumber;
+
+    @Column(columnDefinition = "varchar(30)")
+    private String idCard;
 
     @Column(columnDefinition = "varchar(150)")
     private String address;

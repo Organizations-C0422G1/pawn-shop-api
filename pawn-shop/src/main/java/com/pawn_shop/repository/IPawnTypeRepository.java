@@ -9,5 +9,10 @@ import java.util.List;
 public interface IPawnTypeRepository extends JpaRepository<PawnType,Long> {
 
     @Query(nativeQuery = true,value = "select pt.id, pt.name from pawn_type pt ")
-    <T> List<T> findAllPawnType(Class<T> tClass);
+    <T> List<T> findAllPawnTypeLiquidation(Class<T> tClass);
+
+    @Query(value = "select * from pawn_type",nativeQuery = true)
+    List<PawnType> findAllPawnTypea();
+
 }
+
