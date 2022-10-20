@@ -1,6 +1,7 @@
 package com.pawn_shop.controller;
 
 
+import com.pawn_shop.dto.projection.DetailContractPawnItemDto;
 import com.pawn_shop.dto.projection.PawnItemDto;
 import com.pawn_shop.service.IContractService;
 import com.pawn_shop.service.IPawItemService;
@@ -49,12 +50,12 @@ public class PawnItemController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<DetailContractPawnItemDto> detailContractPawnItem(@PathVariable("id") Long id) {
-        DetailContractPawnItemDto detailContractPawnItemList = iPawItemService.detailContractPawnItem(id, DetailContractPawnItemDto.class);
-        if (detailContractPawnItemList == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(detailContractPawnItemList, HttpStatus.OK);
-    }
+//    @GetMapping("/detail/{id}")
+//    public ResponseEntity<DetailContractPawnItemDto> detailContractPawnItem(@PathVariable("id") Long id) {
+//        DetailContractPawnItemDto detailContractPawnItemList = iPawItemService.detailContractPawnItem(id, DetailContractPawnItemDto.class);
+//        if (detailContractPawnItemList == null) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(detailContractPawnItemList, HttpStatus.OK);
+//    }
 }
