@@ -22,14 +22,14 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin()
-@RequestMapping("/")
+@CrossOrigin(origins = "http://localhost:4200")
+@RequestMapping("/api/employee")
 public class NewsController {
     @Autowired
     private INewsService newsService;
 
     @GetMapping("/list-news")
-    public ResponseEntity<Page<INewsDto>> getAllNews(@PageableDefault(5) Pageable pageable, @RequestParam("title") Optional<String> titleSearch,
+    public ResponseEntity<Page<INewsDto>> getAllNews(@PageableDefault(size = 5) Pageable pageable, @RequestParam("title") Optional<String> titleSearch,
                                                      @RequestParam("content") Optional<String> contentSearch,
                                                      Optional<String> firstDate,
                                                      Optional<String> lastDate) {
@@ -65,7 +65,7 @@ public class NewsController {
         }
         News news = new News();
         BeanUtils.copyProperties(newsDto, news);
-        news.setPostingDay(LocalDate.parse(newsDto.getPostingDay()));
+        news.setPostingDay(newsDto.getPostingDay());
         this.newsService.saveNews(news);
         return new ResponseEntity<>(HttpStatus.OK);
     }
