@@ -11,5 +11,15 @@ import java.util.List;
 @Service
 public class PawnTypeService implements IPawnTypeService {
 
+<<<<<<< HEAD
 
+=======
+    @Autowired
+    private IPawnTypeRepository iPawnTypeRepository;
+
+    @Override
+    public List<PawnType> findAllPawnType() {
+        return iPawnTypeRepository.findAllPawnType();
+    }
+>>>>>>> bba05b2ddf91be359030c53a8e609456592c23a5
 }

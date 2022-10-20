@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+@Transactional
 public interface IContractRepository extends JpaRepository<Contract, Long> {
 
     @Query(value = "select id,\n" +
@@ -113,6 +114,7 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
     Page<Contract> findExpectedContractByDate(@Param("startReturnDate") String startReturnDate,
                                               @Param("endReturnDate") String endReturnDate, Pageable pageable);
 
+<<<<<<< HEAD
 
     @Query(value = "\n" +
             "\tSELECT \n" +
@@ -278,4 +280,10 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
             "WHERE\n" +
             "    contract.status = 1", nativeQuery = true)
     <T> List<T> getAllCompleteContract(Class<T> tClass);
+=======
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE `pawn_shop`.`contract` SET `status` = '2' WHERE (`id` = :idContract)", nativeQuery = true)
+    void updateStatusContract(@Param("idContract") Long idContract);
+>>>>>>> bba05b2ddf91be359030c53a8e609456592c23a5
 }
