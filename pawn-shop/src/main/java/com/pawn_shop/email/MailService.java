@@ -24,7 +24,7 @@ public class MailService {
     private String password;
 
     @Autowired
-    ThymeleafService thymeleafService;
+    private ThymeleafService thymeleafService;
 
     public void sendMail(Contract contract, String email) {
         Properties props = new Properties();

@@ -1,6 +1,7 @@
 package com.pawn_shop.model.pawn;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pawn_shop.model.contract.Contract;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,11 +30,11 @@ public class PawnItem {
     private PawnType pawnType;
 
     @OneToMany(mappedBy = "pawnItem",cascade = CascadeType.ALL)
-    @JsonBackReference(value = "pawnImg")
+    @JsonIgnore
     private Set<PawnImg> pawnImg;
 
     @OneToOne(mappedBy = "pawnItem")
-    @JsonBackReference(value = "ContractDto")
+    @JsonIgnore
     private Contract contract;
 
     private Boolean status;

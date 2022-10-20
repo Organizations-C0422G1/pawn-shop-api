@@ -16,4 +16,9 @@ public class PawnTypeService implements IPawnTypeService {
     public List<PawnType> findAllPawnType() {
         return iPawnTypeRepository.findAllPawnType();
     }
+
+    @Override
+    public void updatePawnType(PawnType pawnType) {
+        iPawnTypeRepository.updatePawnType(pawnType.getName(),pawnType.getId());
+    }
 }

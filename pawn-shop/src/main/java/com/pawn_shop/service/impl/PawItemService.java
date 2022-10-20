@@ -23,5 +23,8 @@ public class PawItemService implements IPawItemService {
         return iPawItemRepository.findAll();
     }
 
-
+    @Override
+    public void updatePawnItem(PawnItem pawnItem) {
+        iPawItemRepository.updatePawnItem(pawnItem.getName(), pawnItem.getPawnType().getId(),pawnItem.getId());
+    }
 }

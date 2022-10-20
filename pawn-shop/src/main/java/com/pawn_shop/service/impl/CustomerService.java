@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,10 +16,6 @@ public class CustomerService implements ICustomerService {
     @Autowired
     private ICustomerRepository iCustomerRepository;
 
-    @Override
-    public Page<Customer> findAllCustomer(Pageable pageable) {
-        return iCustomerRepository.findAllCustomer(pageable);
-    }
 
     @Override
     public Optional<Customer> findCustomerById(Long id) {
@@ -26,8 +23,17 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Optional<Customer> findCustomerByIdCard(String idCard) {
+    public List<Customer> findCustomerByIdCard(String idCard) {
         return iCustomerRepository.findCustomerByIdCard(idCard);
     }
 
+    @Override
+    public List<Customer> findAllCustomer() {
+        return iCustomerRepository.findAllCustomer();
+    }
+
+    @Override
+    public List<Customer> findAllCus() {
+        return iCustomerRepository.findAllCus();
+    }
 }

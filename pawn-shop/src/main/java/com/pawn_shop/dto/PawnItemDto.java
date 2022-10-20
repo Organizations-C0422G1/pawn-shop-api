@@ -1,6 +1,5 @@
 package com.pawn_shop.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pawn_shop.model.contract.Contract;
 import com.pawn_shop.model.pawn.PawnImg;
 import com.pawn_shop.model.pawn.PawnType;
@@ -9,7 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;

@@ -1,5 +1,6 @@
 package com.pawn_shop.model.contract;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.pawn_shop.model.customer.Customer;
 import com.pawn_shop.model.employee.Employee;
 import com.pawn_shop.model.pawn.PawnItem;
@@ -25,7 +26,6 @@ public class Contract {
     @Column(columnDefinition = "varchar(30)")
     private String code;
 
-    @Column(columnDefinition = "double")
     private Double itemPrice;
 
     private Double interestRate;
