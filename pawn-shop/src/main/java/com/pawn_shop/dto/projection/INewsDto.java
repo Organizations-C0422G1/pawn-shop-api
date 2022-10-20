@@ -4,7 +4,7 @@ import com.pawn_shop.model.login.AppUser;
 
 import java.time.LocalDate;
 
-public interface NewsDto {
+public interface INewsDto {
     Long getId();
     String getTitle();
     String getContent();
