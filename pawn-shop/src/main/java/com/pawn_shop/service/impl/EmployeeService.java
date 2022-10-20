@@ -38,7 +38,12 @@ iEmployeeRepository.deleteEmployee(id);
             return this.iEmployeeRepository.findById(id).orElse(null);
         }
 
-        @Override
+    @Override
+    public IEmployeeDto findByUser(String user) {
+        return this.iEmployeeRepository.findByUser(user);
+    }
+
+    @Override
         public void update(Employee employee) {
             String address = employee.getAddress();
             LocalDate dateOfBirth = employee.getDateOfBirth();

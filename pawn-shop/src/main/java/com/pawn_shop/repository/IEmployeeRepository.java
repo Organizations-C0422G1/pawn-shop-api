@@ -47,4 +47,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
     void updateEmployee(@Param("address") String address, @Param("dateOfBirth") LocalDate dateOfBirth,
                         @Param("email") String email, @Param("gender") Boolean gender, @Param("imgUrl") String imgUrl,
                         @Param("name") String name, @Param("phoneNumber") String phoneNumber, @Param("idCard") String idCard, @Param("id") Long id);
+
+    @Query(value = "select  e.id, e.address, `code`, e.date_of_birth as dateOfBirth, e.email, e.gender, e.img_url as imgUrl, `name`, e.phone_number as phoneNumber, e.salary, `status`, e.id_card as idCard, a.username from employee e join app_user a on e.id = a.employee_id where a.username = :user", nativeQuery = true)
+    IEmployeeDto findByUser(@Param("user") String user);
 }

@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.util.Objects;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/employee")
 public class EmployeeController {
@@ -68,5 +69,10 @@ public class EmployeeController {
         BeanUtils.copyProperties(employeeDto, employee);
         this.iEmployeeService.update(employee);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("/findUser/{user}")
+    public ResponseEntity<IEmployeeDto> findByUser(@PathVariable String user) {
+        IEmployeeDto employee = this.iEmployeeService.findByUser(user);
+        return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 }
