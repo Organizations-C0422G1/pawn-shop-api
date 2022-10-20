@@ -25,14 +25,4 @@ public interface IPawItemRepository extends JpaRepository<PawnItem, Long> {
 
     <T> List<T> findAllPawnItem(String namePawnType, String idPawnItem,String price,Class<T> tClass);
 
-//    @Query(value = "select pi.id as idPawnItem,pi.name as namePawnItem, pt.name AS namePawnType, c.item_price AS itemPrice"+
-//            " FROM" +
-//            "    pawn_item pi" +
-//            "        JOIN" +
-//            "    contract c ON c.pawn_item_id = pi.id" +
-//            "        JOIN" +
-//            "    pawn_type pt ON pt.id = pi.pawn_type_id" +
-//            " WHERE" +
-//            " pi",nativeQuery = true)
-//    <T> List<T> findPawnItemById(Class<T> tClass);
 }
