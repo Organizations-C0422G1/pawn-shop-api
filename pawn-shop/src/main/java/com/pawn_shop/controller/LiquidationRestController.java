@@ -1,11 +1,9 @@
 package com.pawn_shop.controller;
 
 import com.pawn_shop.dto.ContractLiquidationDto;
-import com.pawn_shop.dto.ICustomerLiquidationDto;
 import com.pawn_shop.dto.IPawnItemLiquidationDto;
 import com.pawn_shop.dto.IPawnTypeLiquidationDto;
 import com.pawn_shop.service.IContractService;
-import com.pawn_shop.service.ICustomerService;
 import com.pawn_shop.service.IPawItemService;
 import com.pawn_shop.service.IPawnTypeService;
 import org.springframework.beans.factory.annotation.Autowired;

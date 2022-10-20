@@ -2,7 +2,6 @@ package com.pawn_shop.controller;
 
 import com.pawn_shop.config.MailConfig;
 import com.pawn_shop.dto.ContractDtoHd;
-import com.pawn_shop.dto.ContractUpdateDto;
 import com.pawn_shop.dto.projection.ContractDto;
 import com.pawn_shop.dto.quick_register.QuickContractDto;
 import com.pawn_shop.model.address.Address;
