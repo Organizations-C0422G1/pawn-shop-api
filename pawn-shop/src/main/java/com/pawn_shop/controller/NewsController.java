@@ -16,7 +16,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -53,6 +52,7 @@ public class NewsController {
             return new ResponseEntity<>(newsDtos, HttpStatus.OK);
         }
     }
+
     @PostMapping("/create")
     public ResponseEntity<Map<String, String>> createNews(@Valid @RequestBody NewsDto newsDto, BindingResult bindingResult) {
         new NewsDto().validate(newsDto, bindingResult);
@@ -72,12 +72,11 @@ public class NewsController {
 
     @GetMapping("/findId/{id}")
     public ResponseEntity<News> findNewsById(@PathVariable Long id) {
-        if(id == null){
+        if (id == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        else {
+        } else {
             Optional<News> newsOptional = Optional.ofNullable(this.newsService.getNewsById(id));
-            return new ResponseEntity<>(newsOptional.get(),HttpStatus.OK);
+            return new ResponseEntity<>(newsOptional.get(), HttpStatus.OK);
         }
     }
 

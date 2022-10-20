@@ -55,3 +55,5 @@ public class NewsDto implements Validator {
         }
     }
 }
+
+

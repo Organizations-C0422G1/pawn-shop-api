@@ -35,5 +35,4 @@ public class NewsService implements INewsService {
         this.newsRepository.saveNews(news.getContent(),news.getImgUrl(),news.getPostingDay(),news.getTitle());
     }
 
-
 }
