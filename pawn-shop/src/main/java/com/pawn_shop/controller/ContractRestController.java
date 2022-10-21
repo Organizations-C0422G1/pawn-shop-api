@@ -213,44 +213,4 @@ public class ContractRestController {
         }
 }
 
-    //    Truong bat dau
-    @PostMapping(value = "/createQuickContract")
-    public ResponseEntity<?> createQuickContract(@RequestBody @Valid QuickContractDto quickContractDto,
-                                                 BindingResult bindingResult) {
-        new QuickContractDto().validate(quickContractDto, bindingResult);
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errMap = new HashMap<>();
-            for (FieldError fieldError : bindingResult.getFieldErrors()) {
-                errMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-            }
-            return new ResponseEntity<>(errMap, HttpStatus.BAD_REQUEST);
-        }
-        PawnItem tempPawnItem = new PawnItem();
-        Address tempAddress = new Address();
-        Customer tempCustomer = new Customer();
-        Contract tempContract = new Contract();
-
-        PawnType tempPawnType = new PawnType();
-        tempPawnType.setId(quickContractDto.getQuickPawnItemDto().getQuickPawnTypeDto().getId());
-        tempPawnItem.setPawnType(tempPawnType);
-        PawnItem pawnItem = this.iPawnItemService.createQuickPawnItem(tempPawnItem);
-
-        District tempDistrict = new District();
-        tempDistrict.setId(quickContractDto.getQuickCustomerDto().getQuickAddressDto().getQuickDistrictDto().getId());
-        tempAddress.setDistrict(tempDistrict);
-        Address address = this.iAddressService.createQuickAddress(tempAddress);
-
-        tempCustomer.setAddress(address);
-        tempCustomer.setName(quickContractDto.getQuickCustomerDto().getName());
-        tempCustomer.setPhoneNumber(quickContractDto.getQuickCustomerDto().getPhoneNumber());
-        tempCustomer.setStatus(true);
-        Customer customer = this.iCustomerService.createQuickCustomer(tempCustomer);
-
-        tempContract.setCustomer(customer);
-        tempContract.setPawnItem(pawnItem);
-        tempContract.setStatus(4);
-        Contract contract = this.contractService.createQuickContract(tempContract);
-        return new ResponseEntity<>(contract, HttpStatus.CREATED);
-    }
-//    Truong ket thuc
 }
