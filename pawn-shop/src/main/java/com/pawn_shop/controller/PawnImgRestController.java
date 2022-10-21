@@ -18,7 +18,7 @@ public class PawnImgRestController {
 
     @PostMapping("/pawnImg/save")
     public ResponseEntity<Void> savePawnImg(@RequestBody PawnImg pawnImg) {
-        iPawnImgService.savePawnImg(pawnImg);
+        this.iPawnImgService.savePawnImg(pawnImg);
         return new ResponseEntity<>( HttpStatus.OK);
     }
 }

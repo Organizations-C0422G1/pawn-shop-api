@@ -173,7 +173,7 @@ public class ContractRestController {
 
     //uyen
     @GetMapping("/customerlist")
-    public ResponseEntity<?> getAllCustomerService() {
+    public ResponseEntity<List<Customer>> getAllCustomerService() {
         return new ResponseEntity<>(iCustomerService.findAllCustomer(), HttpStatus.OK);
     }
 
@@ -183,17 +183,17 @@ public class ContractRestController {
     }
 
     @GetMapping("/pawntypelist")
-    public ResponseEntity<?> getAllPawnType() {
+    public ResponseEntity<List<PawnType>> getAllPawnType() {
         return new ResponseEntity<>(iPawnTypeService.findAllPawnType(), HttpStatus.OK);
     }
 
     @GetMapping("/pawnitemlist")
-    public ResponseEntity<?> getAllPawnItem() {
+    public ResponseEntity<List<PawnItem>> getAllPawnItem() {
         return new ResponseEntity<>(iPawnItemService.findAllPawnItem(), HttpStatus.OK);
     }
 
     @GetMapping("/contract/{id}")
-    public ResponseEntity<?> getId(@PathVariable("id") Long id) {
+    public ResponseEntity<Contract> getId(@PathVariable("id") Long id) {
         return new ResponseEntity<>(contractService.findIdContract(id), HttpStatus.OK);
     }
 
