@@ -23,7 +23,7 @@ public interface ICustomerService {
 
     Page<Customer> findAllCustomer(Pageable pageable);
 
-    Optional<Customer> findCustomerById(@Param("id") Long id);
+    Optional<Customer> findCustomerById (@Param("id") Long id);
 
     Optional<Customer> findCustomerByIdCard(@Param("idCard") String idCard);
 
