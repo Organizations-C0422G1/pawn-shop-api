@@ -62,7 +62,7 @@ public class ContractRestController {
             @RequestParam Optional<String> startDate,
             @RequestParam Optional<String> endDate,
             @RequestParam Optional<String> status,
-            @PageableDefault(size = 20) Pageable pageable) {
+            @PageableDefault(size = 5) Pageable pageable) {
         String types = type.orElse("");
         String cusName = customerName.orElse("");
         String pawnItem = pawnItemName.orElse("");
