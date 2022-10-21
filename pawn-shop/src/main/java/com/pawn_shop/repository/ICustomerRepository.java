@@ -94,7 +94,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     public Page<Customer> findAllCustomer (Pageable pageable);
 
     @Query (value = "select * from customer where id = :id", nativeQuery = true)
-    public Optional<Customer> findCustomerById (@Param("id") Long id);
+     Optional<Customer> findCustomerById (@Param("id") Long id);
 
     @Query(value = "select * from customer where id_card = :idCard",nativeQuery = true)
     public Optional<Customer> findCustomerByIdCard(@Param("idCard") String idCard);
