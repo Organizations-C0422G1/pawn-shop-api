@@ -79,12 +79,10 @@ public class PawnTypeRestController {
         tempCustomer.setAddress(address);
         tempCustomer.setName(quickContractDto.getQuickCustomerDto().getName());
         tempCustomer.setPhoneNumber(quickContractDto.getQuickCustomerDto().getPhoneNumber());
-        tempCustomer.setStatus(true);
         Customer customer = this.iCustomerService.createQuickCustomer(tempCustomer);
 
         tempContract.setCustomer(customer);
         tempContract.setPawnItem(pawnItem);
-        tempContract.setStatus(4);
         Contract contract = this.contractService.createQuickContract(tempContract);
         return new ResponseEntity<>(contract, HttpStatus.CREATED);
     }

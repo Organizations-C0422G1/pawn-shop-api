@@ -295,7 +295,8 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
             "SET " +
             "    `liquidation_price` = ?1," +
             "    `return_date` = ?2," +
-            "    `status` = 3 " +
+            "    `status` = 3 ," +
+            "    `type` = 0 " +
             "WHERE" +
             "    (`id` = ?3);")
     void createLiquidation(Double price, String dateLiquidation, Long idContract);
@@ -350,33 +351,33 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
                                                LocalDate beforeSevenDay,
                                                LocalDate afterOneDay);
 
-    @Query(value = "select ct.code, c.name as customer, pi.name as pawnItem, " +
+    @Query(value = "select ct.id, ct.code, c.name as customer, pi.name as pawnItem, " +
             " ct.item_price as itemPrice, ct.start_date as startDate, " +
             " ct.end_date as endDate, ct.interest_rate as interestRate, " +
-            " ct.return_date as returnDate, ct.liquidation_price as liquidationPrice " +
+            " ct.return_date as returnDate, ct.liquidation_price as liquidationPrice, c.email as customerEmail " +
             " from contract ct " +
             " join customer c on ct.customer_id = c.id " +
             " join pawn_item pi on ct.pawn_item_id = pi.id " +
             " where (ct.code like %:code% and c.name like %:customerName% " +
-            " and pi.name like %:pawnItem% and ct.start_date >= :startDate) " +
+            " and pi.name like %:pawnItem% and ct.start_date like %:startDate%) " +
             " and ct.status = 0", nativeQuery = true,
             countQuery = "select count(*) from (" +
-                    " select ct.code, c.name as customer, pi.name as pawnItem, " +
+                    " select ct.id, ct.code, c.name as customer, pi.name as pawnItem, " +
                     " ct.item_price as itemPrice, ct.start_date as startDate, " +
                     " ct.end_date as endDate, ct.interest_rate as interestRate, " +
-                    " ct.return_date as returnDate, ct.liquidation_price as liquidationPrice " +
+                    " ct.return_date as returnDate, ct.liquidation_price as liquidationPrice, c.email as customerEmail " +
                     " from contract ct " +
                     " join customer c on ct.customer_id = c.id " +
                     " join pawn_item pi on ct.pawn_item_id = pi.id " +
                     " where (ct.code like %:code% and c.name like %:customerName% " +
-                    " and pi.name like %:pawnItem% and ct.start_date >= :startDate) " +
+                    " and pi.name like %:pawnItem% and ct.start_date like %:startDate%) " +
                     " and ct.status = 0) contracts")
     Page<ContractDto> getAllContractPaginationAndSearch(Pageable pageable, @Param("code") String code, @Param("customerName") String customerName,
                                                         @Param("pawnItem") String pawnItem, @Param("startDate") String startDate);
 
     @Modifying
-    @Query(value = "update contract set status = 1 where id = :id", nativeQuery = true)
-    void returnItem(@Param("id") long id);
+    @Query(value = "update contract set status = 1, liquidation_price = :liquidationPrice, return_date = :returnDate where id = :id", nativeQuery = true)
+    void returnItem(@Param("liquidationPrice") Double liquidationPrice, @Param("returnDate") LocalDate returnDate, @Param("id") long id);
 
     // duyên
     @Modifying
@@ -402,7 +403,7 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
     @Query(value = "select * from contract where start_date = current_date order by id desc limit 10 ", nativeQuery = true)
     List<Contract> top10Contract();
 
-    @Query(value = "select  * from contract where status_delete = 0", nativeQuery = true)
+    @Query(value = "select  * from contract where status = 0", nativeQuery = true)
     List<Contract> findAllContract();
 
 

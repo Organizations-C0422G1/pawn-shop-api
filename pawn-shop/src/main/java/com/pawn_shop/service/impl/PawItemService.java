@@ -37,6 +37,8 @@ public class PawItemService implements IPawItemService {
 
     @Override
     public PawnItem createQuickPawnItem(PawnItem pawnItem) {
+        pawnItem.setStatus(true);
+        pawnItem.setName("");
         return this.iPawItemRepository.save(pawnItem);
     }
 

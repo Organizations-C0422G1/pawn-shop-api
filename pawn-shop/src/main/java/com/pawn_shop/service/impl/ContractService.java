@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -159,8 +160,8 @@ public class ContractService implements IContractService {
     }
 
     @Override
-    public void returnItem(long id) {
-        this.iContractRepository.returnItem(id);
+    public void returnItem(Double liquidationPrice, LocalDate returnDate, long id) {
+        this.iContractRepository.returnItem(liquidationPrice, returnDate, id);
     }
 
     //duyeen
@@ -205,6 +206,11 @@ public class ContractService implements IContractService {
 
     @Override
     public Contract createQuickContract(Contract contract) {
+        LocalDate now = LocalDate.now();
+        contract.setStartDate(now);
+        contract.setEndDate(now);
+        contract.setStatus(4);
+        contract.setType(true);
         return this.iContractRepository.save(contract);
     }
 

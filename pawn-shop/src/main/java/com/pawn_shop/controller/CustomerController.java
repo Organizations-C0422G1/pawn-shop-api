@@ -27,7 +27,7 @@ public class CustomerController {
 
     @GetMapping(value = "")
     public ResponseEntity<Page<ICustomerDto>> getAllCustomer(@RequestParam Optional<String> name,
-                                                             @PageableDefault(size = 5) Pageable pageable) {
+                                                             @PageableDefault(size = 4) Pageable pageable) {
         String name1 = name.orElse("");
         Page<ICustomerDto> customerPage = iCustomerService.findAllCustomer("%" + name1 + "%", pageable);
         if (!customerPage.hasContent()) {

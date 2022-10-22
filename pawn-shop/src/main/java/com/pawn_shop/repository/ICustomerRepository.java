@@ -28,7 +28,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
     <T> List<T> findByNameCustomer(String name,String cmnd,Class<T> tClass);
 
 
-    @Query(nativeQuery = true, value = "select count(customer.id) as amountContract ,\n" +
+    @Query(nativeQuery = true, value = "select count(contract.id) as amountContract ,\n" +
             " customer.id as id,\n" +
             " customer.`name` as `name`,\n" +
             " customer.`code` as `code`,\n" +
@@ -39,10 +39,10 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
             " customer.img_url as imgUrl,\n" +
             " customer.phone_number as phoneNumber,\n" +
             " customer.`status` as `status`\n" +
-            " from customer join contract on customer.id = contract.customer_id \n" +
+            " from customer left join contract on customer.id = contract.customer_id \n" +
             " where customer.status = 1 and customer.`name` like ?1" +
-            " group by contract.customer_id",
-            countQuery = "select count(customer.id) as amountContract ,\n" +
+            " group by customer.id",
+            countQuery = "select count(contract.id) as amountContract ,\n" +
                     " customer.id as id,\n" +
                     " customer.`name` as `name`,\n" +
                     " customer.`code` as `code`,\n" +
@@ -53,9 +53,9 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                     " customer.img_url as imgUrl,\n" +
                     " customer.phone_number as phoneNumber,\n" +
                     " customer.`status` as `status`\n" +
-                    " from customer join contract on customer.id = contract.customer_id \n" +
+                    " from customer left join contract on customer.id = contract.customer_id \n" +
                     " where customer.status = 1 and customer.`name` like ?1" +
-                    " group by contract.customer_id")
+                    " group by customer.id")
      Page<ICustomerDto> findAllCustomer(String name, Pageable pageable);
 
     @Modifying

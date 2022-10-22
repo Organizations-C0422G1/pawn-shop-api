@@ -78,6 +78,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public Customer createQuickCustomer(Customer customer) {
+        customer.setStatus(true);
         return this.iCustomerRepository.save(customer);
 
     }
