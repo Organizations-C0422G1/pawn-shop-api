@@ -212,7 +212,6 @@ public class ContractRestController {
         } else {
             Contract contract = new Contract();
             BeanUtils.copyProperties(contractUpdateDto, contract);
-            System.out.println(123123213);
             contract.setItemPrice(Double.parseDouble(contractUpdateDto.getItemPrice()));
             contract.setInterestRate(Double.parseDouble(contractUpdateDto.getInterestRate()));
             contract.setStartDate(LocalDate.parse(contractUpdateDto.getStartDate()));

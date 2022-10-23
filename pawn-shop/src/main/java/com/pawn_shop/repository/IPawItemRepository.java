@@ -65,8 +65,29 @@ public interface IPawItemRepository extends JpaRepository<PawnItem, Long> {
             " pi.name LIKE %?1%" +
             " AND pi.pawn_type_id LIKE %?2%" +
             "        AND c.item_price LIKE %?3%" +
-            "        AND c.status = 2",nativeQuery = true)
+            "        AND c.status = 2",nativeQuery = true,
+            countQuery = "SELECT" +
+                    "    pi.id as idPawnItem,pi.name as namePawnItem, pt.name AS namePawnType, c.item_price AS itemPrice" +
+                    " FROM" +
+                    "    pawn_item pi" +
+                    "        JOIN" +
+                    "    contract c ON c.pawn_item_id = pi.id" +
+                    "        JOIN" +
+                    "    pawn_type pt ON pt.id = pi.pawn_type_id" +
+                    " WHERE" +
+                    " pi.name LIKE %:namePawnType%" +
+                    " AND pi.pawn_type_id LIKE %:idPawnItem%" +
+                    "        AND c.item_price LIKE %:price%" +
+                    "        AND c.status = 2")
+    <T> Page<T> getAllPawnItem(Pageable pageable,@Param("namePawnType") String namePawnType,@Param("idPawnItem") String idPawnItem,@Param("price") String price,Class<T> tClass);
 
-    <T> List<T> findAllPawnItem(String namePawnType, String idPawnItem,String price,Class<T> tClass);
-
+    @Query(value = "SELECT " +
+            "    i.img_url " +
+            "FROM " +
+            "    pawn_img AS i " +
+            "        JOIN " +
+            "    pawn_item AS p ON p.id = i.pawn_item_id " +
+            "WHERE " +
+            "    p.id = :id ",nativeQuery = true)
+    List<String> findImgUrlByPawnItemId(@Param("id") Long id);
 }

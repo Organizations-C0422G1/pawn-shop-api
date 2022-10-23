@@ -10,12 +10,14 @@ import java.util.List;
 public interface IPawItemService {
     Page<PawnItemDto> findAllPawnItem(Pageable pageable, String itemName, String pawnName);
 
-    <T> List<T> findAllPawnItem(String namePawnType, String namePawnItem, String price, Class<T> tClass);
+    <T> Page<T> getAllPawnItem(Pageable pageable,String namePawnType,String idPawnItem,String price, Class<T> tClass);
 
     PawnItem savePawnItem(PawnItem pawnItem);
 
     List<PawnItem> findAllPawnItem();
 
     PawnItem createQuickPawnItem(PawnItem pawnItem);
+
+    List<String> findImgUrlByPawnItemId(Long id);
 }
 

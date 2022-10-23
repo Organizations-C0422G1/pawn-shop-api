@@ -22,8 +22,8 @@ public class PawItemService implements IPawItemService {
     }
 
     @Override
-    public <T> List<T> findAllPawnItem(String namePawnType, String namePawnItem, String price, Class<T> tClass) {
-        return iPawItemRepository.findAllPawnItem(namePawnType,namePawnItem, price, tClass);
+    public <T> Page<T> getAllPawnItem(Pageable pageable, String namePawnType, String idPawnItem, String price, Class<T> tClass) {
+        return iPawItemRepository.getAllPawnItem(pageable, namePawnType, idPawnItem, price, tClass);
     }
 
     public PawnItem savePawnItem(PawnItem pawnItem) {
@@ -41,6 +41,11 @@ public class PawItemService implements IPawItemService {
         pawnItem.setStatus(true);
         pawnItem.setName("");
         return this.iPawItemRepository.save(pawnItem);
+    }
+
+    @Override
+    public List<String> findImgUrlByPawnItemId(Long id) {
+        return this.iPawItemRepository.findImgUrlByPawnItemId(id);
     }
 
 }
