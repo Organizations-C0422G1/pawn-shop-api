@@ -28,10 +28,11 @@ public class NewsController {
     private INewsService newsService;
 
     @GetMapping("/list-news")
-    public ResponseEntity<Page<INewsDto>> getAllNews(@PageableDefault(size = 5) Pageable pageable, @RequestParam("title") Optional<String> titleSearch,
+    public ResponseEntity<Page<INewsDto>> getAllNews(@PageableDefault(size = 5) Pageable pageable,
+                                                     @RequestParam("title") Optional<String> titleSearch,
                                                      @RequestParam("content") Optional<String> contentSearch,
-                                                     Optional<String> firstDate,
-                                                     Optional<String> lastDate) {
+                                                     @RequestParam Optional<String> firstDate,
+                                                     @RequestParam Optional<String> lastDate) {
         String searchName = titleSearch.orElse("");
         String searchContent = contentSearch.orElse("");
         String dateFirst = firstDate.orElse("0001-01-01");
