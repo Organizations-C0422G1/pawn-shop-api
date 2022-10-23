@@ -1,7 +1,6 @@
 package com.pawn_shop.model.pawn;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pawn_shop.model.contract.Contract;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,12 +25,11 @@ public class PawnItem {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "pawn_type_id",referencedColumnName = "id")
+    @JoinColumn(name = "pawn_type_id", referencedColumnName = "id")
     private PawnType pawnType;
 
-    @OneToMany(mappedBy = "pawnItem",cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<PawnImg> pawnImg;
+    @OneToMany(mappedBy = "pawnItem", cascade = CascadeType.ALL)
+    private List<PawnImg> pawnImg;
 
     @OneToOne(mappedBy = "pawnItem")
     @JsonBackReference

@@ -5,9 +5,11 @@ import com.pawn_shop.dto.projection.ContractDto;
 import com.pawn_shop.email.MailService;
 import com.pawn_shop.model.contract.Contract;
 import com.pawn_shop.model.customer.Customer;
+import com.pawn_shop.model.pawn.PawnImg;
 import com.pawn_shop.repository.IContractRepository;
 import com.pawn_shop.service.IContractService;
 import com.pawn_shop.service.ICustomerService;
+import com.pawn_shop.service.IPawnImgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,8 +29,11 @@ public class ContractService implements IContractService {
 
     @Autowired
     private MailService mailService;
-    @Override
 
+    @Autowired
+    private IPawnImgService iPawnImgService;
+
+    @Override
     public Page<Contract> findCompleteContractByDate(String startReturnDate, String endReturnDate, Pageable pageable) {
         if (startReturnDate.equals("") && endReturnDate.equals("")) {
             return iContractRepository.findAllCompleteContract(pageable);
@@ -167,9 +172,15 @@ public class ContractService implements IContractService {
     //duyeen
     @Override
     public void saveContract(Contract contract) {
+        for (PawnImg pawnImg: contract.getPawnItem().getPawnImg()) {
+            pawnImg.setPawnItem(contract.getPawnItem());
+            iPawnImgService.savePawnImg(pawnImg);
+        }
+
         Contract lastContract = this.iContractRepository.findContract();
         contract.setCode(contract.getCode()+(lastContract.getId()+1));
-        iContractRepository.saveContract(contract.getCode(), contract.getEndDate(), contract.getInterestRate(), contract.getItemPrice(), contract.getLiquidationPrice(), contract.getReturnDate(), contract.getStartDate(), contract.getStatus(), contract.getCustomer().getId(), contract.getEmployee().getId(), contract.getPawnItem().getId(),contract.getType());
+        iContractRepository.saveContract(contract.getCode(), contract.getEndDate(), contract.getInterestRate(), contract.getItemPrice(), contract.getLiquidationPrice(), contract.getReturnDate(), contract.getStartDate(), contract.getStatus(), contract.getCustomer().getId(), contract.getEmployee().getId(), contract.getPawnItem().getId(),
+                contract.getType());
         Customer customer = customerService.findCustomerById(contract.getCustomer().getId()).orElse(null);
         mailService.sendMail(contract, customer.getEmail());
     }

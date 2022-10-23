@@ -57,8 +57,8 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Page<Customer> findAllCustomer(Pageable pageable) {
-        return iCustomerRepository.findAllCustomer(pageable);
+    public List<Customer> findAllCus() {
+        return iCustomerRepository.findAllCus();
     }
 
     @Override
@@ -67,7 +67,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Optional<Customer> findCustomerByIdCard(String idCard) {
+    public List<Customer> findCustomerByIdCard(String idCard) {
         return iCustomerRepository.findCustomerByIdCard(idCard);
     }
 

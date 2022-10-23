@@ -6,19 +6,15 @@ import com.pawn_shop.model.customer.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import org.springframework.data.jpa.repository.Query;
-
-import java.util.List;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
@@ -90,14 +86,14 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                         @Param("name") String name, @Param("phone_number") String phoneNumber, @Param("status") Boolean status,
                         @Param("address_id") Long addressId, @Param("id") Long id);
 
-    @Query(value = "select * from customer where status = 1",nativeQuery = true, countQuery = "select count(*) from (select * from customer where status =1) as tableQuery")
-    public Page<Customer> findAllCustomer (Pageable pageable);
+    @Query(value = "select * from customer where status = 1", nativeQuery = true, countQuery = "select count(*) from (select * from customer where status =1) as tableQuery")
+    public List<Customer> findAllCus();
 
-    @Query (value = "select * from customer where id = :id", nativeQuery = true)
-     Optional<Customer> findCustomerById (@Param("id") Long id);
+    @Query(value = "select * from customer where id = :id", nativeQuery = true)
+    public Optional<Customer> findCustomerById(@Param("id") Long id);
 
-    @Query(value = "select * from customer where id_card = :idCard",nativeQuery = true)
-    public Optional<Customer> findCustomerByIdCard(@Param("idCard") String idCard);
+    @Query(value = "select * from customer where id_card = :idCard", nativeQuery = true)
+    public List<Customer> findCustomerByIdCard(@Param("idCard") String idCard);
 
     @Query(value = "select * from customer",nativeQuery = true)
     List<Customer> findAllCustomer();

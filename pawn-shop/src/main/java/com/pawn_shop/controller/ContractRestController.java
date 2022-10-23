@@ -171,7 +171,6 @@ public class ContractRestController {
         contract.setEndDate(LocalDate.parse(contractDto.getEndDate()));
         employee.setId(Long.parseLong(iEmployeeDto.getId()));
         contract.setEmployee(employee);
-        contract.setCustomer(iCustomerService.findCustomerById(contractDto.getCustomer().getId()).orElse(null));
         contractService.saveContract(contract);
         return new ResponseEntity<>(HttpStatus.OK);
     }

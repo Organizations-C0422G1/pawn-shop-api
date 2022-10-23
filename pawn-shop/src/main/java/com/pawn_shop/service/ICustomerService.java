@@ -21,11 +21,11 @@ public interface ICustomerService {
 
     List<Customer> findAll();
 
-    Page<Customer> findAllCustomer(Pageable pageable);
+    List<Customer> findAllCus();
 
-    Optional<Customer> findCustomerById (@Param("id") Long id);
+    Optional<Customer> findCustomerById(@Param("id") Long id);
 
-    Optional<Customer> findCustomerByIdCard(@Param("idCard") String idCard);
+    List<Customer> findCustomerByIdCard(@Param("idCard") String idCard);
 
     List<Customer> findAllCustomer();
 

@@ -27,6 +27,7 @@ public class PawItemService implements IPawItemService {
     }
 
     public PawnItem savePawnItem(PawnItem pawnItem) {
+        pawnItem.setPawnImg(null);
         return iPawItemRepository.save(pawnItem);
     }
 
