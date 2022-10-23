@@ -200,7 +200,7 @@ public class ContractRestController {
         return new ResponseEntity<>(contractService.findIdContract(id), HttpStatus.OK);
     }
 
-    @PatchMapping(value = "/update-contract", consumes = {"*/*"})
+    @PatchMapping(value = "/update-contract")
     public ResponseEntity<Map<String, String>> update(@Valid  @RequestBody ContractDtoHd contractUpdateDto, BindingResult bindingResult) {
         contractUpdateDto.validate(contractUpdateDto,bindingResult);
         if (bindingResult.hasErrors()) {

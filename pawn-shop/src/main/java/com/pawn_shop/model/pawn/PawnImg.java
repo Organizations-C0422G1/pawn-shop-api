@@ -26,4 +26,7 @@ public class PawnImg {
     @JsonBackReference
     @JoinColumn(name = "pawn_item_id",referencedColumnName = "id")
     private PawnItem pawnItem;
+
+    @Column(name = "status_delete", columnDefinition = "BIT(1)")
+    private Integer statusDelete = 0;
 }

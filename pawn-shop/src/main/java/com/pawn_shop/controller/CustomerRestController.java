@@ -31,6 +31,7 @@ public class CustomerRestController {
         }
         return new ResponseEntity<>(customer,HttpStatus.OK);
     }
+
     @GetMapping("/findCustomerByIdCard")
     public ResponseEntity<List<Customer>> findCustomerByIdCard(@RequestParam String idCard) {
         List<Customer> customerList = iCustomerService.findCustomerByIdCard(idCard);
@@ -38,5 +39,10 @@ public class CustomerRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(customerList,HttpStatus.OK);
+    }
+
+    @GetMapping("/getCustomerToEdit")
+    public ResponseEntity<?> getCustomerToEdit(){
+        return new ResponseEntity<>(iCustomerService.findAllCustomer(), HttpStatus.OK);
     }
 }
