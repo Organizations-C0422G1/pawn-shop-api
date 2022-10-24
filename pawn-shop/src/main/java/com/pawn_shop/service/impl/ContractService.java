@@ -5,10 +5,12 @@ import com.pawn_shop.dto.projection.ContractDto;
 import com.pawn_shop.email.MailService;
 import com.pawn_shop.model.contract.Contract;
 import com.pawn_shop.model.customer.Customer;
+import com.pawn_shop.model.employee.Employee;
 import com.pawn_shop.model.pawn.PawnImg;
 import com.pawn_shop.repository.IContractRepository;
 import com.pawn_shop.service.IContractService;
 import com.pawn_shop.service.ICustomerService;
+import com.pawn_shop.service.IEmployeeService;
 import com.pawn_shop.service.IPawnImgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,6 +34,9 @@ public class ContractService implements IContractService {
 
     @Autowired
     private IPawnImgService iPawnImgService;
+
+    @Autowired
+    private IEmployeeService iEmployeeService;
 
     @Override
     public Page<Contract> findCompleteContractByDate(String startReturnDate, String endReturnDate, Pageable pageable) {
@@ -222,6 +227,8 @@ public class ContractService implements IContractService {
         contract.setEndDate(now);
         contract.setStatus(4);
         contract.setType(true);
+        Employee employee = this.iEmployeeService.findById(1L);
+        contract.setEmployee(employee);
         return this.iContractRepository.save(contract);
     }
 
