@@ -29,7 +29,8 @@ public interface INewsRepository extends JpaRepository<News, Long> {
                     " from news" +
                     " join app_user on app_user.id = news.app_user_id " +
                     " join employee on employee.id = app_user.employee_id " +
-                    " where news.title like :searchName and news.content like :searchContent and (news.posting_day between :dateFirst and :dateLast) and news.`status` = 1 ) order by news.posting_day DESC temp_table ")
+                    " where news.title like :searchName and news.content like :searchContent and (news.posting_day between :dateFirst and :dateLast) and news.`status` = 1" +
+                    " order by news.posting_day DESC ) temp_table ")
     Page<INewsDto> findAllNews(Pageable pageable, @Param(value = "searchName") String searchName, @Param(value = "searchContent") String contentSearch, @Param(value = "dateFirst") String dateFirst, @Param(value = "dateLast") String dateLast);
 
     @Transactional

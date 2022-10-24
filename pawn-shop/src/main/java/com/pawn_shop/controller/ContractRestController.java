@@ -162,9 +162,8 @@ public class ContractRestController {
         Contract contract = new Contract();
         Employee employee = new Employee();
         BeanUtils.copyProperties(contractDto, contract);
-        //Nhowf Long huongw dan cachs lay usename ddang dang nhap => findEmployee dua vaof username
-        IEmployeeDto iEmployeeDto =iEmployeeService.findByUser("user1");
-        BeanUtils.copyProperties(iEmployeeDto,employee);
+        IEmployeeDto iEmployeeDto = iEmployeeService.findByUser(contractDto.getEmployee().getAppUser().getUsername());
+        BeanUtils.copyProperties(iEmployeeDto, employee);
         contract.setItemPrice(Double.parseDouble(contractDto.getItemPrice()));
         contract.setInterestRate(Double.parseDouble(contractDto.getInterestRate()));
         contract.setStartDate(LocalDate.parse(contractDto.getStartDate()));
@@ -174,6 +173,7 @@ public class ContractRestController {
         contractService.saveContract(contract);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     //uyen
     @GetMapping("/customerlist")
     public ResponseEntity<?> getAllCustomerService() {
@@ -201,8 +201,8 @@ public class ContractRestController {
     }
 
     @PatchMapping(value = "/update-contract")
-    public ResponseEntity<Map<String, String>> update(@Valid  @RequestBody ContractDtoHd contractUpdateDto, BindingResult bindingResult) {
-        contractUpdateDto.validate(contractUpdateDto,bindingResult);
+    public ResponseEntity<Map<String, String>> update(@Valid @RequestBody ContractDtoHd contractUpdateDto, BindingResult bindingResult) {
+        contractUpdateDto.validate(contractUpdateDto, bindingResult);
         if (bindingResult.hasErrors()) {
             Map<String, String> errMap = new HashMap<>();
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
@@ -211,14 +211,19 @@ public class ContractRestController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } else {
             Contract contract = new Contract();
+            Employee employee = new Employee();
             BeanUtils.copyProperties(contractUpdateDto, contract);
+            IEmployeeDto iEmployeeDto = iEmployeeService.findByUser("user1");
+            BeanUtils.copyProperties(iEmployeeDto, employee);
             contract.setItemPrice(Double.parseDouble(contractUpdateDto.getItemPrice()));
             contract.setInterestRate(Double.parseDouble(contractUpdateDto.getInterestRate()));
             contract.setStartDate(LocalDate.parse(contractUpdateDto.getStartDate()));
             contract.setEndDate(LocalDate.parse(contractUpdateDto.getEndDate()));
+            employee.setId(Long.parseLong(iEmployeeDto.getId()));
+            contract.setEmployee(employee);
             contractService.updateContract(contract);
             return new ResponseEntity<>(HttpStatus.OK);
         }
-}
+    }
 
 }

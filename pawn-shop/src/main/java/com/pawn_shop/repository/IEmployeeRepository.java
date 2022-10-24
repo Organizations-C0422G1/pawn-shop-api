@@ -40,6 +40,7 @@ public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
             "\twhere id = :id", nativeQuery = true)
     Optional<Employee> findById(@Param("id") Long id);
 
+    @Transactional
     @Modifying
     @Query(value = "update employee set address = :address, date_of_birth = :dateOfBirth,email = :email," +
             " gender = :gender , img_url = :imgUrl , `name` = :name, phone_number = :phoneNumber, id_card= :idCard " +
