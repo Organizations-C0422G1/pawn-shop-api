@@ -2,7 +2,9 @@ package com.pawn_shop.controller;
 
 import com.pawn_shop.dto.CustomerDto;
 import com.pawn_shop.dto.ICustomerDto;
+import com.pawn_shop.model.address.Address;
 import com.pawn_shop.model.customer.Customer;
+import com.pawn_shop.service.IAddressService;
 import com.pawn_shop.service.ICustomerService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,15 @@ public class CustomerController {
     @Autowired
     private ICustomerService iCustomerService;
 
+    @Autowired
+    private IAddressService iAddressService;
+
+    @PostMapping("/saveAddress")
+    public ResponseEntity<Address> saveAddress(@RequestBody Address address) {
+        iAddressService.save(address);
+        return new ResponseEntity<>(address, HttpStatus.OK);
+    }
+
     @GetMapping(value = "")
     public ResponseEntity<Page<ICustomerDto>> getAllCustomer(@RequestParam Optional<String> name,
                                                              @PageableDefault(size = 4) Pageable pageable) {
@@ -36,7 +47,7 @@ public class CustomerController {
         return new ResponseEntity<>(customerPage, HttpStatus.OK);
     }
 
-    @PatchMapping (value = "{id}")
+    @PatchMapping(value = "{id}")
     public ResponseEntity<Void> deleteCustomerById(@PathVariable Integer id) {
         this.iCustomerService.deleteCustomer(id);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -52,14 +63,16 @@ public class CustomerController {
         BeanUtils.copyProperties(newCustomerDTO, customer);
         List<Customer> customerList = iCustomerService.findAll();
         int max = 0;
-        if (customerList.size() == 0) {
+        if (customerList.isEmpty()) {
             customer.setCode("KH-001");
         } else {
             for (Customer item : customerList) {
-                if (Integer.parseInt(item.getCode().split("-")[1]) > max) {
-                    max = Integer.parseInt(item.getCode().split("-")[1]);
+                if (item.getCode() != null) {
+                    if (Integer.parseInt(item.getCode().split("-")[1]) > max) {
+                        max = Integer.parseInt(item.getCode().split("-")[1]);
+                    }
+                    customer.setCode("KH-" + String.format("%3s", max + 1).replaceAll(" ", "0"));
                 }
-                customer.setCode("KH-" + String.format("%3s", max + 1).replaceAll(" ", "0"));
             }
         }
         iCustomerService.createCustomer(customer);
