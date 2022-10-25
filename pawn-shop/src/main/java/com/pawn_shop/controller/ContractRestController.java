@@ -209,12 +209,12 @@ public class ContractRestController {
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 errMap.put(fieldError.getField(), fieldError.getDefaultMessage());
             }
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(errMap,HttpStatus.BAD_REQUEST);
         } else {
             Contract contract = new Contract();
             Employee employee = new Employee();
             BeanUtils.copyProperties(contractUpdateDto, contract);
-            IEmployeeDto iEmployeeDto = iEmployeeService.findByUser("user1");
+            IEmployeeDto iEmployeeDto = iEmployeeService.findByUser(contractUpdateDto.getEmployee().getAppUser().getUsername());
             BeanUtils.copyProperties(iEmployeeDto, employee);
             contract.setItemPrice(Double.parseDouble(contractUpdateDto.getItemPrice()));
             contract.setInterestRate(Double.parseDouble(contractUpdateDto.getInterestRate()));

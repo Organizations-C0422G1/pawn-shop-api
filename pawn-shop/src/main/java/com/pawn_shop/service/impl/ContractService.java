@@ -217,15 +217,23 @@ public class ContractService implements IContractService {
             }
         }
         iPawItemService.updatePawnItem(contract.getPawnItem());
+        if (contract.getStatus() == 4){
+            contract.setStatus(0);
+        }
         iContractRepository.updateContract(contract.getCode(),contract.getEndDate(),contract.getInterestRate(),
                 contract.getItemPrice(),contract.getLiquidationPrice(),contract.getReturnDate(),contract.getStartDate(),
-                contract.getType(),contract.getCustomer().getId(),contract.getEmployee().getId(),contract.getPawnItem().getId(), contract.getId());
+                contract.getType(),contract.getCustomer().getId(),contract.getEmployee().getId(),contract.getPawnItem().getId(), contract.getId(), contract.getStatus());
     }
 
 
     @Override
     public Contract findIdContract(Long id) {
-        return iContractRepository.findIdContract(id);
+        Contract contract = iContractRepository.findIdContract(id);
+        if (contract.getCode() == null){
+            Contract lastContract = this.iContractRepository.findContract();
+            contract.setCode(String.valueOf(lastContract.getId()+1));
+        }
+        return contract;
     }
 
 

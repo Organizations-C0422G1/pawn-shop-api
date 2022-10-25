@@ -1,14 +1,13 @@
 package com.pawn_shop.service.impl;
 
 import com.pawn_shop.config.MailConfig;
-import com.pawn_shop.model.login.AppUser;
-import com.pawn_shop.service.ISendMailService;
-import org.springframework.stereotype.Service;
-import javax.mail.internet.*;
-import java.util.Properties;
 import com.pawn_shop.dto.projection.MailAutoProjection;
+import com.pawn_shop.model.login.AppUser;
 import com.pawn_shop.repository.IContractRepository;
+import com.pawn_shop.service.ISendMailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -17,6 +16,7 @@ import javax.mail.internet.MimeMultipart;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Properties;
 
 @Service
 public class SendMailService implements ISendMailService {
@@ -47,17 +47,41 @@ public class SendMailService implements ISendMailService {
                 "<html lang=\"en\">\n" +
                 "<head>\n" +
                 "    <meta charset=\"UTF-8\">\n" +
-                "    <title>Quên mật khẩu</title>\n" +
+                "    <title>Title</title>\n" +
+                "    <style>\n" +
+                "        .p-btn {\n" +
+                "            background: linear-gradient(to right, #f37214, #ff3300);\n" +
+                "            display: inline-block;\n" +
+                "            font-weight: 400;\n" +
+                "            line-height: 1.5;\n" +
+                "            color: #ffffff;\n" +
+                "            text-align: center;\n" +
+                "            text-decoration: none;\n" +
+                "            vertical-align: middle;\n" +
+                "            cursor: pointer;\n" +
+                "            -webkit-user-select: none;\n" +
+                "            -moz-user-select: none;\n" +
+                "            user-select: none;\n" +
+                "            border: 1px solid transparent;\n" +
+                "            padding: 0.375rem 0.75rem;\n" +
+                "            font-size: 1rem;\n" +
+                "            border-radius: 0.25rem;\n" +
+                "            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n" +
+                "\n" +
+                "        }\n" +
+                "    </style>\n" +
                 "</head>\n" +
                 "<body>\n" +
-                "<h3>Chào " + user.getEmployee().getName() + "</h3>\n" +
-                "<p>Đây là email đặt lại mật khẩu của bạn, bấm vào link bên dưới để đặt lại mật khẩu:</p>\n" +
-                "<a href=\"http://localhost:4200/reset-password/" + jwt + "\">Reset password link</a>\n" +
-                "<p style=\"color: red\"><i>Lưu ý: Không chia sẻ link này cho người khác</i></p>\n" +
+                "<h2>Chào " + user.getEmployee().getName() + "</h2>\n" +
+                "<h4>Quên mật khẩu?</h4>\n" +
+                "<p style=\"margin-bottom: 30px\">Chúng tôi nhận được một yêu cầu đặt lại mật khẩu cho tài khoản của bạn.</p>\n" +
+                "<p>Để đặt lại mật khẩu, click vào nút đặt lại mật khẩu bên dưới: </p>\n" +
+                "<button class=\"p-btn\"><a href=\"http://localhost:4200/reset-password/" + jwt + "\" style=\"text-decoration: none; color: white\">Đặt lại mật khẩu</a></button>\n" +
+                "<p><i style=\"color: red\">Lưu ý: Không chia sẻ mail này cho bất kỳ người nào khác</i></p>\n" +
                 "<hr>\n" +
-                "<h4>C04 - PawnShop</h4>\n" +
-                "<p>SĐT: 0123456789</p>\n" +
-                "<p>Email: pawnshopc04@gmail.com</p>\n" +
+                "<h3>C04 - PawnShop</h3>\n" +
+                "<p><b>SĐT: </b>012456789</p>\n" +
+                "<p><b>Email: </b>pawnshopc04@gmail.com</p>\n" +
                 "</body>\n" +
                 "</html>\n";
         MimeBodyPart textBodyPart = new MimeBodyPart();

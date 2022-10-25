@@ -393,12 +393,12 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
     @Modifying
     @Query(value = "update contract set code = :code , end_date = :endDate, interest_rate = :interestRate, item_price = :itemPrice," +
             "liquidation_price = :liquidationPrice, return_date = :returnDate,start_date = :startDate, type = :type," +
-            "customer_id = :customerId, employee_id = :employeeId, pawn_item_id = :pawnItemId where id = :id ", nativeQuery = true)
+            "customer_id = :customerId, employee_id = :employeeId, pawn_item_id = :pawnItemId, status = :status where id = :id ", nativeQuery = true)
     void updateContract(@Param("code") String code, @Param("endDate") LocalDate endDate, @Param("interestRate") Double interestDate,
                         @Param("itemPrice") Double itemPrice, @Param("liquidationPrice") Double liquidationPrice, @Param("returnDate") LocalDate returnDate,
                         @Param("startDate") LocalDate startDate, @Param("type") Boolean type,
                         @Param("customerId") Long customerId, @Param("employeeId") Long employeeId,
-                        @Param("pawnItemId") Long pawnItemId, @Param("id") Long id);
+                        @Param("pawnItemId") Long pawnItemId, @Param("id") Long id, @Param("status") Integer status);
 
     @Query(value = "select * from contract where start_date = current_date order by id desc limit 10 ", nativeQuery = true)
     List<Contract> top10Contract();

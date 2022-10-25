@@ -16,6 +16,6 @@ public interface IFinanceRepository extends JpaRepository<Finance, Long> {
     @Query(value = "select sum(item_price) as total_investment from contract where status =0", nativeQuery = true)
     Double findTotalInvestment();
 
-    @Query(value = "select sum((item_price)*interest_rate/100) as total_expected_profit from contract where status = 0", nativeQuery = true)
+    @Query(value = "select sum(DATEDIFF(end_date,start_date)*(interest_rate/100)*item_price) as total_expected_profit from contract where status = 0 ", nativeQuery = true)
     Double findTotalExpectedProfit();
 }
