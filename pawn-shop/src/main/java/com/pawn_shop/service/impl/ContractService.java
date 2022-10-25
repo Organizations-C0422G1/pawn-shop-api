@@ -38,6 +38,11 @@ public class ContractService implements IContractService {
     @Autowired
     private IPawItemService iPawItemService;
 
+    @Autowired
+    private IFinanceService iFinanceService;
+
+
+
     @Override
     public Page<Contract> findCompleteContractByDate(String startReturnDate, String endReturnDate, Pageable pageable) {
         if (startReturnDate.equals("") && endReturnDate.equals("")) {
@@ -104,6 +109,8 @@ public class ContractService implements IContractService {
     }
 
     public void createLiquidation(Double price, String dateLiquidation, Long idContract) {
+        Double currentMoney = this.iFinanceService.findAllFinance().get(0).getCurrentCapital();
+        this.iFinanceService.updateFinance(currentMoney + price);
         iContractRepository.createLiquidation(price, dateLiquidation, idContract);
     }
 
@@ -171,6 +178,8 @@ public class ContractService implements IContractService {
 
     @Override
     public void returnItem(Double liquidationPrice, LocalDate returnDate, long id) {
+        Double currentMoney = this.iFinanceService.findAllFinance().get(0).getCurrentCapital();
+        this.iFinanceService.updateFinance(currentMoney + liquidationPrice);
         this.iContractRepository.returnItem(liquidationPrice, returnDate, id);
     }
 
@@ -186,6 +195,8 @@ public class ContractService implements IContractService {
         contract.setCode(contract.getCode()+(lastContract.getId()+1));
         iContractRepository.saveContract(contract.getCode(), contract.getEndDate(), contract.getInterestRate(), contract.getItemPrice(), contract.getLiquidationPrice(), contract.getReturnDate(), contract.getStartDate(), contract.getStatus(), contract.getCustomer().getId(), contract.getEmployee().getId(), contract.getPawnItem().getId(),
                 contract.getType());
+        Double currentMoney = this.iFinanceService.findAllFinance().get(0).getCurrentCapital();
+        this.iFinanceService.updateFinance(currentMoney - contract.getItemPrice());
         Customer customer = customerService.findCustomerById(contract.getCustomer().getId()).orElse(null);
         mailService.sendMail(contract, customer.getEmail());
     }

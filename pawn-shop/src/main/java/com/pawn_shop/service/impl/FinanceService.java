@@ -28,4 +28,9 @@ public class FinanceService implements IFinanceService {
         return iFinanceRepository.findTotalExpectedProfit();
     }
 
+    @Override
+    public void updateFinance(Double changeMoney) {
+        this.iFinanceRepository.updateFinance(changeMoney);
+    }
+
 }

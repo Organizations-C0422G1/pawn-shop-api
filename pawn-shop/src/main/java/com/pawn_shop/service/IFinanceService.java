@@ -10,4 +10,6 @@ public interface IFinanceService {
     Double findTotalInvestment();
 
     Double findTotalExpectedProfit();
+
+    void updateFinance(Double changeMoney);
 }
