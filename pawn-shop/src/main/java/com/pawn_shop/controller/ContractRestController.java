@@ -2,6 +2,7 @@ package com.pawn_shop.controller;
 
 import com.pawn_shop.config.MailConfig;
 import com.pawn_shop.dto.ContractDtoHd;
+import com.pawn_shop.dto.ContractUpdateDto;
 import com.pawn_shop.dto.projection.ContractDto;
 import com.pawn_shop.dto.projection.IEmployeeDto;
 import com.pawn_shop.dto.quick_register.QuickContractDto;
@@ -201,7 +202,7 @@ public class ContractRestController {
     }
 
     @PatchMapping(value = "/update-contract")
-    public ResponseEntity<Map<String, String>> update(@Valid @RequestBody ContractDtoHd contractUpdateDto, BindingResult bindingResult) {
+    public ResponseEntity<Map<String, String>> update(@Valid @RequestBody ContractUpdateDto contractUpdateDto, BindingResult bindingResult) {
         contractUpdateDto.validate(contractUpdateDto, bindingResult);
         if (bindingResult.hasErrors()) {
             Map<String, String> errMap = new HashMap<>();

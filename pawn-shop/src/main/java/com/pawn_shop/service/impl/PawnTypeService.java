@@ -20,7 +20,8 @@ public class PawnTypeService implements IPawnTypeService {
         return iPawnTypeRepository.findAllPawnType();
 
     }
-        @Override
+
+    @Override
         public <T > List < T > findAllPawnType(Class < T > tClass) {
             return iPawnTypeRepository.findAllPawnTypeLiquidation(tClass);
         }

@@ -48,4 +48,9 @@ public class PawItemService implements IPawItemService {
         return this.iPawItemRepository.findImgUrlByPawnItemId(id);
     }
 
+    @Override
+    public void updatePawnItem(PawnItem pawnItem) {
+        iPawItemRepository.updatePawnItem(pawnItem.getName(), pawnItem.getPawnType().getId(),pawnItem.getId());
+    }
+
 }

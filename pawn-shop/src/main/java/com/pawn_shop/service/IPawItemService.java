@@ -19,5 +19,7 @@ public interface IPawItemService {
     PawnItem createQuickPawnItem(PawnItem pawnItem);
 
     List<String> findImgUrlByPawnItemId(Long id);
+
+    void updatePawnItem(PawnItem pawnItem);
 }
 

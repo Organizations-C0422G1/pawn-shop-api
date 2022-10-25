@@ -8,9 +8,12 @@ import com.pawn_shop.model.pawn.PawnItem;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.data.repository.query.Param;
+
+import javax.transaction.Transactional;
 
 public interface IPawItemRepository extends JpaRepository<PawnItem, Long> {
 
@@ -90,4 +93,9 @@ public interface IPawItemRepository extends JpaRepository<PawnItem, Long> {
             "WHERE " +
             "    p.id = :id ",nativeQuery = true)
     List<String> findImgUrlByPawnItemId(@Param("id") Long id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update pawn_item set name = :name , pawn_type_id = :typeId where id = :id",nativeQuery = true)
+    void updatePawnItem(@Param("name") String name, @Param("typeId") Long typeId,@Param("id") Long id);
 }

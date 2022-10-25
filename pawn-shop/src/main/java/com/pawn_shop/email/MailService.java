@@ -20,7 +20,7 @@ public class MailService {
     private String port;
     @Value("${config.mail.username}")
     private String email;
-    @Value("${config.mail.password}")
+    @Value("ufgknjtbrihadbns")
     private String password;
 
     @Autowired
@@ -37,7 +37,7 @@ public class MailService {
                 new Authenticator() {
                     @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication("nguyenhaduyen23@gmail.com", "atfzgdyyqoyiewhc");
+                        return new PasswordAuthentication("pawnshopc04@gmail.com", "ufgknjtbrihadbns");
                     }
                 });
         Message message = new MimeMessage(session);

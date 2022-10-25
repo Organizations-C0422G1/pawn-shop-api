@@ -11,7 +11,7 @@ import java.util.List;
 public interface IPawnImgRepository extends JpaRepository<PawnImg, Long> {
     @Transactional
     @Modifying
-    @Query(value = "insert into pawn_img (img_url,pawn_item_id) values (?1,?2)",nativeQuery = true)
+    @Query(value = "insert into pawn_img (img_url,pawn_item_id,status_delete) values (?1,?2,true)",nativeQuery = true)
     void savePawnImg (String imgUrl, Long pawnItem);
 
 

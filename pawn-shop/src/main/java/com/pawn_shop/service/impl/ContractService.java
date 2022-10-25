@@ -8,10 +8,7 @@ import com.pawn_shop.model.customer.Customer;
 import com.pawn_shop.model.employee.Employee;
 import com.pawn_shop.model.pawn.PawnImg;
 import com.pawn_shop.repository.IContractRepository;
-import com.pawn_shop.service.IContractService;
-import com.pawn_shop.service.ICustomerService;
-import com.pawn_shop.service.IEmployeeService;
-import com.pawn_shop.service.IPawnImgService;
+import com.pawn_shop.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,6 +34,9 @@ public class ContractService implements IContractService {
 
     @Autowired
     private IEmployeeService iEmployeeService;
+
+    @Autowired
+    private IPawItemService iPawItemService;
 
     @Override
     public Page<Contract> findCompleteContractByDate(String startReturnDate, String endReturnDate, Pageable pageable) {
@@ -208,6 +208,15 @@ public class ContractService implements IContractService {
 
     @Override
     public void updateContract(Contract contract) {
+        for (PawnImg pawnImg: contract.getPawnItem().getPawnImg()) {
+            pawnImg.setPawnItem(contract.getPawnItem());
+            if(pawnImg.getStatusDelete() == 1){
+                iPawnImgService.delete(pawnImg);
+            }else {
+                iPawnImgService.savePawnImgByUpdate(pawnImg);
+            }
+        }
+        iPawItemService.updatePawnItem(contract.getPawnItem());
         iContractRepository.updateContract(contract.getCode(),contract.getEndDate(),contract.getInterestRate(),
                 contract.getItemPrice(),contract.getLiquidationPrice(),contract.getReturnDate(),contract.getStartDate(),
                 contract.getType(),contract.getCustomer().getId(),contract.getEmployee().getId(),contract.getPawnItem().getId(), contract.getId());

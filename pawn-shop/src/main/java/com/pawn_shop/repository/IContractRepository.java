@@ -330,7 +330,7 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
             "ct.start_date as startDate, ct.end_date as endDate, " +
             "p.name as pawnItem, e.name as employee, ct.type as type, " +
             "c.email as customerEmail, ct.item_price as itemPrice, " +
-            "ct.status as status, ct.return_date as returnDate, " +
+            "ct.status as status, ct.return_date as returnDate, c.phone_number as phoneNumber, " +
             "ct.interest_rate as interestRate, ct.liquidation_price as liquidationPrice " +
             "from contract ct join customer c on ct.customer_id = c.id " +
             "join pawn_item p on ct.pawn_item_id = p.id " +

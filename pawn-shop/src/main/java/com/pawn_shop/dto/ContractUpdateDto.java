@@ -77,9 +77,6 @@ public class ContractUpdateDto implements Validator {
         } else {
             try {
                 startDate = LocalDate.parse(contractUpdateDto.startDate);
-                if (startDate.isBefore(LocalDate.now()) || startDate.isAfter(LocalDate.now())){
-                    errors.rejectValue("startDate","add.startDate","Vui lòng nhập ngày làm hợp đồng bằng ngày hiện tại");
-                }
             } catch (Exception e) {
                 errors.rejectValue("startDate","add.startDate","Vui lòng nhập đúng định dạng dd/MM/yyyy");
             }

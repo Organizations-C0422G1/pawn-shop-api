@@ -30,4 +30,6 @@ public interface ContractDto {
     Integer getStatus();
 
     String getCustomerEmail();
+
+    String getPhoneNumber();
 }

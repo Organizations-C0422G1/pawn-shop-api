@@ -19,9 +19,9 @@ import java.util.Optional;
 @Repository
 public interface ICustomerRepository extends JpaRepository<Customer, Long> {
 
-    @Query(nativeQuery = true,value = "Select c.code, c.name, c.id_card from customer c " +
+    @Query(nativeQuery = true, value = "Select c.code, c.name, c.id_card from customer c " +
             " where c.name like %?1% and c.id_card like %?2%")
-    <T> List<T> findByNameCustomer(String name,String cmnd,Class<T> tClass);
+    <T> List<T> findByNameCustomer(String name, String cmnd, Class<T> tClass);
 
 
     @Query(nativeQuery = true, value = "select count(contract.id) as amountContract ,\n" +
@@ -52,7 +52,7 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                     " from customer left join contract on customer.id = contract.customer_id \n" +
                     " where customer.status = 1 and customer.`name` like ?1" +
                     " group by customer.id")
-     Page<ICustomerDto> findAllCustomer(String name, Pageable pageable);
+    Page<ICustomerDto> findAllCustomer(String name, Pageable pageable);
 
     @Modifying
     @Transactional
@@ -87,15 +87,15 @@ public interface ICustomerRepository extends JpaRepository<Customer, Long> {
                         @Param("address_id") Long addressId, @Param("id") Long id);
 
     @Query(value = "select * from customer where status = 1", nativeQuery = true, countQuery = "select count(*) from (select * from customer where status =1) as tableQuery")
-    public List<Customer> findAllCus();
+    List<Customer> findAllCus();
 
     @Query(value = "select * from customer where id = :id", nativeQuery = true)
-    public Optional<Customer> findCustomerById(@Param("id") Long id);
+    Optional<Customer> findCustomerById(@Param("id") Long id);
 
     @Query(value = "select * from customer where id_card = :idCard", nativeQuery = true)
-    public List<Customer> findCustomerByIdCard(@Param("idCard") String idCard);
+    List<Customer> findCustomerByIdCard(@Param("idCard") String idCard);
 
-    @Query(value = "select * from customer",nativeQuery = true)
+    @Query(value = "select * from customer", nativeQuery = true)
     List<Customer> findAllCustomer();
 
 }
