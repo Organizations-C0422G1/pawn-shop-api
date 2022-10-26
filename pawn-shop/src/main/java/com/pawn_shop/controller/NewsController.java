@@ -42,6 +42,7 @@ public class NewsController {
         }
         if (dateFirst.equals("null")) {
             dateFirst = "0001-01-01";
+
         }
         if (dateLast.equals("null")) {
             dateLast = "9000-01-01";
