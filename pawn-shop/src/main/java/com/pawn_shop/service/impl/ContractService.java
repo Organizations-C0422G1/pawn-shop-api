@@ -254,7 +254,7 @@ public class ContractService implements IContractService {
         contract.setStartDate(now);
         contract.setEndDate(now);
         contract.setStatus(4);
-        contract.setType(true);
+        contract.setType(false);
         Employee employee = this.iEmployeeService.findById(1L);
         contract.setEmployee(employee);
         return this.iContractRepository.save(contract);

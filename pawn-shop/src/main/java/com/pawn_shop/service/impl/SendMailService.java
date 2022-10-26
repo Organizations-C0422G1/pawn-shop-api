@@ -13,9 +13,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 @Service
@@ -155,7 +157,10 @@ public class SendMailService implements ISendMailService {
     }
 
     @Override
-    public void sendMailReturnItem(Session session, String email, String customerName) {
+    public void sendMailReturnItem(Session session, String email, String customerName, Double liquidationPrice, String pawnItem, LocalDate returnDate) {
+        Locale localeVN = new Locale("vi", "VN");
+        NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
+        String liquidationPriceFormat = currencyVN.format(liquidationPrice);
         try {
             Multipart multipart = new MimeMultipart();
             MimeMessage message = new MimeMessage(session);
@@ -169,11 +174,17 @@ public class SendMailService implements ISendMailService {
                     + "</head>"
                     + "<body>"
                     + "<h2 style=\"color: blue; fontSize:20px\">Dear " + customerName + "!</h2>"
-                    + "<p>Hệ thống PAWN xác nhận bạn đã thanh toán thành công. Cảm ơn quý khách đã sử dụng dịch vụ của PAWN</p>"
-                    + "<h3 style=\"color:green\">Mr. Trần Hoàng Long</h3>"
-                    + "<b>Phone number:</b><span>0971450138</span>"
-                    + "</body>"
-                    + "</html>";
+                    + "<p>Hệ thống PAWN xác nhận bạn đã thanh toán thành công</p>"
+                    + "<p>Đồ cầm: " + pawnItem + "</p>"
+                    + "<p>Tổng tiền thanh toán: " + liquidationPriceFormat + "</p>"
+                    + "<p>Ngày thanh toán: " + returnDate + "</p>"
+                    + "<p>Cảm ơn quý khách đã sử dụng dịch vụ của PAWN</p>"
+                    + "<hr>\n" +
+                    "<h3>C04 - PawnShop</h3>\n" +
+                    "<p><b>SĐT: </b>012456789</p>\n" +
+                    "<p><b>Email: </b>pawnshopc04@gmail.com</p>\n" +
+                    "</body>\n" +
+                    "</html>\n";
             MimeBodyPart textBodyPart = new MimeBodyPart();
             textBodyPart.setContent(htmlContent, "text/html; charset=UTF-8");
             multipart.addBodyPart(textBodyPart);

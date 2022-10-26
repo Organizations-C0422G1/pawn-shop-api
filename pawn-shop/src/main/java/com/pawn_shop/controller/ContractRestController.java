@@ -118,11 +118,14 @@ public class ContractRestController {
     @GetMapping(value = "returnItem/{id}")
     public ResponseEntity<Void> returnItem(@PathVariable long id, @RequestParam Optional<String> email,
                                            @RequestParam Optional<String> customerName,
-                                           @RequestParam Optional<Double> liquidationPrice) {
+                                           @RequestParam Optional<Double> liquidationPrice,
+                                           @RequestParam Optional<String> pawnItem,
+                                           @RequestParam Optional<LocalDate> returnDate) {
         String emailCustomer = email.orElse("");
         String keywordCustomerName = customerName.orElse("");
         Double liquidationPriceParam = liquidationPrice.orElse(0.0);
-        LocalDate returnDateParam = LocalDate.now();
+        LocalDate returnDateParam = returnDate.orElse(LocalDate.now());
+        String keywordPawnItem = pawnItem.orElse("");
 
         List<Contract> contractList = contractService.findAllContract();
 
@@ -141,7 +144,7 @@ public class ContractRestController {
                     }
                 });
                 this.contractService.returnItem(liquidationPriceParam, returnDateParam, id);
-                this.sendMailService.sendMailReturnItem(session, emailCustomer, keywordCustomerName);
+                this.sendMailService.sendMailReturnItem(session, emailCustomer, keywordCustomerName, liquidationPriceParam, keywordPawnItem, returnDateParam);
                 return new ResponseEntity<>(HttpStatus.OK);
             }
         }

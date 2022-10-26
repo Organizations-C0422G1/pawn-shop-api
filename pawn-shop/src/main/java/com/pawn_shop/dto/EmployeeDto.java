@@ -41,7 +41,7 @@ public class EmployeeDto implements Validator {
 
     @NotBlank(message = "Vui lòng nhập vào")
     @NotNull(message = "Vui lòng nhập vào")
-    @Pattern(regexp = "^((090)|(091)|(\\\\(84\\\\)\\\\+90)|(\\\\(84\\\\)\\\\+91))[0-9]{7}$",message = "Vui lòng nhập đúng định dạng")
+    @Pattern(regexp = "^0[0-9]{9}$",message = "Vui lòng nhập đúng định dạng")
     private String phoneNumber;
 
     @NotBlank(message = "Vui lòng nhập vào")
@@ -57,7 +57,7 @@ public class EmployeeDto implements Validator {
 
     @NotBlank
     @NotNull(message = "Vui lòng nhập vào")
-    @Pattern(regexp = "^[0-9]{9}|[0-9]{12}$",message = "Nhập sai định dạng. Vui lòng nhập lại!!!")
+    @Pattern(regexp = "^[0-9]{12}$",message = "Nhập sai định dạng. Vui lòng nhập lại!!!")
     private String idCard;
 
     private AppUser appUser;

@@ -296,7 +296,7 @@ public interface IContractRepository extends JpaRepository<Contract, Long> {
             "    `liquidation_price` = ?1," +
             "    `return_date` = ?2," +
             "    `status` = 3 ," +
-            "    `type` = 0 " +
+            "    `type` = 1 " +
             "WHERE" +
             "    (`id` = ?3);")
     void createLiquidation(Double price, String dateLiquidation, Long idContract);
