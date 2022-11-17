@@ -29,13 +29,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AppUser user = this.appUserRepository.findByUsername(username);
 
-        if (user == null){
-            throw new  UsernameNotFoundException("Not found username in database");
+        if (user == null) {
+            throw new UsernameNotFoundException("Not found username in database");
         }
 
         List<AppRole> roleList = this.appRoleRepository.findByUsername(username);
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        for (AppRole role: roleList){
+        for (AppRole role : roleList) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
         return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
